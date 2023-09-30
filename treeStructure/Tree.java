@@ -1,18 +1,33 @@
+/**
+ * Treeクラスです。
+ * ジェネリクス型のAVL木です。
+ */
 package treeStructure;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public final class Tree<E extends Comparable<E>> {
+	
+	//このTreeの根です。
 	private Node<E> root;
+	
 	private int size, hash;
 
+	/**
+	 * 新しいTreeを生成します。
+	 */
 	public Tree () {
 		size = 0;
 		root = null;
 		hash = 0;
 	}
 
+	/**
+	 * このTreeの節を表すNodeクラスです。
+	 *
+	 * @param <E>
+	 */
 	static final private class Node<E> {
 		E value;
 		int height, size;
@@ -26,6 +41,11 @@ public final class Tree<E extends Comparable<E>> {
 		}
 	}
 
+	/**
+	 * 引数の要素を追加します。
+	 * @param x
+	 * @return
+	 */
 	public boolean add ( final E x ) {
 		boolean bool = true;
 		if ( root == null ) {
@@ -66,6 +86,11 @@ public final class Tree<E extends Comparable<E>> {
 		return bool;
 	}
 
+	/**
+	 * 小さい方から数えて引数のインデックスの要素を返します。
+	 * @param index
+	 * @return
+	 */
 	public E get ( int index ) {
 		if ( root == null || size <= index ) {
 			throw new NullPointerException();
@@ -88,6 +113,11 @@ public final class Tree<E extends Comparable<E>> {
 		return now.value;
 	}
 
+	/**
+	 * このAVL木に引数が存在すれば削除します。
+	 * @param x
+	 * @return
+	 */
 	public boolean remove ( final E x ) {
 		final Node<E> n = getNode( x );
 		if ( n == null ) {
@@ -99,6 +129,10 @@ public final class Tree<E extends Comparable<E>> {
 		return true;
 	}
 
+	/**
+	 * 引数のNodeを削除します。
+	 * @param node
+	 */
 	private void delete ( final Node<E> node ) {
 		if ( node != null ) {
 			if ( node.left == null && node.right == null ) {
@@ -143,6 +177,11 @@ public final class Tree<E extends Comparable<E>> {
 		}
 	}
 
+	/**
+	 * 引数をvalueに持ったNodeクラスを探します。
+	 * @param x
+	 * @return
+	 */
 	private Node<E> getNode ( final E x ) {
 		Node<E> now = root;
 		while ( now != null ) {
@@ -160,6 +199,10 @@ public final class Tree<E extends Comparable<E>> {
 		return now;
 	}
 
+	/**
+	 * このAVL木の最小の要素を返します。
+	 * @return
+	 */
 	public E first () {
 		if ( root == null ) {
 			return null;
@@ -167,6 +210,11 @@ public final class Tree<E extends Comparable<E>> {
 		return getFirstNode( root ).value;
 	}
 
+	/**
+	 * 引数のNodeクラスを根とした部分木の最小の要素を返します。
+	 * @param node
+	 * @return
+	 */
 	private Node<E> getFirstNode ( Node<E> node ) {
 		assert node != null;
 		Node<E> par = null;
@@ -177,6 +225,11 @@ public final class Tree<E extends Comparable<E>> {
 		return par;
 	}
 
+	/**
+	 * このAVL木の最大の要素を返します。
+	 * @param node
+	 * @return
+	 */
 	public E last () {
 		if ( root == null ) {
 			return null;
@@ -184,6 +237,11 @@ public final class Tree<E extends Comparable<E>> {
 		return getLastNode( root ).value;
 	}
 
+	/**
+	 * 引数のNodeクラスを根とした部分木の最大の要素を返します。
+	 * @param node
+	 * @return
+	 */
 	private Node<E> getLastNode ( Node<E> node ) {
 		assert node != null;
 		Node<E> par = null;
@@ -194,6 +252,11 @@ public final class Tree<E extends Comparable<E>> {
 		return par;
 	}
 
+	/**
+	 * 引数が存在するか調べます。
+	 * @param x
+	 * @return
+	 */
 	public boolean contains ( final E x ) {
 		if ( root == null ) {
 			return false;
@@ -201,6 +264,10 @@ public final class Tree<E extends Comparable<E>> {
 		return getNode( x ) != null;
 	}
 
+	/**
+	 * このAVL木の最小の要素を取り出して削除します。
+	 * @return
+	 */
 	public E pollFirst () {
 		if ( root == null ) {
 			return null;
@@ -212,6 +279,10 @@ public final class Tree<E extends Comparable<E>> {
 		return min.value;
 	}
 
+	/**
+	 * このAVL木の最大の要素を取り出して削除します。
+	 * @return
+	 */
 	public E pollLast () {
 		if ( root == null ) {
 			return null;
@@ -223,10 +294,20 @@ public final class Tree<E extends Comparable<E>> {
 		return max.value;
 	}
 
+	/**
+	 * 引数と等価か引数よりも大きい要素で最小の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	public E ceiling ( final E x ) {
 		return ceiling( root, x );
 	}
 
+	/**
+	 * 引数と等価か引数よりも大きい要素で最小の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	private E ceiling ( Node<E> node, final E x ) {
 		Node<E> ans = null;
 		while ( node != null ) {
@@ -245,10 +326,20 @@ public final class Tree<E extends Comparable<E>> {
 		return ans != null ? ans.value : null;
 	}
 
+	/**
+	 * 引数よりも大きい要素で最小の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	public E higher ( final E x ) {
 		return higher( root, x );
 	}
 
+	/**
+	 * 引数よりも大きい要素で最小の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	private E higher ( Node<E> node, final E x ) {
 		Node<E> ans = null;
 		while ( node != null ) {
@@ -264,10 +355,20 @@ public final class Tree<E extends Comparable<E>> {
 		return ans != null ? ans.value : null;
 	}
 
+	/**
+	 * 引数と等価か引数よりも小さい要素で最大の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	public E floor ( final E x ) {
 		return floor( root, x );
 	}
 
+	/**
+	 * 引数と等価か引数よりも小さい要素で最大の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	private E floor ( Node<E> node, final E x ) {
 		Node<E> ans = null;
 		while ( node != null ) {
@@ -286,10 +387,20 @@ public final class Tree<E extends Comparable<E>> {
 		return ans != null ? ans.value : null;
 	}
 
+	/**
+	 * 引数よりも小さい要素で最大の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	public E lower ( final E x ) {
 		return lower( root, x );
 	}
 
+	/**
+	 * 引数よりも小さい要素で最大の要素を返します。
+	 * @param x
+	 * @return
+	 */
 	private E lower ( Node<E> node, final E x ) {
 		Node<E> ans = null;
 		while ( node != null ) {
@@ -305,20 +416,36 @@ public final class Tree<E extends Comparable<E>> {
 		return ans != null ? ans.value : null;
 	}
 
+	/**
+	 * このAVL木を空にします。
+	 */
 	public void clear () {
 		root = null;
 		size = 0;
 		hash = 0;
 	}
 
+	/**
+	 * このAVL木が空か判定します。
+	 * @return
+	 */
 	public boolean isEmpty () {
 		return size == 0;
 	}
 
+	/**
+	 * このAVL木に含まれる要素数を返します。
+	 * @return
+	 */
 	public int size () {
 		return size;
 	}
 
+	/**
+	 * このAVL木に含まれる要素をArrayListにして返します。
+	 * 順番は昇順であることが保証されます。
+	 * @return
+	 */
 	public ArrayList<E> toList () {
 		final ArrayList<E> list = new ArrayList<>();
 		if ( root != null ) {
@@ -353,12 +480,19 @@ public final class Tree<E extends Comparable<E>> {
 		return list;
 	}
 
+	/**
+	 * このAVL木を表すStringを返します。
+	 * このメソッドはtree.toList().toString()と等価です。
+	 */
 	@Override
 	public String toString () {
 		final ArrayList<E> list = toList();
 		return list.toString();
 	}
 
+	/**
+	 * このAVL木と引数のObjectが等価か調べます。
+	 */
 	@Override
 	public boolean equals ( final Object o ) {
 		if ( o instanceof final Tree<?> tree ) {
@@ -377,6 +511,9 @@ public final class Tree<E extends Comparable<E>> {
 		return false;
 	}
 
+	/**
+	 * このAVL木を表すハッシュ値を返します。
+	 */
 	@Override
 	public int hashCode () {
 		return hash;
@@ -386,6 +523,10 @@ public final class Tree<E extends Comparable<E>> {
 	 * 以下、平衡用メソッド
 	 */
 
+	/**
+	 * 節の情報を更新します。
+	 * @param node
+	 */
 	private void fix ( Node<E> node ) {
 		while ( node != null ) {
 			final int lh = node.left == null ? 0 : node.left.height;
@@ -411,6 +552,10 @@ public final class Tree<E extends Comparable<E>> {
 		}
 	}
 
+	/**
+	 * 右回転をします。
+	 * @param node
+	 */
 	private void rotateR ( final Node<E> node ) {
 		final Node<E> temp = node.left;
 		node.left = temp.right;
@@ -434,6 +579,10 @@ public final class Tree<E extends Comparable<E>> {
 		setStates( node );
 	}
 
+	/**
+	 * 左回転をします。
+	 * @param node
+	 */
 	private void rotateL ( final Node<E> node ) {
 		final Node<E> temp = node.right;
 		node.right = temp.left;
@@ -457,6 +606,10 @@ public final class Tree<E extends Comparable<E>> {
 		setStates( node );
 	}
 
+	/**
+	 * 部分木の高さや要素数の情報を更新します。
+	 * @param node
+	 */
 	private void setStates ( final Node<E> node ) {
 		final int lh = node.left != null ? node.left.height : 0;
 		final int rh = node.right != null ? node.right.height : 0;
