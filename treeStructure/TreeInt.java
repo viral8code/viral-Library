@@ -1,18 +1,33 @@
+/**
+ * TreeIntクラスです。
+ * 全体はTreeクラスと変わりませんが、int特化になっているため他の要素は扱えません。
+ */
 package treeStructure;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
 
 public final class TreeInt {
+	
+	//このAVL木の根です
 	private Node root;
+	
+	//このAVL木の要素数とハッシュ値です
 	private int size, hash;
 
+	/**
+	 * 新しいTreeIntインスタンスを生成します。
+	 */
 	public TreeInt () {
 		size = 0;
 		root = null;
 		hash = 0;
 	}
 
+	/**
+	 * このAVL木のノードを表すクラスです。
+	 *
+	 */
 	static final private class Node {
 		int value;
 		int height, size;
@@ -26,6 +41,11 @@ public final class TreeInt {
 		}
 	}
 
+	/**
+	 * 引数の値をこのAVL木に追加します。
+	 * @param x
+	 * @return このAVL木に変更がされればtrue
+	 */
 	public boolean add ( final int x ) {
 		boolean bool = true;
 		if ( root == null ) {
@@ -64,6 +84,11 @@ public final class TreeInt {
 		return bool;
 	}
 
+	/**
+	 * 引数で指定された位置の要素を返します。
+	 * @param index
+	 * @return 小さい方からindex番目の要素
+	 */
 	public int get ( int index ) {
 		if ( root == null || size <= index ) {
 			throw new NullPointerException();
@@ -86,6 +111,11 @@ public final class TreeInt {
 		return now.value;
 	}
 
+	/**
+	 * 引数で指定された要素を削除します。
+	 * @param x
+	 * @return このAVL木が変更されればtrue
+	 */
 	public boolean remove ( final int x ) {
 		final Node n = getNode( x );
 		if ( n == null ) {
@@ -97,6 +127,10 @@ public final class TreeInt {
 		return true;
 	}
 
+	/**
+	 * 引数のノードを削除します。
+	 * @param node
+	 */
 	private void delete ( final Node node ) {
 		if ( node != null ) {
 			if ( node.left == null && node.right == null ) {
@@ -141,6 +175,11 @@ public final class TreeInt {
 		}
 	}
 
+	/**
+	 * 指定された値を持つノードを返します。
+	 * @param x
+	 * @return
+	 */
 	private Node getNode ( final int x ) {
 		Node now = root;
 		while ( now != null ) {
@@ -157,6 +196,10 @@ public final class TreeInt {
 		return now;
 	}
 
+	/**
+	 * このAVL木の最小を値を返します。
+	 * @return
+	 */
 	public int first () {
 		if ( root == null ) {
 			throw new NullPointerException();
@@ -164,6 +207,11 @@ public final class TreeInt {
 		return getFirstNode( root ).value;
 	}
 
+	/**
+	 * このAVL木の最小の値を持つノードを返します。
+	 * @param node
+	 * @return
+	 */
 	private Node getFirstNode ( Node node ) {
 		assert node != null;
 		Node par = null;
@@ -174,6 +222,10 @@ public final class TreeInt {
 		return par;
 	}
 
+	/**
+	 * このAVL木の最大の値を返します。
+	 * @return
+	 */
 	public int last () {
 		if ( root == null ) {
 			throw new NullPointerException();
@@ -181,6 +233,11 @@ public final class TreeInt {
 		return getLastNode( root ).value;
 	}
 
+	/**
+	 * このAVL木の最大の値を持つノードを返します。
+	 * @param node
+	 * @return
+	 */
 	private Node getLastNode ( Node node ) {
 		assert node != null;
 		Node par = null;
@@ -191,6 +248,11 @@ public final class TreeInt {
 		return par;
 	}
 
+	/**
+	 * 引数の値がこのAVL木に含まれているか返します。
+	 * @param x
+	 * @return
+	 */
 	public boolean contains ( final int x ) {
 		if ( root == null ) {
 			return false;
@@ -198,6 +260,10 @@ public final class TreeInt {
 		return getNode( x ) != null;
 	}
 
+	/**
+	 * このAVL木の最小の値を返して削除します。
+	 * @return
+	 */
 	public int pollFirst () {
 		if ( root == null ) {
 			throw new NullPointerException();
@@ -209,6 +275,10 @@ public final class TreeInt {
 		return min.value;
 	}
 
+	/**
+	 * このAVL木の最大の値を返して削除します。
+	 * @return
+	 */
 	public int pollLast () {
 		if ( root == null ) {
 			throw new NullPointerException();
@@ -220,10 +290,23 @@ public final class TreeInt {
 		return max.value;
 	}
 
+	/**
+	 * 引数以上の値で最も小さい値を返します。
+	 * もし引数以上の値が無ければ引数-1を返します。
+	 * @param x
+	 * @return
+	 */
 	public int ceiling ( final int x ) {
 		return ceiling( root, x );
 	}
 
+	/**
+	 * 引数以上の値で最も小さい値を持っているノードを返します。
+	 * もし引数以上の値が無ければ引数-1を持ったノードを返します。
+	 * @param node
+	 * @param x
+	 * @return
+	 */
 	private int ceiling ( Node node, final int x ) {
 		Node ans = new Node( null, x - 1 );
 		while ( node != null ) {
@@ -241,10 +324,23 @@ public final class TreeInt {
 		return ans.value;
 	}
 
+	/**
+	 * 引数よりも大きい値で最も小さい値を返します。
+	 * もし引数よりも大きい値が無ければ引数-1を返します。
+	 * @param x
+	 * @return
+	 */
 	public int higher ( final int x ) {
 		return higher( root, x );
 	}
 
+	/**
+	 * 引数よりも大きい値で最も小さい値を持つノードを返します。
+	 * もし引数よりも大きい値が無ければ引数-1を持つノードを返します。
+	 * @param node
+	 * @param x
+	 * @return
+	 */
 	private int higher ( Node node, final int x ) {
 		Node ans = new Node( null, x - 1 );
 		while ( node != null ) {
@@ -259,10 +355,23 @@ public final class TreeInt {
 		return ans.value;
 	}
 
+	/**
+	 * 引数以下で最大の値を返します。
+	 * もし引数以下の値が無ければ引数+1を返します。
+	 * @param x
+	 * @return
+	 */
 	public int floor ( final int x ) {
 		return floor( root, x );
 	}
 
+	/**
+	 * 引数以下で最大の値を持つノードを返します。
+	 * もし引数以下の値が無ければ引数+1を持つノードを返します。
+	 * @param node
+	 * @param x
+	 * @return
+	 */
 	private int floor ( Node node, final int x ) {
 		Node ans = new Node( null, x + 1 );
 		while ( node != null ) {
@@ -280,10 +389,23 @@ public final class TreeInt {
 		return ans.value;
 	}
 
+	/**
+	 * 引数よりも小さい最大の値を返します。
+	 * もし引数よりも小さい値が無ければ引数+1を返します。
+	 * @param x
+	 * @return
+	 */
 	public int lower ( final int x ) {
 		return lower( root, x );
 	}
 
+	/**
+	 * 引数よりも小さい最大の値を持つノードを返します。
+	 * もし引数よりも小さい値が無ければ引数+1を持つノードを返します。
+	 * @param node
+	 * @param x
+	 * @return
+	 */
 	private int lower ( Node node, final int x ) {
 		Node ans = new Node( null, x + 1 );
 		while ( node != null ) {
@@ -298,20 +420,36 @@ public final class TreeInt {
 		return ans.value;
 	}
 
+	/**
+	 * このAVL木を空にします。
+	 */
 	public void clear () {
 		root = null;
 		size = 0;
 		hash = 0;
 	}
 
+	/**
+	 * このAVL木が空か判定します。
+	 * @return
+	 */
 	public boolean isEmpty () {
 		return size == 0;
 	}
 
+	/**
+	 * このAVL木の大きさを返します。
+	 * @return
+	 */
 	public int size () {
 		return size;
 	}
 
+	/**
+	 * このAVL木の要素を配列にして返します。
+	 * この配列の値は昇順に並んでいることが保証されます。
+	 * @return
+	 */
 	public int[] toArray () {
 		final int[] list = new int[size];
 		if ( root != null ) {
@@ -347,16 +485,22 @@ public final class TreeInt {
 		return list;
 	}
 
+	/**
+	 * このAVL木を表すStringを返します。
+	 */
 	@Override
 	public String toString () {
 		final int[] list = toArray();
 		return Arrays.toString( list );
 	}
 
+	/**
+	 * このAVL木と引数が等しいか返します。
+	 */
 	@Override
 	public boolean equals ( final Object o ) {
 		if ( o instanceof final TreeInt tree ) {
-			if ( size == tree.size() ) {
+			if ( size != tree.size() ) {
 				return false;
 			}
 			final int[] array1 = toArray();
@@ -371,6 +515,10 @@ public final class TreeInt {
 		return false;
 	}
 
+	/**
+	 * このAVL木のハッシュ値を返します。
+	 * この値は全要素の累積排他的論理和と一致します。
+	 */
 	@Override
 	public int hashCode () {
 		return hash;
@@ -380,6 +528,10 @@ public final class TreeInt {
 	 * 以下、平衡用メソッド
 	 */
 
+	/**
+	 * 引数のノードから根に向かって、各ノードが平衡を保つよう修正します。
+	 * @param node
+	 */
 	private void fix ( Node node ) {
 		while ( node != null ) {
 			final int lh = node.left == null ? 0 : node.left.height;
@@ -405,6 +557,10 @@ public final class TreeInt {
 		}
 	}
 
+	/**
+	 * 引数のノードを右に回転させます。
+	 * @param node
+	 */
 	private void rotateR ( final Node node ) {
 		final Node temp = node.left;
 		node.left = temp.right;
@@ -428,6 +584,10 @@ public final class TreeInt {
 		setStates( node );
 	}
 
+	/**
+	 * 引数のノードを左に回転させます。
+	 * @param node
+	 */
 	private void rotateL ( final Node node ) {
 		final Node temp = node.right;
 		node.right = temp.left;
@@ -451,6 +611,10 @@ public final class TreeInt {
 		setStates( node );
 	}
 
+	/**
+	 * 引数のノードのパラメータを更新します。
+	 * @param node
+	 */
 	private void setStates ( final Node node ) {
 		final int lh = node.left != null ? node.left.height : 0;
 		final int rh = node.right != null ? node.right.height : 0;
