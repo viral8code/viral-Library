@@ -263,30 +263,6 @@ public final class MathFunction {
 	}
 
 	/**
-	 * 指定された頂点を順に結んで出来上がる多角形が凸多角形か判定します。
-	 *
-	 * @param points 多角形を構成する点
-	 *
-	 * @return 多角形が凸多角形ならtrue
-	 */
-	public static boolean isConvex ( final Point... points ) {
-		final int n = points.length;
-		if ( n < 3 ) {
-			return false;
-		}
-		if ( n == 3 ) {
-			return true;
-		}
-		boolean conv = true;
-		for ( int i = 0; i < n; ++i ) {
-			int result = isCrossed( points[i], points[( i + 2 ) % n],
-					points[( i + 1 ) % n], points[( i + 1 + n / 2 ) % n] );
-			conv &= result >= 0;
-		}
-		return conv;
-	}
-
-	/**
 	 * numをmodで割ったあまりを返します。
 	 * 戻り値は0以上mod未満であることが保証されます。
 	 *
