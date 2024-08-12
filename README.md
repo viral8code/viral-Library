@@ -1,5 +1,6 @@
 # viral-Library
 
+Document : https://viral8code.github.io/Lib/index.html  
 2024年6月10日時点での僕のライブラリです。  
 もしかしたら大幅に変更される可能性があります。  
 ご自由に使用して下さい(可能であればどこかに僕のだと書いてくれると嬉しいです)。  
