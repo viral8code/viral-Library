@@ -41,7 +41,6 @@ import java.util.TreeSet;
 
 final class Main{
 
-	@SuppressWarnings("unused")
 	private static final SimpleScanner sc;
 	private static final SimpleWriter out;
 
@@ -52,6 +51,8 @@ final class Main{
 	}
 
 	public static void main(final String[] args){
+
+		
 
 		out.close();
 	}
@@ -2674,14 +2675,14 @@ abstract class LazySegmentTree<S,F>{
 	 * 閉区間であることに注意して下さい。
 	 *
 	 * @param left 左端 (left を含む)
-	 * @param right 右端 (right を含まない)
+	 * @param right 右端 (right を含む)
 	 *
-	 * @return [left,right) の要素に function を適用した結果
+	 * @return [left,right] の要素に function を適用した結果
 	 */
 	@SuppressWarnings("unchecked")
 	public final S query(int left,int right){
 		left += this.offSet;
-		right += this.offSet;
+		right += this.offSet+1;
 		this.spreadRange(left,right);
 		S sumL = this.defaultS;
 		S sumR = this.defaultS;
@@ -2728,13 +2729,13 @@ abstract class LazySegmentTree<S,F>{
 	 * 指定された区間の要素に指定されたパラメータによる演算を反映します。
 	 *
 	 * @param left 左端 (left を含む)
-	 * @param right 右端 (right を含まない)
+	 * @param right 右端 (right を含む)
 	 * @param function 反映する演算を表すパラメータ
 	 */
 	@SuppressWarnings("unchecked")
 	public final void apply(final int left,final int right,final F function){
 		int subL = left+this.offSet;
-		int subR = right+this.offSet;
+		int subR = right+this.offSet+1;
 		this.spreadRange(subL,subR);
 		while(subL<subR){
 			if((subL&1)==1){
@@ -2742,10 +2743,10 @@ abstract class LazySegmentTree<S,F>{
 				this.lazy[subL] = this.composition((F)this.lazy[subL],function);
 				subL += 1;
 			}
-			if((subR&1)==1){
-				subR -= 1;
+			if((subR&1)==0){
 				this.node[subR] = this.mapping((S)this.node[subR],function);
 				this.lazy[subR] = this.composition((F)this.lazy[subR],function);
+				subR -= 1;
 			}
 			subL >>= 1;
 			subR >>= 1;
@@ -4558,6 +4559,160 @@ record Montgomery64(InnerMontgomery64 inner){
 }
 
 /**
+ * PolarComparator です。
+ * 基準点から見たときに x 軸方向を基準に反時計回りで比較します。
+ */
+@SuppressWarnings("unused")
+final class PolarComparator{
+
+	/**
+	 * 原点 (内部用)
+	 */
+	private static final Point ORIGIN = new Point(0,0);
+
+	/**
+	 * 呼び出さないでください。
+	 *
+	 * @throws UnsupportedOperationException このコンストラクタは呼び出されることを想定していません。
+	 */
+	private PolarComparator()throws UnsupportedOperationException{
+		throw new UnsupportedOperationException();
+	}
+	
+	/**
+	 * 基準点 base からの極座標順に比較する Comparator を返します。
+	 *
+	 * @param base 基準点
+	 *
+	 * @return Comparator<Point>
+	 */
+	public static Comparator<Point> fromBase(final Point base){
+		return (a,b)->compareFromBase(a,b,base);
+	}
+	
+	/**
+	 * 基準点 base からの極座標順に比較する Comparator を返します。
+	 * 内部で BigInteger を用いて計算します。
+	 *
+	 * @param base 基準点
+	 *
+	 * @return Comparator<Point>
+	 */
+	public static Comparator<Point> fromBaseExact(final Point base){
+		return (a,b)->compareExactFromBase(a,b,base);
+	}
+	
+	/**
+	 * 原点からの極座標順に比較します。
+	 *
+	 * @param a 比較対象
+	 * @param b 比較対象
+	 *
+	 * @return
+	 */
+	public static int compare(final Point a,final Point b){
+		return compareFromBase(a,b,ORIGIN);
+	}
+	
+	/**
+	 * 原点からの極座標順に比較します。
+	 * 内部で BigInteger を用いて計算します。
+	 *
+	 * @param a 比較対象
+	 * @param b 比較対象
+	 *
+	 * @return
+	 */
+	public static int compareExact(final Point a,final Point b){
+		return compareExactFromBase(a,b,ORIGIN);
+	}
+	
+	/**
+	 * 基準点からの極座標順に比較します。
+	 *
+	 * @param a 比較対象
+	 * @param b 比較対象
+	 * @param base 基準点
+	 *
+	 * @return
+	 */
+	public static int compareFromBase(final Point a,final Point b,final Point base){
+		final long ax = a.x-base.x;
+		final long ay = a.y-base.y;
+		final long bx = b.x-base.x;
+		final long by = b.y-base.y;
+		final int qa = quadrant(ax,ay);
+		final int qb = quadrant(bx,by);
+		if(qa!=qb){
+			return Integer.compare(qa,qb);
+		}
+		final long cross = ax*by-ay*bx;
+		if(cross!=0){
+			return cross>0?-1:1;
+		}
+		return Long.compare(ax*ax+ay*ay,bx*bx+by*by);
+	}
+	
+	/**
+	 * 基準点からの極座標順に比較します。
+	 * 内部で BigInteger を用いて計算します。
+	 *
+	 * @param a 比較対象
+	 * @param b 比較対象
+	 * @param base 基準点
+	 *
+	 * @return
+	 */
+	public static int compareExactFromBase(final Point a,final Point b,final Point base){
+		final long ax = a.x-base.x;
+		final long ay = a.y-base.y;
+		final long bx = b.x-base.x;
+		final long by = b.y-base.y;
+		final int qa = quadrant(ax,ay);
+		final int qb = quadrant(bx,by);
+		if(qa!=qb){
+			return Integer.compare(qa,qb);
+		}
+		final BigInteger axBig = BigInteger.valueOf(ax);
+		final BigInteger ayBig = BigInteger.valueOf(ay);
+		final BigInteger bxBig = BigInteger.valueOf(bx);
+		final BigInteger byBig = BigInteger.valueOf(by);
+		final BigInteger cross = axBig.multiply(byBig).subtract(ayBig.multiply(bxBig));
+		final int cmp = cross.signum();
+		if(cmp!=0){
+			return -cmp;
+		}
+		final BigInteger distA = axBig.multiply(axBig).add(ayBig.multiply(ayBig));
+		final BigInteger distB = bxBig.multiply(bxBig).add(byBig.multiply(byBig));
+		return distA.compareTo(distB);
+	}
+	
+	/**
+	 * 象限を返します。
+	 *
+	 * @param x x座標
+	 * @param y y座標
+	 *
+	 * @return 象限
+	 */
+	private static int quadrant(final long x,final long y){
+		if(y>0){
+			return x>=0?0:1;
+		}
+		if(y<0){
+			return x<0?2:3;
+		}
+		if(x>0){
+			return 4;
+		}
+		if(x<0){
+			return 6;
+		}
+		return 8;
+	}
+}
+
+/**
  * 二分探索ライブラリです。
  * 様々な条件での探索を二分探索を用いて実行します。
  */
@@ -6220,11 +6375,11 @@ abstract class SegmentTree<E>{
 				sumL = this.function(sumL,(E)this.node[left]);
 				left += 1;
 			}
-			left >>= 1;
 			if((right&1)==0){
 				sumR = this.function((E)this.node[right],sumR);
 				right -= 1;
 			}
+			left >>= 1;
 			right >>= 1;
 		}
 		return this.function(sumL,sumR);
