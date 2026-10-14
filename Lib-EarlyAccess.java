@@ -58,6 +58,44 @@ final class Main{
 	}
 }
 
+/*
+                   ::=-=-:=++. .                                                     
+               .:.+**********+*+*=                                                   
+               **+=-------==*******:-=                                               
+            =+++**********************=-                                             
+           =***=++********************=+                          .::-**+-:.         
+           +..===*-********************--:                        *+***+             
+              :********:****************++                      +=**+**              
+              ==*+****: :***************+.                     :*******:.            
+              +=*****    ****************:                      =********:-:-        
+              ==*=**.    ***+++*++**+****.                     .=+*********+*.       
+              =++=*+    -*+=-=-===+++*****.                     :-***********+*      
+              :-**:.   :*=--------=+*++****:                     +************* *    
+                      **+====+++****++*******.                    .:=**********:-    
+                      *=++*******+**************::                  :=-*******+-* =  
+                      +++****====+*********************-:.:           =*********:.   
+              .+-:..-++*=+==+**+*******************++*+=-==**:         -*+******=    
+             ++***+**=+*+**************************+===*=+*****-       +++*****:-    
+            -**  +++****+*****************************++*+*******.. ..++******+*:    
+            +*+  .**        ::***************************+******************-:+      
+           .=+*   **.           :**********************++**********.=****+=*+-..     
+            ***+   **:             .+*****************+************  =.*.+.          
+             *+*=  ***-=               .:.:=+**********************  -               
+              +**   -**+=                       *****************+                   
+               .:    ..=*                       :**************=:                    
+                                                 ***********+:                       
+                                                 ****- *****                         
+                                                 ****   ****-                        
+                                                :****    ****.                       
+                                            ..=****:.    ****+                       
+                                        -****:..        .**-                         
+                                      :=*=+-           +*-                           
+                                      +**:           -**.                            
+                                     ::           .***=                              
+                                              .+***:-:                               
+                                              .:::.                                  
+*/
+
 /*//////////////////////////////////////////////////////////////////////////////////////////*/
 /*                                     *  My Library  *                                     */
 /*                                                                                          */
@@ -2686,7 +2724,7 @@ abstract class LazySegmentTree<S,F>{
 		this.spreadRange(left,right);
 		S sumL = this.defaultS;
 		S sumR = this.defaultS;
-		while(left>0&&right>0&&left<=right){
+		while(left<right){
 			if((left&1)==1){
 				sumL = this.function(sumL,(S)this.node[left]);
 				left += 1;
@@ -2743,15 +2781,15 @@ abstract class LazySegmentTree<S,F>{
 				this.lazy[subL] = this.composition((F)this.lazy[subL],function);
 				subL += 1;
 			}
-			if((subR&1)==0){
-				this.node[subR] = this.mapping((S)this.node[subR],function);
-				this.lazy[subR] = this.composition((F)this.lazy[subR],function);
+			if((subR&1)==1){
 				subR -= 1;
+				this.node[subR] = this.mapping((S)this.node[subR],function);
+				this.lazy[subR] = this.composition((F)this.lazy[subR], function);
 			}
 			subL >>= 1;
 			subR >>= 1;
 		}
-		this.update(left,right);
+		this.update(left+this.offSet,right+this.offSet+1);
 	}
 
 	/**
@@ -8481,7 +8519,7 @@ final class Sorter{
 		int j = 0;
 		int k = 0;
 		while(i<len1&&j<len2){
-			if(comparator.applyAsInt(array1[i],array[j])<=0){
+			if(comparator.applyAsInt(array1[i],array2[j])<=0){
 				array[k] = array1[i];
 				i += 1;
 			}
@@ -8527,7 +8565,7 @@ final class Sorter{
 		int j = 0;
 		int k = 0;
 		while(i<len1&&j<len2){
-			if(comparator.applyAsLong(array1[i],array[j])<=0){
+			if(comparator.applyAsLong(array1[i],array2[j])<=0){
 				array[k] = array1[i];
 				i += 1;
 			}
@@ -8573,7 +8611,7 @@ final class Sorter{
 		int j = 0;
 		int k = 0;
 		while(i<len1&&j<len2){
-			if(comparator.applyAsInt(array1[i],array[j])<=0){
+			if(comparator.applyAsInt(array1[i],array2[j])<=0){
 				array[k] = array1[i];
 				i += 1;
 			}
@@ -8619,7 +8657,7 @@ final class Sorter{
 		int j = 0;
 		int k = 0;
 		while(i<len1&&j<len2){
-			if(comparator.applyAsDouble(array1[i],array[j])<=0){
+			if(comparator.applyAsDouble(array1[i],array2[j])<=0){
 				array[k] = array1[i];
 				i += 1;
 			}
