@@ -1,7 +1,6 @@
 # viral-Library
 
-Document : https://viral8code.github.io/Lib/index.html  
-2024年6月10日時点での僕のライブラリです。  
+2026 年 10 月 20 日時点での僕のライブラリです。  
 もしかしたら大幅に変更される可能性があります。  
 ご自由に使用して下さい(可能であればどこかに僕のだと書いてくれると嬉しいです)。  
 使用前に僕に連絡していただくと励みになります(しなくても全然良いです)。
@@ -11,6 +10,9 @@ Document : https://viral8code.github.io/Lib/index.html
 そのときはそっと教えて下さい。
 
 # 現状
+#### 2026/10/20
+しばらく更新してなかったので更新してみました
+
 #### 2024/6/10
 書き換えました
 
@@ -18,5 +20,5 @@ Document : https://viral8code.github.io/Lib/index.html
 もしかしたら全体的に書き換えるかも
 
 #### 2023/9/18
-io 、 math 、 structure パッケージはコメント書き終えてます。  
-他はまだです。  
+io 、 math 、 structure パッケージはコメント書き終えてます  
+他はまだです
