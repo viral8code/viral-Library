@@ -3,89 +3,89 @@ package structure;
 import java.util.Arrays;
 
 /**
- * SegmentTreeクラスです。
- * 載せる演算はfunctionメソッドを定義して使用して下さい。
+ * SegmentTree クラスです。<br/>
+ * 載せる演算は function メソッドを定義して使用して下さい。
  *
  * @param <E> 演算を適用する要素の型
  */
-@SuppressWarnings("unchecked")
 public abstract class SegmentTree<E>{
 
 	/**
 	 * 内部処理用の変数です。
 	 */
-	private final int N, size;
+	private final int size, offSet;
 
 	/**
-	 * このSegmentTreeの単位元です。
+	 * この SegmentTree の単位元です。
 	 */
 	private final E def;
 
 	/**
-	 * このSegmentTreeを表すテーブルです。
+	 * この SegmentTree を表すテーブルです。
 	 */
 	private final Object[] node;
 
 	/**
-	 * 大きさnの、単位元がdefであるSegmentTreeを構築します。
+	 * 大きさ n の、単位元が def である SegmentTree を構築します。
 	 *
 	 * @param n 扱う範囲
-	 * @param def 単位元
-	 * @param is1indexed 各メソッドに渡すインデックスが1-indexedか
+	 * @param defaultValue 単位元
+	 * @param is1indexed 各メソッドに渡すインデックスが 1-indexed か
 	 */
-	public SegmentTree(final int n,final E def,final boolean is1indexed){
+	protected SegmentTree(final int n,final E defaultValue,final boolean is1indexed){
 		int num = 2;
 		while(num<n<<1){
 			num <<= 1;
 		}
-		N = num;
-		size = (num>>1)-(is1indexed?1:0);
-		node = new Object[N];
-		this.def = def;
-		Arrays.fill(node,this.def);
+		this.size = num;
+		this.offSet = (num>>1)-(is1indexed?1:0);
+		this.node = new Object[this.size];
+		this.def = defaultValue;
+		Arrays.fill(this.node,this.def);
 	}
 
 	/**
-	 * 引数の配列を元に、単位元がdefであるSegmentTreeを構築します。
+	 * 引数の配列を元に、単位元が def である SegmentTree を構築します。<br/>
 	 * 浅いコピーなので、引数の配列の要素に変更を加えたときの動作は保証されません。
 	 *
-	 * @param arr 　元となる配列
-	 * @param def 単位元
-	 * @param is1indexed 各メソッドに渡すインデックスが1-indexedか
+	 * @param arr 元となる配列
+	 * @param defaultValue 単位元
+	 * @param is1indexed 各メソッドに渡すインデックスが 1-indexed か
 	 */
-	public SegmentTree(final E[] arr,final E def,final boolean is1indexed){
+	protected SegmentTree(final E[] arr,final E defaultValue,final boolean is1indexed){
 		int num = 2;
 		while(num<arr.length<<1){
 			num <<= 1;
 		}
-		N = num;
-		size = num>>1-(is1indexed?1:0);
-		node = new Object[N];
-		this.def = def;
-		System.arraycopy(arr,0,node,N>>1,arr.length);
-		for(int i = arr.length+(N>>1);i<N;i++){
-			node[i] = def;
+		this.size = num;
+		this.offSet = (num>>1)-(is1indexed?1:0);
+		this.node = new Object[this.size];
+		this.def = defaultValue;
+		System.arraycopy(arr,0,this.node,this.size>>1,arr.length);
+		for(int i=arr.length+(this.size>>1);i<this.size;i++){
+			this.node[i] = defaultValue;
 		}
-		updateAll();
+		this.updateAll();
 	}
 
 	/**
-	 * 大きさn、単位元がdefのSegmentTreeを構築します。
-	 * 各メソッドに渡すインデックスは0-indexedであることが要求されます。
+	 * 大きさ n、単位元が def の SegmentTree を構築します。
+	 * 各メソッドに渡すインデックスは 0-indexed であることが要求されます。
 	 *
 	 * @param n 大きさ
-	 * @param def 単位元
+	 * @param defaultValue 単位元
 	 */
-	public SegmentTree(final int n,final E def){
-		this(n,def,false);
+	protected SegmentTree(final int n,final E defaultValue){
+		this(n,defaultValue,false);
 	}
 
 	/**
-	 * このSegmentTreeのテーブルを一括で更新します。
+	 * この SegmentTree のテーブルを一括で更新します。
 	 */
+	@SuppressWarnings("unchecked")
 	private void updateAll(){
-		for(int i = (N>>1)-1;i>0;i--){
-			node[i] = function((E)node[i<<1],(E)node[(i<<1)+1]);
+		for(int i=(this.size>>1)-1;i>0;i--){
+			this.node[i] = this.function((E)this.node[i<<1],(E)this.node[(i<<1)+1]);
 		}
 	}
 
@@ -95,12 +95,13 @@ public abstract class SegmentTree<E>{
 	 * @param n インデックス
 	 * @param value 上書きする値
 	 */
-	public void update(int n,final E value){
-		n += size;
-		node[n] = value;
+	@SuppressWarnings("unchecked")
+	public final void update(int n,final E value){
+		n += this.offSet;
+		this.node[n] = value;
 		n >>= 1;
 		while(n>0){
-			node[n] = function((E)node[n<<1],(E)node[(n<<1)+1]);
+			this.node[n] = this.function((E)this.node[n<<1],(E)this.node[(n<<1)+1]);
 			n >>= 1;
 		}
 	}
@@ -112,52 +113,69 @@ public abstract class SegmentTree<E>{
 	 *
 	 * @return 引数の位置の要素
 	 */
-	public E get(final int a){
-		return (E)node[a+size];
+	@SuppressWarnings("unchecked")
+	public final E get(final int a){
+		return (E)this.node[a+this.offSet];
 	}
 
 	/**
-	 * このSegmentTree上の要素全てにfunctionを適用した結果を返します。
+	 * この SegmentTree 上の要素全てに function を適用した結果を返します。
 	 *
-	 * @return 要素全てにfunctionを適用した結果
+	 * @return 要素全てに function を適用した結果
 	 */
-	public E answer(){
-		return (E)node[1];
+	@SuppressWarnings("unchecked")
+	public final E answer(){
+		return (E)this.node[1];
 	}
 
 	/**
-	 * 引数の区間の要素にfunctionを適用した結果を返します。
+	 * 引数の区間の要素に function を適用した結果を返します。<br/>
 	 * 閉区間であることに注意して下さい。
 	 *
-	 * @param l 左端(lを含む)
-	 * @param r 右端(rを含む)
+	 * @param left 左端 (left を含む)
+	 * @param right 右端 (right を含む)
 	 *
-	 * @return [l,r]の要素にfunctionを適用した結果
+	 * @return [left,right] の要素に function を適用した結果
 	 */
-	public E query(int l,int r){
-		l += size;
-		r += size;
-		E answer = def;
-		while(l>0&&r>0&&l<=r){
-			if(l%2==1){
-				answer = function((E)node[l++],answer);
+	@SuppressWarnings("unchecked")
+	public final E query(int left,int right){
+		left += this.offSet;
+		right += this.offSet;
+		E sumL = this.def;
+		E sumR = this.def;
+		while(left>0&&right>0&&left<=right){
+			if((left&1)==1){
+				sumL = this.function(sumL,(E)this.node[left]);
+				left += 1;
 			}
-			l >>= 1;
-			if(r%2==0){
-				answer = function(answer,(E)node[r--]);
+			if((right&1)==0){
+				sumR = this.function((E)this.node[right],sumR);
+				right -= 1;
 			}
-			r >>= 1;
+			left >>= 1;
+			right >>= 1;
 		}
-		return answer;
+		return this.function(sumL,sumR);
 	}
 
 	/**
-	 * このSegmentTree上で適用する関数を定義したメソッドです。
+	 * この SegmentTree 上で適用する関数を定義したメソッドです。
 	 *
-	 * @param a 要素1
-	 * @param b 要素2
+	 * @param value1 要素1
+	 * @param value2 要素2
 	 *
-	 * @return aとbに関数を適用した結果
+	 * @return value1 と value2 に関数を適用した結果
 	 */
-	abstract public E function(E a,E b);
+	abstract public E function(E value1,E value2);
+
+	/**
+	 * この LazySegmentTree を表す文字列を返します。
+	 *
+	 * @return この LazySegmentTree を表す文字列
+	 */
+	@Override
+	@Deprecated
+	public String toString(){
+		return "SegmentTree["+this.hashCode()+"]";
+	}
 }

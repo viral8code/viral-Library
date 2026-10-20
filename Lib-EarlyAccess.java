@@ -11,10 +11,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.PrimitiveIterator;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.DoubleBinaryOperator;
@@ -32,6 +29,7 @@ import java.util.function.UnaryOperator;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Map.Entry;
@@ -46,6 +44,7 @@ final class Main{
 
 	static{
 		final boolean autoFlush = false;
+
 		sc = new SimpleScanner(System.in);
 		out = new SimpleWriter(System.out,autoFlush);
 	}
@@ -103,7 +102,7 @@ final class Main{
 /*//////////////////////////////////////////////////////////////////////////////////////////*/
 
 /**
- * 配列に関する処理を管理するクラスです。
+ * 配列に関する処理を管理するクラスです。<br/>
  * 2 次元配列の回転や1次元配列の区間反転などを提供します。
  */
 @SuppressWarnings("unused")
@@ -119,7 +118,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに 90 度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -128,8 +127,8 @@ final class ArrayUtil{
 	 */
 	public static int[][] rotateR(final int[][] array){
 		final int[][] ans = new int[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -137,7 +136,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに 90 度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -146,8 +145,8 @@ final class ArrayUtil{
 	 */
 	public static long[][] rotateR(final long[][] array){
 		final long[][] ans = new long[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -155,7 +154,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに 90 度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -164,8 +163,8 @@ final class ArrayUtil{
 	 */
 	public static char[][] rotateR(final char[][] array){
 		final char[][] ans = new char[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -173,7 +172,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに 90 度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -182,8 +181,8 @@ final class ArrayUtil{
 	 */
 	public static double[][] rotateR(final double[][] array){
 		final double[][] ans = new double[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -191,7 +190,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに 90 度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -200,8 +199,8 @@ final class ArrayUtil{
 	 */
 	public static boolean[][] rotateR(final boolean[][] array){
 		final boolean[][] ans = new boolean[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -209,7 +208,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに 90 度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -219,8 +218,8 @@ final class ArrayUtil{
 	 * @return 回転させた配列
 	 */
 	public static <E> E[][] rotateR(final E[][] array,final E[][] ans){
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -228,7 +227,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに 90 度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -237,8 +236,8 @@ final class ArrayUtil{
 	 */
 	public static int[][] rotateL(final int[][] array){
 		final int[][] ans = new int[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;j++){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;j++){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -246,7 +245,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに 90 度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -255,8 +254,8 @@ final class ArrayUtil{
 	 */
 	public static long[][] rotateL(final long[][] array){
 		final long[][] ans = new long[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;j++){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;j++){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -264,7 +263,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに 90 度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -273,8 +272,8 @@ final class ArrayUtil{
 	 */
 	public static char[][] rotateL(final char[][] array){
 		final char[][] ans = new char[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -282,7 +281,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに 90 度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -291,8 +290,8 @@ final class ArrayUtil{
 	 */
 	public static double[][] rotateL(final double[][] array){
 		final double[][] ans = new double[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -300,7 +299,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに 90 度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -309,8 +308,8 @@ final class ArrayUtil{
 	 */
 	public static boolean[][] rotateL(final boolean[][] array){
 		final boolean[][] ans = new boolean[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -318,7 +317,7 @@ final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに 90 度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -328,8 +327,8 @@ final class ArrayUtil{
 	 * @return 回転させた配列
 	 */
 	public static <E> E[][] rotateL(final E[][] array,final E[][] ans){
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -393,7 +392,7 @@ final class ArrayUtil{
 	public static int lis(final int[] array,final boolean include){
 		final int[] list = new int[array.length];
 		Arrays.fill(list,Integer.MAX_VALUE);
-		for(final int num: array){
+		for(final int num:array){
 			final int index = include?Searcher.overSearch(list,num):Searcher.upSearch(list,num);
 			list[index] = Math.min(list[index],num);
 		}
@@ -413,7 +412,7 @@ final class ArrayUtil{
 	public static int lis(final int[][] arrays,final int p,final boolean include){
 		final int[] list = new int[arrays.length];
 		Arrays.fill(list,Integer.MAX_VALUE);
-		for(final int[] array: arrays){
+		for(final int[] array:arrays){
 			final int index = include?Searcher.overSearch(list,array[p]):Searcher.upSearch(list,array[p]);
 			list[index] = Math.min(list[index],array[p]);
 		}
@@ -432,7 +431,7 @@ final class ArrayUtil{
 	public static int lis(final long[] array,final boolean include){
 		final long[] list = new long[array.length];
 		Arrays.fill(list,Long.MAX_VALUE);
-		for(final long num: array){
+		for(final long num:array){
 			final int index = include?Searcher.overSearch(list,num):Searcher.upSearch(list,num);
 			list[index] = Math.min(list[index],num);
 		}
@@ -452,7 +451,7 @@ final class ArrayUtil{
 	public static int lis(final long[][] arrays,final int p,final boolean include){
 		final long[] list = new long[arrays.length];
 		Arrays.fill(list,Long.MAX_VALUE);
-		for(final long[] array: arrays){
+		for(final long[] array:arrays){
 			final int index = include?Searcher.overSearch(list,array[p]):Searcher.upSearch(list,array[p]);
 			list[index] = Math.min(list[index],array[p]);
 		}
@@ -473,14 +472,14 @@ final class ArrayUtil{
 	public static int[][] topologicalSort(final ArrayList<? extends ArrayList<Integer>> route){
 		final int[] count = new int[route.size()];
 		int pathCount = 0;
-		for(final ArrayList<Integer> path: route){
-			for(final int point: path){
+		for(final ArrayList<Integer> path:route){
+			for(final int point:path){
 				pathCount += 1;
 				count[point] += 1;
 			}
 		}
 		final ArrayDeque<Integer> deq = new ArrayDeque<>(count.length);
-		for(int i = 1;i<count.length;++i){
+		for(int i=1;i<count.length;++i){
 			if(count[i]==0){
 				deq.add(i);
 			}
@@ -489,7 +488,7 @@ final class ArrayUtil{
 		int index = 0;
 		while(!deq.isEmpty()){
 			final int nowP = deq.pollFirst();
-			for(final int nextP: route.get(nowP)){
+			for(final int nextP:route.get(nowP)){
 				ans[index][0] = nowP;
 				ans[index][1] = nextP;
 				index += 1;
@@ -515,14 +514,14 @@ final class ArrayUtil{
 	public static int[][] topologicalSort(final int[][] route){
 		final int[] count = new int[route.length];
 		int pathCount = 0;
-		for(final int[] path: route){
-			for(final int point: path){
+		for(final int[] path:route){
+			for(final int point:path){
 				pathCount += 1;
 				count[point] += 1;
 			}
 		}
 		final ArrayDeque<Integer> deq = new ArrayDeque<>(count.length);
-		for(int i = 1;i<count.length;++i){
+		for(int i=1;i<count.length;++i){
 			if(count[i]==0){
 				deq.add(i);
 			}
@@ -531,7 +530,7 @@ final class ArrayUtil{
 		int index = 0;
 		while(!deq.isEmpty()){
 			final int nowP = deq.pollFirst();
-			for(final int nextP: route[nowP]){
+			for(final int nextP:route[nowP]){
 				ans[index][0] = nowP;
 				ans[index][1] = nextP;
 				index += 1;
@@ -723,9 +722,9 @@ final class ArrayUtil{
 	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static boolean nextPermutation(final int[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i]<array[i+1]){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i]<array[j]){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -746,9 +745,9 @@ final class ArrayUtil{
 	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static boolean nextPermutation(final long[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i]<array[i+1]){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i]<array[j]){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -769,9 +768,9 @@ final class ArrayUtil{
 	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static boolean nextPermutation(final char[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i]<array[i+1]){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i]<array[j]){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -793,9 +792,9 @@ final class ArrayUtil{
 	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static <E extends Comparable<E>> boolean nextPermutation(final E[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i].compareTo(array[i+1])<0){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i].compareTo(array[j])<0){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -816,9 +815,9 @@ final class ArrayUtil{
 	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static boolean previousPermutation(final int[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i]>array[i+1]){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i]>array[j]){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -839,9 +838,9 @@ final class ArrayUtil{
 	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static boolean previousPermutation(final long[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i]>array[i+1]){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i]>array[j]){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -862,9 +861,9 @@ final class ArrayUtil{
 	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static boolean previousPermutation(final char[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i]>array[i+1]){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i]>array[j]){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -886,9 +885,9 @@ final class ArrayUtil{
 	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static <E extends Comparable<E>> boolean previousPermutation(final E[] array){
-		for(int i = array.length-2;i>=0;--i){
+		for(int i=array.length-2;i>=0;--i){
 			if(array[i].compareTo(array[i+1])>0){
-				for(int j = array.length-1;i<j;--j){
+				for(int j=array.length-1;i<j;--j){
 					if(array[i].compareTo(array[j])>0){
 						swap(array,i,j);
 						reverseRange(array,i+1,array.length);
@@ -907,7 +906,7 @@ final class ArrayUtil{
 	 * @param func 適用する関数
 	 */
 	public static void mapping(final int[] array,final IntUnaryOperator func){
-		for(int i = 0;i<array.length;i++){
+		for(int i=0;i<array.length;i++){
 			array[i] = func.applyAsInt(array[i]);
 		}
 	}
@@ -919,7 +918,7 @@ final class ArrayUtil{
 	 * @param func 適用する関数
 	 */
 	public static void mapping(final long[] array,final LongUnaryOperator func){
-		for(int i = 0;i<array.length;i++){
+		for(int i=0;i<array.length;i++){
 			array[i] = func.applyAsLong(array[i]);
 		}
 	}
@@ -931,7 +930,7 @@ final class ArrayUtil{
 	 * @param func 適用する関数
 	 */
 	public static void mapping(final double[] array,final DoubleUnaryOperator func){
-		for(int i = 0;i<array.length;i++){
+		for(int i=0;i<array.length;i++){
 			array[i] = func.applyAsDouble(array[i]);
 		}
 	}
@@ -943,7 +942,7 @@ final class ArrayUtil{
 	 * @param func 適用する関数
 	 */
 	public static <E> void mapping(final E[] array,final UnaryOperator<E> func){
-		for(int i = 0;i<array.length;i++){
+		for(int i=0;i<array.length;i++){
 			array[i] = func.apply(array[i]);
 		}
 	}
@@ -958,7 +957,7 @@ final class ArrayUtil{
 	 */
 	public static int[] reBuild(final int[] array,final IntUnaryOperator func){
 		final int[] ans = new int[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsInt(array[i]);
 		}
 		return ans;
@@ -974,7 +973,7 @@ final class ArrayUtil{
 	 */
 	public static int[] reBuild(final int[] array,final IntBinaryOperator func){
 		final int[] ans = new int[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsInt(i,array[i]);
 		}
 		return ans;
@@ -990,7 +989,7 @@ final class ArrayUtil{
 	 */
 	public static long[] reBuild(final long[] array,final LongUnaryOperator func){
 		final long[] ans = new long[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsLong(array[i]);
 		}
 		return ans;
@@ -1006,7 +1005,7 @@ final class ArrayUtil{
 	 */
 	public static long[] reBuild(final long[] array,final LongBinaryOperator func){
 		final long[] ans = new long[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsLong(i,array[i]);
 		}
 		return ans;
@@ -1022,7 +1021,7 @@ final class ArrayUtil{
 	 */
 	public static double[] reBuild(final double[] array,final DoubleUnaryOperator func){
 		final double[] ans = new double[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsDouble(array[i]);
 		}
 		return ans;
@@ -1038,7 +1037,7 @@ final class ArrayUtil{
 	 */
 	public static double[] reBuild(final double[] array,final DoubleBinaryOperator func){
 		final double[] ans = new double[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsDouble(i,array[i]);
 		}
 		return ans;
@@ -1051,7 +1050,7 @@ final class ArrayUtil{
 	 * @param func 作用先の Consumer
 	 */
 	public static void computeByArray(final int[] array,final IntConsumer func){
-		for(final int num: array){
+		for(final int num:array){
 			func.accept(num);
 		}
 	}
@@ -1063,7 +1062,7 @@ final class ArrayUtil{
 	 * @param func 作用先の Consumer
 	 */
 	public static void computeByArray(final long[] array,final LongConsumer func){
-		for(final long num: array){
+		for(final long num:array){
 			func.accept(num);
 		}
 	}
@@ -1075,7 +1074,7 @@ final class ArrayUtil{
 	 * @param func 作用先の Consumer
 	 */
 	public static void computeByArray(final double[] array,final DoubleConsumer func){
-		for(final double num: array){
+		for(final double num:array){
 			func.accept(num);
 		}
 	}
@@ -1087,7 +1086,7 @@ final class ArrayUtil{
 	 * @param func 作用先の Consumer
 	 */
 	public static <E> void computeByArray(final E[] array,final Consumer<? super E> func){
-		for(final E num: array){
+		for(final E num:array){
 			func.accept(num);
 		}
 	}
@@ -1246,7 +1245,7 @@ final class ArrayUtil{
 	 */
 	public static Comparator<int[]> mosComparator(final int queryCount){
 		final int separateCount = (int)Math.sqrt(queryCount);
-		return (left,right) -> {
+		return (left,right)->{
 			final int sepL = left[0]/separateCount;
 			final int sepR = right[0]/separateCount;
 			if(sepL!=sepR){
@@ -1408,7 +1407,7 @@ final class ArrayUtil{
 	public static <E> boolean isPalindrome(final E[] array,int left,int right){
 		while(left<right){
 			right -= 1;
-			if(array[left].equals(array[right])){
+			if(!array[left].equals(array[right])){
 				return false;
 			}
 			left += 1;
@@ -1467,6 +1466,9 @@ final class BIT{
 	 * @param x 加算する値
 	 */
 	public void add(int i,final long x){
+		if(i<1){
+			throw new IndexOutOfBoundsException("index must be positive: "+i);
+		}
 		while(i<=this.size){
 			this.tree[i] += x;
 			i += i&(-i);
@@ -1489,11 +1491,11 @@ final class BIT{
 	@Override
 	public String toString(){
 		final long[] array = new long[this.size];
-		for(int i = this.size;i>0;i--){
+		for(int i=1;i<=this.size;i++){
 			long val = this.tree[i];
 			final int j = i-(i&-i)+1;
-			for(int k = j;k<i;k++){
-				val -= array[k];
+			for(int k=j;k<i;k++){
+				val -= array[k-1];
 			}
 			array[i-1] = val;
 		}
@@ -1551,6 +1553,9 @@ final class BITInt{
 	 * @param x 加算する値
 	 */
 	public void add(int i,final int x){
+		if(i<1){
+			throw new IndexOutOfBoundsException("index must be positive: "+i);
+		}
 		while(i<=this.size){
 			this.tree[i] += x;
 			i += i&(-i);
@@ -1573,11 +1578,11 @@ final class BITInt{
 	@Override
 	public String toString(){
 		final int[] array = new int[this.size];
-		for(int i = this.size;i>0;i--){
+		for(int i=1;i<=this.size;i++){
 			int val = this.tree[i];
 			final int j = i-(i&-i)+1;
-			for(int k = j;k<i;k++){
-				val -= array[k];
+			for(int k=j;k<i;k++){
+				val -= array[k-1];
 			}
 			array[i-1] = val;
 		}
@@ -1611,7 +1616,7 @@ final class Converter{
 	public static int[] toIntArray(final Collection<Integer> collection){
 		final int[] ans = new int[collection.size()];
 		int index = 0;
-		for(final int num: collection){
+		for(final int num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1628,7 +1633,7 @@ final class Converter{
 	public static long[] toLongArray(final Collection<Long> collection){
 		final long[] ans = new long[collection.size()];
 		int index = 0;
-		for(final long num: collection){
+		for(final long num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1645,7 +1650,7 @@ final class Converter{
 	public static char[] toCharArray(final Collection<Character> collection){
 		final char[] ans = new char[collection.size()];
 		int index = 0;
-		for(final char num: collection){
+		for(final char num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1662,7 +1667,7 @@ final class Converter{
 	public static double[] toDoubleArray(final Collection<Double> collection){
 		final double[] ans = new double[collection.size()];
 		int index = 0;
-		for(final double num: collection){
+		for(final double num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1679,7 +1684,7 @@ final class Converter{
 	public static boolean[] toBooleanArray(final Collection<Boolean> collection){
 		final boolean[] ans = new boolean[collection.size()];
 		int index = 0;
-		for(final boolean num: collection){
+		for(final boolean num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1696,7 +1701,7 @@ final class Converter{
 	public static byte[] toByteArray(final Collection<Byte> collection){
 		final byte[] ans = new byte[collection.size()];
 		int index = 0;
-		for(final byte num: collection){
+		for(final byte num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1713,7 +1718,7 @@ final class Converter{
 	public static short[] toShortArray(final Collection<Short> collection){
 		final short[] ans = new short[collection.size()];
 		int index = 0;
-		for(final short num: collection){
+		for(final short num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1730,7 +1735,7 @@ final class Converter{
 	public static float[] toFloatArray(final Collection<Float> collection){
 		final float[] ans = new float[collection.size()];
 		int index = 0;
-		for(final float num: collection){
+		for(final float num:collection){
 			ans[index] = num;
 			index += 1;
 		}
@@ -1740,7 +1745,7 @@ final class Converter{
 
 /**
  * 階乗計算用の Factorial クラスです。
- * 引数Nに対して前計算を O(N) で行なうことで N 以下の階乗とその逆元、N 以下の逆元を O(1) で求めます。
+ * 引数 N に対して前計算を O(N) で行なうことで N 以下の階乗とその逆元、N 以下の逆元を O(1) で求めます。
  */
 @SuppressWarnings("unused")
 final class Factorial{
@@ -1765,17 +1770,24 @@ final class Factorial{
 	 *
 	 * @param size 計算範囲
 	 * @param modValue 法
+	 *
+	 * @throws IllegalArgumentException size が負の場合
 	 */
-	public Factorial(final int size,final long modValue){
+	public Factorial(final int size,final long modValue) throws IllegalArgumentException{
+		if(size<0){
+			throw new IllegalArgumentException("size must be non-negative");
+		}
 		this.fact = new long[size+1];
 		this.fact[0] = 1;
-		this.fact[1] = 1;
-		for(int i = 2;i<=size;++i){
+		if(size>0){
+			this.fact[1] = 1;
+		}
+		for(int i=2;i<=size;++i){
 			this.fact[i] = this.fact[i-1]*i%modValue;
 		}
 		this.inFact = new long[size+1];
 		this.inFact[size] = MathFunction.modPow(this.fact[size],modValue-2,modValue);
-		for(int i = size;i>0;--i){
+		for(int i=size;i>0;--i){
 			this.inFact[i-1] = this.inFact[i]*i%modValue;
 		}
 		this.inFact[0] = 1;
@@ -1879,7 +1891,7 @@ final class FastFourierTransformFor998244353{
 		if(array.length==1){
 			return;
 		}
-		for(int i = 0, j = 0;i<array.length;i++){
+		for(int i=0,j=0;i<array.length;i++){
 			if(i<j){
 				ArrayUtil.swap(array,i,j);
 			}
@@ -1890,13 +1902,13 @@ final class FastFourierTransformFor998244353{
 			}
 			j ^= bit;
 		}
-		for(int bit = 1;1<<bit<=array.length;++bit){
+		for(int bit=1;1<<bit<=array.length;++bit){
 			final int n = 1<<bit;
 			final long multiplyValue = MathFunction.modPow(g,(mod-1)>>bit,mod);
 			final int subN = n>>1;
-			for(int i = 0;i<array.length;i += n){
+			for(int i=0;i<array.length;i+=n){
 				long now = 1;
-				for(int j = 0;j<subN;j++){
+				for(int j=0;j<subN;j++){
 					final int index1 = i+j;
 					final int index2 = index1+subN;
 					final long u = array[index1];
@@ -1924,7 +1936,7 @@ final class FastFourierTransformFor998244353{
 		if(array.length==1){
 			return;
 		}
-		for(int i = 0, j = 0;i<array.length;i++){
+		for(int i=0,j=0;i<array.length;i++){
 			if(i<j){
 				ArrayUtil.swap(array,i,j);
 			}
@@ -1935,13 +1947,13 @@ final class FastFourierTransformFor998244353{
 			}
 			j ^= bit;
 		}
-		for(int bit = 1;1<<bit<=array.length;++bit){
+		for(int bit=1;1<<bit<=array.length;++bit){
 			final int n = 1<<bit;
 			final long multiplyValue = MathFunction.modPow(g,mod-1-((mod-1)>>bit),mod);
 			final int subN = n>>1;
-			for(int i = 0;i<array.length;i += n){
+			for(int i=0;i<array.length;i+=n){
 				long now = 1;
-				for(int j = 0;j<subN;j++){
+				for(int j=0;j<subN;j++){
 					final int index1 = i+j;
 					final int index2 = index1+subN;
 					final long u = array[index1];
@@ -1980,13 +1992,13 @@ final class FastFourierTransformFor998244353{
 		final long[] poly2 = Arrays.copyOf(array2,size);
 		discreteFourierTransform(poly1);
 		discreteFourierTransform(poly2);
-		for(int i = 0;i<size;i++){
+		for(int i=0;i<size;i++){
 			poly1[i] *= poly2[i];
 			poly1[i] %= mod;
 		}
 		inverseDiscreteFourierTransform(poly1);
 		final long ip = MathFunction.modPow(size,mod-2,mod);
-		for(int i = 0;i<size;i++){
+		for(int i=0;i<size;i++){
 			poly1[i] *= ip;
 			poly1[i] %= mod;
 		}
@@ -2032,7 +2044,7 @@ final class FastFourierTransformFor1000000007{
 		if(array.length==1){
 			return;
 		}
-		for(int i = 0, j = 0;i<array.length;i++){
+		for(int i=0,j=0;i<array.length;i++){
 			if(i<j){
 				ArrayUtil.swap(array,i,j);
 			}
@@ -2043,13 +2055,13 @@ final class FastFourierTransformFor1000000007{
 			}
 			j ^= bit;
 		}
-		for(int bit = 1;1<<bit<=array.length;++bit){
+		for(int bit=1;1<<bit<=array.length;++bit){
 			final int n = 1<<bit;
 			final long multiplyValue = MathFunction.modPow(g,(mod-1)>>bit,mod);
 			final int subN = n>>1;
-			for(int i = 0;i<array.length;i += n){
+			for(int i=0;i<array.length;i+=n){
 				long now = 1;
-				for(int j = 0;j<subN;j++){
+				for(int j=0;j<subN;j++){
 					final int index1 = i+j;
 					final int index2 = index1+subN;
 					final long u = array[index1];
@@ -2077,7 +2089,7 @@ final class FastFourierTransformFor1000000007{
 		if(array.length==1){
 			return;
 		}
-		for(int i = 0, j = 0;i<array.length;i++){
+		for(int i=0,j=0;i<array.length;i++){
 			if(i<j){
 				ArrayUtil.swap(array,i,j);
 			}
@@ -2088,13 +2100,13 @@ final class FastFourierTransformFor1000000007{
 			}
 			j ^= bit;
 		}
-		for(int bit = 1;1<<bit<=array.length;++bit){
+		for(int bit=1;1<<bit<=array.length;++bit){
 			final int n = 1<<bit;
 			final long multiplyValue = MathFunction.modPow(g,mod-1-((mod-1)>>bit),mod);
 			final int subN = n>>1;
-			for(int i = 0;i<array.length;i += n){
+			for(int i=0;i<array.length;i+=n){
 				long now = 1;
-				for(int j = 0;j<subN;j++){
+				for(int j=0;j<subN;j++){
 					final int index1 = i+j;
 					final int index2 = index1+subN;
 					final long u = array[index1];
@@ -2133,13 +2145,13 @@ final class FastFourierTransformFor1000000007{
 		final long[] poly2 = Arrays.copyOf(array2,size);
 		discreteFourierTransform(poly1);
 		discreteFourierTransform(poly2);
-		for(int i = 0;i<size;i++){
+		for(int i=0;i<size;i++){
 			poly1[i] *= poly2[i];
 			poly1[i] %= mod;
 		}
 		inverseDiscreteFourierTransform(poly1);
 		final long ip = MathFunction.modPow(size,mod-2,mod);
-		for(int i = 0;i<size;i++){
+		for(int i=0;i<size;i++){
 			poly1[i] *= ip;
 			poly1[i] %= mod;
 		}
@@ -2194,7 +2206,7 @@ final class FastFourierTransformForMegaPrime{
 		}
 		final long[] odd = new long[array.length>>1];
 		final long[] even = new long[array.length>>1];
-		for(int i = 0, j = 1, k = 0;j<array.length;i += 2,j += 2,++k){
+		for(int i=0,j=1,k=0;j<array.length;i+=2,j+=2,++k){
 			odd[k] = array[i];
 			even[k] = array[j];
 		}
@@ -2203,7 +2215,7 @@ final class FastFourierTransformForMegaPrime{
 		long now = im.setMontgomeryExpression(1);
 		final long multiplyValue = im.pow(g,(mod-1)/array.length);
 		final int mask = odd.length-1;
-		for(int i = 0;i<array.length;i++){
+		for(int i=0;i<array.length;i++){
 			array[i] = (odd[i&mask]-mod)+im.innerMultiply(now,even[i&mask]);
 			if(array[i]<0){
 				array[i] += mod;
@@ -2222,7 +2234,7 @@ final class FastFourierTransformForMegaPrime{
 		}
 		final long[] odd = new long[array.length>>1];
 		final long[] even = new long[array.length>>1];
-		for(int i = 0, j = 1, k = 0;j<array.length;i += 2,j += 2,++k){
+		for(int i=0,j=1,k=0;j<array.length;i+=2,j+=2,++k){
 			odd[k] = array[i];
 			even[k] = array[j];
 		}
@@ -2231,7 +2243,7 @@ final class FastFourierTransformForMegaPrime{
 		long now = im.setMontgomeryExpression(1);
 		final long multiplyValue = im.pow(g,mod-1-(mod-1)/array.length);
 		final int mask = odd.length-1;
-		for(int i = 0;i<array.length;i++){
+		for(int i=0;i<array.length;i++){
 			array[i] = (odd[i&mask]-mod)+im.innerMultiply(now,even[i&mask]);
 			if(array[i]<0){
 				array[i] += mod;
@@ -2256,247 +2268,25 @@ final class FastFourierTransformForMegaPrime{
 			size <<= 1;
 		}
 		final long[] poly1 = new long[size];
-		for(int i = 0;i<array1.length;i++){
+		for(int i=0;i<array1.length;i++){
 			poly1[i] = im.setMontgomeryExpression(array1[i]);
 		}
 		final long[] poly2 = new long[size];
-		for(int i = 0;i<array2.length;i++){
+		for(int i=0;i<array2.length;i++){
 			poly2[i] = im.setMontgomeryExpression(array2[i]);
 		}
 		discreteFourierTransform(poly1);
 		discreteFourierTransform(poly2);
-		for(int i = 0;i<size;i++){
+		for(int i=0;i<size;i++){
 			poly1[i] = im.innerMultiply(poly1[i],poly2[i]);
 		}
 		invertDiscreteFourierTransform(poly1);
 		final long ip = im.pow(size,mod-2);
-		for(int i = 0;i<size;i++){
+		for(int i=0;i<size;i++){
 			poly1[i] = im.innerMultiply(poly1[i],ip);
 			poly1[i] = im.montgomeryReduction(poly1[i]);
 		}
 		return poly1;
-	}
-}
-
-/**
- * Int 特化の stack です。
- * Iterable を実装しているので範囲 for 文に使用できます。
- */
-@SuppressWarnings("unused")
-final class IntStack implements Iterable<Integer>{
-
-	/**
-	 * サイズ未指定時の初期容量です。
-	 */
-	private static final int DEFAULT_SIZE = 16;
-
-	/**
-	 * この IntStack を表す int[]
-	 */
-	private int[] stack;
-
-	/**
-	 * stack に入っている値の数
-	 */
-	private int tail;
-
-	/**
-	 * 初期容量 16 で stack を生成します。
-	 */
-	public IntStack(){
-		this(DEFAULT_SIZE);
-	}
-
-	/**
-	 * 指定された初期容量で stack を生成します。
-	 * 1 以上の容量でしてください。
-	 *
-	 * @param size 初期容量
-	 *
-	 * @throws IllegalArgumentException サイズが 0 以下のとき
-	 */
-	public IntStack(final int size) throws IllegalArgumentException{
-		if(size<1){
-			throw new IllegalArgumentException();
-		}
-		this.stack = new int[size];
-		this.tail = 0;
-	}
-
-	/**
-	 * この IntStack の内部容量を拡張します。
-	 */
-	private void grow(){
-		final int[] oldStack = this.stack;
-		this.stack = new int[oldStack.length<<1];
-		System.arraycopy(oldStack,0,this.stack,0,this.tail);
-	}
-
-	/**
-	 * 引数の値をこの stack に追加します。
-	 *
-	 * @param value 追加する値
-	 */
-	public void push(final int value){
-		if(this.stack.length==this.tail){
-			this.grow();
-		}
-		this.stack[this.tail] = value;
-		this.tail += 1;
-	}
-
-	/**
-	 * この stack を空にします。<br/>
-	 * 内部配列は操作せずインデックスのみ初期化するため O(1) で動作します。
-	 */
-	public void clear(){
-		this.tail = 0;
-	}
-
-	/**
-	 * この stack に最後に追加された値を取り出し、削除します。
-	 *
-	 * @return この stack から削除された値
-	 */
-	public int poll(){
-		this.tail -= 1;
-		return this.stack[this.tail];
-	}
-
-	/**
-	 * この stack に保持されている個数を返します。
-	 *
-	 * @return この stack に保持されている個数
-	 */
-	public int size(){
-		return this.tail;
-	}
-
-	/**
-	 * この stack を表現する Iterator&lt;Integer&gt; を返します。
-	 *
-	 * @return この stack を表現する Iterator&lt;Integer&gt;
-	 */
-	@Override
-	public Iterator<Integer> iterator(){
-		return new IntStackIterator(this.stack,this.tail);
-	}
-
-	/**
-	 * この stack を Iterator として表現するためのクラスです。
-	 */
-	private static class IntStackIterator implements PrimitiveIterator.OfInt{
-
-		/**
-		 * 内部配列
-		 */
-		private final int[] innerStack;
-
-		/**
-		 * 内部容量
-		 */
-		private final int innerTail;
-
-		/**
-		 * イテレータが次返す位置
-		 */
-		private int index;
-
-		/**
-		 * 指定された配列、サイズを基に Iterator を生成します。
-		 *
-		 * @param stack 基となる配列
-		 * @param tail 読み取るサイズ
-		 */
-		private IntStackIterator(final int[] stack,final int tail){
-			this.innerStack = stack;
-			this.innerTail = tail;
-			this.index = 0;
-		}
-
-		/**
-		 * 次の要素があるか返します。
-		 *
-		 * @return 次の要素があれば true、それ以外は false
-		 */
-		@Override
-		public boolean hasNext(){
-			return this.index<this.innerTail;
-		}
-
-		/**
-		 * この Iterator に対して引数の Consumer を適用します。
-		 *
-		 * @param action 適用する Consumer
-		 */
-		@Override
-		public void forEachRemaining(final Consumer<? super Integer> action){
-			for(int i = 0;i<this.innerTail;i++){
-				action.accept(this.innerStack[i]);
-			}
-		}
-
-		/**
-		 * この Iterator に対して引数の Consumer を適用します。
-		 *
-		 * @param action 適用する Consumer
-		 */
-		@Override
-		public void forEachRemaining(final IntConsumer action){
-			for(int i = 0;i<this.innerTail;i++){
-				action.accept(this.innerStack[i]);
-			}
-		}
-
-		/**
-		 * 次の要素を取得します。
-		 *
-		 * @return この Iterator が指す次の値
-		 */
-		@Override
-		public Integer next(){
-			if(!this.hasNext()){
-				throw new NoSuchElementException();
-			}
-			final int ans = this.innerStack[this.index];
-			this.index += 1;
-			return ans;
-		}
-
-		/**
-		 * 次の要素を int として返します。
-		 *
-		 * @return この Iterator が指す次の int
-		 */
-		@Override
-		public int nextInt(){
-			if(this.index==this.innerTail){
-				throw new NoSuchElementException();
-			}
-			final int ans = this.innerStack[this.index];
-			this.index += 1;
-			return ans;
-		}
-
-		/**
-		 * この IntStackIterator を表す文字列を返します。
-		 *
-		 * @return この IntStackIterator を表す文字列
-		 */
-		@Override
-		public String toString(){
-			return "IntStackIterator[now = "+this.index+", length = "+this.innerTail+"]";
-		}
-	}
-
-	/**
-	 * この IntStack を表す文字列を返します。
-	 *
-	 * @return この IntStack を表す文字列
-	 */
-	@Override
-	public String toString(){
-		return Arrays.toString(Arrays.copyOf(this.stack,this.tail));
 	}
 }
 
@@ -2571,7 +2361,7 @@ abstract class LazySegmentTree<S,F>{
 	 * @param defaultValues 大きさ
 	 * @param defS 単位元
 	 * @param defF 恒等写像
-	 * @param is1indexed 各メソッドに渡すインデックスは 1-indexedか
+	 * @param is1indexed 各メソッドに渡すインデックスは 1-indexed か
 	 */
 	protected LazySegmentTree(final S[] defaultValues,final S defS,final F defF,final boolean is1indexed){
 		this(defaultValues.length,defS,defF,is1indexed);
@@ -2594,7 +2384,7 @@ abstract class LazySegmentTree<S,F>{
 	@SuppressWarnings("unchecked")
 	private void updateAll(final S[] defaultValues){
 		System.arraycopy(defaultValues,0,this.node,1<<this.log,defaultValues.length);
-		for(int i = (1<<this.log)-1;i>0;i--){
+		for(int i=(1<<this.log)-1;i>0;i--){
 			this.node[i] = this.function((S)this.node[i<<1],(S)this.node[i<<1|1]);
 		}
 	}
@@ -2623,7 +2413,7 @@ abstract class LazySegmentTree<S,F>{
 	 * @param from 演算を適用する終点
 	 */
 	private void spreadLine(final int from){
-		for(int i = this.log;i>0;i--){
+		for(int i=this.log;i>0;i--){
 			this.spread(from>>i);
 		}
 	}
@@ -2635,7 +2425,7 @@ abstract class LazySegmentTree<S,F>{
 	 * @param right 右端 (right を含まない)
 	 */
 	private void spreadRange(final int left,final int right){
-		for(int i = this.log;i>0;i--){
+		for(int i=this.log;i>0;i--){
 			if((left>>i<<i)!=left){
 				this.spread(left>>i);
 			}
@@ -2669,7 +2459,7 @@ abstract class LazySegmentTree<S,F>{
 	 */
 	@SuppressWarnings("unchecked")
 	private void update(final int left,final int right){
-		for(int i = 1;i<=this.log;i++){
+		for(int i=1;i<=this.log;i++){
 			final int subL = left>>i;
 			final int subR = right>>i;
 			if((subL<<i)!=left){
@@ -2764,7 +2554,8 @@ abstract class LazySegmentTree<S,F>{
 	}
 
 	/**
-	 * 指定された区間の要素に指定されたパラメータによる演算を反映します。
+	 * 指定された区間の要素に指定されたパラメータによる演算を反映します。<br/>
+	 * 閉区間であることに注意して下さい。
 	 *
 	 * @param left 左端 (left を含む)
 	 * @param right 右端 (right を含む)
@@ -2881,10 +2672,8 @@ final class MathFunction{
 	 * @return a と b の最大公約数
 	 */
 	public static long gcd(long value1,long value2){
-		value1 = Math.abs(value1);
-		value2 = Math.abs(value2);
 		if(value2==0){
-			return value1;
+			return Math.abs(value1);
 		}
 		long temp = value1%value2;
 		while(temp!=0){
@@ -2892,7 +2681,7 @@ final class MathFunction{
 			value2 = temp;
 			temp = value1%value2;
 		}
-		return value2;
+		return Math.abs(value2);
 	}
 
 	/**
@@ -2945,7 +2734,7 @@ final class MathFunction{
 		final Montgomery32.InnerMontgomery32 inner = mg.inner();
 		final long montgomeryOne = inner.setMontgomeryExpression(1);
 		final long decrementValue = inner.setMontgomeryExpression(value-1);
-		for(final int a: numberForIntPrime){
+		for(final int a:numberForIntPrime){
 			if(a>=value){
 				return true;
 			}
@@ -2978,7 +2767,7 @@ final class MathFunction{
 		final Montgomery64.InnerMontgomery64 inner = mg.inner();
 		final long montgomeryOne = inner.setMontgomeryExpression(1);
 		final long decrementValue = inner.setMontgomeryExpression(value-1);
-		for(final long a: numberForLongPrime){
+		for(final long a:numberForLongPrime){
 			if(a>=value){
 				return true;
 			}
@@ -3009,14 +2798,14 @@ final class MathFunction{
 		final BitSet numbers = new BitSet(num+1);
 		numbers.set(2,num+1);
 		final int limit = (int)Math.sqrt(num);
-		for(int bit = numbers.nextSetBit(0);rangeCheckClose(bit,2,limit);bit = numbers.nextSetBit(bit+1)){
-			for(int j = bit*bit;j<=num;j += bit){
+		for(int bit=numbers.nextSetBit(0);rangeCheckClose(bit,2,limit);bit=numbers.nextSetBit(bit+1)){
+			for(int j=bit*bit;j<=num;j += bit){
 				numbers.clear(j);
 			}
 		}
 		final int[] answer = new int[numbers.cardinality()];
 		int bit = 0;
-		for(int i = 0;i<answer.length;++i){
+		for(int i=0;i<answer.length;++i){
 			answer[i] = numbers.nextSetBit(bit+1);
 			bit = answer[i];
 		}
@@ -3053,6 +2842,12 @@ final class MathFunction{
 	 * @return value ** exp を mod で割ったあまり
 	 */
 	public static long modPow(long value,long exp,final long mod){
+		if(mod==1){
+			return 0;
+		}
+		if(exp<0){
+			exp = Math.floorMod(exp,mod-1);
+		}
 		long ans = 1;
 		value %= mod;
 		while(exp>0){
@@ -3076,7 +2871,7 @@ final class MathFunction{
 	 */
 	public static long fact(final int value){
 		long ans = 1;
-		for(int i = 2;i<=value;++i){
+		for(int i=2;i<=value;++i){
 			ans *= i;
 		}
 		return ans;
@@ -3092,7 +2887,7 @@ final class MathFunction{
 	 */
 	public static long modFact(final int value,final long mod){
 		long ans = 1;
-		for(int i = 2;i<=value;++i){
+		for(int i=2;i<=value;++i){
 			ans *= i;
 			ans %= mod;
 		}
@@ -3113,7 +2908,7 @@ final class MathFunction{
 		}
 		long ans = 1;
 		choose = Math.min(total-choose,choose);
-		for(int i = 0;i<choose;++i){
+		for(int i=0;i<choose;++i){
 			ans *= total-i;
 			ans /= i+1;
 		}
@@ -3135,7 +2930,7 @@ final class MathFunction{
 		}
 		long ans = 1;
 		choose = Math.min(total-choose,choose);
-		for(int i = 0;i<choose;++i){
+		for(int i=0;i<choose;++i){
 			ans *= (total-i)%mod;
 			ans %= mod;
 			ans *= modPow(i+1,mod-2,mod);
@@ -3159,12 +2954,12 @@ final class MathFunction{
 	 * @return 交差している (線分の端が他方の線分上に存在する場合も含む) 場合は 1、同一線分・直線上なら 0、それ以外は -1
 	 */
 	public static int isCrossed(final int x1,final int y1,final int x2,final int y2,final int x3,final int y3,final int x4,final int y4){
-		final long s1 = (long)(x1-x2)*(y3-y1)-(long)(y1-y2)*(x3-x1);
-		final long t1 = (long)(x1-x2)*(y4-y1)-(long)(y1-y2)*(x4-x1);
-		final long s2 = (long)(x3-x4)*(y1-y3)-(long)(y3-y4)*(x1-x3);
-		final long t2 = (long)(x3-x4)*(y2-y3)-(long)(y3-y4)*(x2-x3);
-		final long temp1 = s1*t1;
-		final long temp2 = s2*t2;
+		final long s1 = (x1-x2)*(long)(y3-y1)-(y1-y2)*(long)(x3-x1);
+		final long t1 = (x1-x2)*(long)(y4-y1)-(y1-y2)*(long)(x4-x1);
+		final long s2 = (x3-x4)*(long)(y1-y3)-(y3-y4)*(long)(x1-x3);
+		final long t2 = (x3-x4)*(long)(y2-y3)-(y3-y4)*(long)(x2-x3);
+		final long temp1 = Long.signum(s1)*Long.signum(t1);
+		final long temp2 = Long.signum(s2)*Long.signum(t2);
 		if(temp1>0||temp2>0){
 			return -1;
 		}
@@ -3204,7 +2999,7 @@ final class MathFunction{
 			return true;
 		}
 		boolean conv = true;
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			final int result = isCrossed(points[i],points[(i+2)%n],points[(i+1)%n],points[(i+1+n/2)%n]);
 			conv &= result>=0;
 		}
@@ -3256,7 +3051,7 @@ final class MathFunction{
 	 */
 	public static int max(final int... numbers){
 		int ans = Integer.MIN_VALUE;
-		for(final int num: numbers){
+		for(final int num:numbers){
 			ans = Math.max(ans,num);
 		}
 		return ans;
@@ -3271,7 +3066,7 @@ final class MathFunction{
 	 */
 	public static long max(final long... numbers){
 		long ans = Long.MIN_VALUE;
-		for(final long num: numbers){
+		for(final long num:numbers){
 			ans = Math.max(ans,num);
 		}
 		return ans;
@@ -3285,8 +3080,8 @@ final class MathFunction{
 	 * @return 引数で最大の要素
 	 */
 	public static double max(final double... numbers){
-		double ans = -Double.MIN_VALUE;
-		for(final double num: numbers){
+		double ans = Double.NEGATIVE_INFINITY;
+		for(final double num:numbers){
 			ans = Math.max(ans,num);
 		}
 		return ans;
@@ -3302,7 +3097,7 @@ final class MathFunction{
 	 */
 	public static <E extends Comparable<E>> E max(final E[] numbers){
 		E ans = numbers[0];
-		for(final E value: numbers){
+		for(final E value:numbers){
 			if(ans.compareTo(value)<0){
 				ans = value;
 			}
@@ -3319,7 +3114,7 @@ final class MathFunction{
 	 */
 	public static int min(final int... numbers){
 		int ans = Integer.MAX_VALUE;
-		for(final int num: numbers){
+		for(final int num:numbers){
 			ans = Math.min(ans,num);
 		}
 		return ans;
@@ -3334,7 +3129,7 @@ final class MathFunction{
 	 */
 	public static long min(final long... numbers){
 		long ans = Long.MAX_VALUE;
-		for(final long num: numbers){
+		for(final long num:numbers){
 			ans = Math.min(ans,num);
 		}
 		return ans;
@@ -3349,7 +3144,7 @@ final class MathFunction{
 	 */
 	public static double min(final double... numbers){
 		double ans = Double.MAX_VALUE;
-		for(final double num: numbers){
+		for(final double num:numbers){
 			ans = Math.min(ans,num);
 		}
 		return ans;
@@ -3365,7 +3160,7 @@ final class MathFunction{
 	 */
 	public static <E extends Comparable<E>> E min(final E[] numbers){
 		E ans = numbers[0];
-		for(final E value: numbers){
+		for(final E value:numbers){
 			if(ans.compareTo(value)>0){
 				ans = value;
 			}
@@ -3382,7 +3177,7 @@ final class MathFunction{
 	 */
 	public static long sum(final int... numbers){
 		long ans = 0;
-		for(final int num: numbers){
+		for(final int num:numbers){
 			ans += num;
 		}
 		return ans;
@@ -3397,7 +3192,7 @@ final class MathFunction{
 	 */
 	public static long sum(final long... numbers){
 		long ans = 0;
-		for(final long num: numbers){
+		for(final long num:numbers){
 			ans += num;
 		}
 		return ans;
@@ -3413,7 +3208,7 @@ final class MathFunction{
 	 */
 	public static long modSum(final long mod,final int... numbers){
 		long ans = 0;
-		for(final int num: numbers){
+		for(final int num:numbers){
 			ans += num;
 			ans %= mod;
 		}
@@ -3433,7 +3228,7 @@ final class MathFunction{
 	 */
 	public static long modSum(final long mod,final long... numbers){
 		long ans = 0;
-		for(final long num: numbers){
+		for(final long num:numbers){
 			ans += num;
 			ans %= mod;
 		}
@@ -3454,7 +3249,7 @@ final class MathFunction{
 	 */
 	public static long sum(final int[] numbers,final int from,final int to){
 		long ans = 0;
-		for(int i = from;i<to;++i){
+		for(int i=from;i<to;++i){
 			ans += numbers[i];
 		}
 		return ans;
@@ -3471,7 +3266,7 @@ final class MathFunction{
 	 */
 	public static long sum(final long[] numbers,final int from,final int to){
 		long ans = 0;
-		for(int i = from;i<to;++i){
+		for(int i=from;i<to;++i){
 			ans += numbers[i];
 		}
 		return ans;
@@ -3489,7 +3284,7 @@ final class MathFunction{
 	 */
 	public static long modSum(final int[] numbers,final int from,final int to,final long mod){
 		long ans = 0;
-		for(int i = from;i<to;++i){
+		for(int i=from;i<to;++i){
 			ans += numbers[i]%mod;
 			if(ans>=mod){
 				ans -= mod;
@@ -3513,7 +3308,7 @@ final class MathFunction{
 	 */
 	public static long modSum(final long[] numbers,final int from,final int to,final long mod){
 		long ans = 0;
-		for(int i = from;i<to;++i){
+		for(int i=from;i<to;++i){
 			ans += numbers[i]%mod;
 			if(ans>=mod){
 				ans -= mod;
@@ -3749,8 +3544,8 @@ final class MathFunction{
 	 */
 	public static int mex(final int... numbers){
 		final BitSet set = new BitSet(numbers.length);
-		for(final int num: numbers){
-			if(num<numbers.length){
+		for(final int num:numbers){
+			if(rangeCheck(num,0,numbers.length)){
 				set.set(num);
 			}
 		}
@@ -3759,7 +3554,7 @@ final class MathFunction{
 }
 
 /**
- * Matrix クラスです。
+ * Matrix クラスです。<br/>
  * 行列を保持するクラスで、簡単な四則演算に行列式、累乗などを提供しています。
  *
  * @param matrix 行列を管理するための二次元配列です。
@@ -3799,7 +3594,7 @@ record Matrix(long[][] matrix){
 	public Matrix(final int height,final int width,final long def){
 		this(new long[height][width]);
 		if(def!=0){
-			for(final long[] mat: this.matrix){
+			for(final long[] mat:this.matrix){
 				Arrays.fill(mat,def);
 			}
 		}
@@ -3826,14 +3621,14 @@ record Matrix(long[][] matrix){
 	}
 
 	/**
-	 * 引数の二次元配列を元に行列を構築します。
+	 * 引数の二次元配列を元に行列を構築します。<br/>
 	 * 値をコピーして構築するため、引数の行列とは連動していません。
 	 *
 	 * @param matrix 元となる二次元配列
 	 */
 	public Matrix(final long[][] matrix){
 		this.matrix = new long[matrix.length][matrix[0].length];
-		for(int i = 0;i<matrix.length;++i){
+		for(int i=0;i<matrix.length;++i){
 			System.arraycopy(matrix[i],0,this.matrix[i],0,this.matrix[i].length);
 		}
 	}
@@ -3892,8 +3687,8 @@ record Matrix(long[][] matrix){
 			throw new IllegalArgumentException("matrix size is not same");
 		}
 		final Matrix ans = new Matrix(size,0);
-		for(int i = 0;i<this.matrix.length;++i){
-			for(int j = 0;j<this.matrix[i].length;++j){
+		for(int i=0;i<this.matrix.length;++i){
+			for(int j=0;j<this.matrix[i].length;++j){
 				ans.set(i,j,this.matrix[i][j]+mat.get(i,j));
 			}
 		}
@@ -3913,8 +3708,8 @@ record Matrix(long[][] matrix){
 			throw new IllegalArgumentException("matrix size is not same");
 		}
 		final Matrix ans = new Matrix(size,0);
-		for(int i = 0;i<this.matrix.length;++i){
-			for(int j = 0;j<this.matrix[i].length;++j){
+		for(int i=0;i<this.matrix.length;++i){
+			for(int j=0;j<this.matrix[i].length;++j){
 				ans.set(i,j,this.matrix[i][j]-mat.get(i,j));
 			}
 		}
@@ -3935,10 +3730,10 @@ record Matrix(long[][] matrix){
 		final Matrix ans = new Matrix(this.size().height,mat.size().width);
 		final Dimension size = ans.size();
 		final int len = this.size().width;
-		for(int i = 0;i<size.height;++i){
-			for(int j = 0;j<size.width;++j){
+		for(int i=0;i<size.height;++i){
+			for(int j=0;j<size.width;++j){
 				long sum = 0;
-				for(int k = 0;k<len;++k){
+				for(int k=0;k<len;++k){
 					sum += this.matrix[i][k]*mat.get(k,j);
 				}
 				ans.set(i,j,sum);
@@ -3948,7 +3743,7 @@ record Matrix(long[][] matrix){
 	}
 
 	/**
-	 * この行列に引数の行列を加算した行列を返します。
+	 * この行列に引数の行列を加算した行列を返します。<br/>
 	 * 各要素は mod で除算したあまりに変換されます。
 	 *
 	 * @param mat 加算する行列
@@ -3962,8 +3757,8 @@ record Matrix(long[][] matrix){
 			throw new IllegalArgumentException("matrix size is not same");
 		}
 		final Matrix ans = new Matrix(size,0);
-		for(int i = 0;i<this.matrix.length;++i){
-			for(int j = 0;j<this.matrix[i].length;++j){
+		for(int i=0;i<this.matrix.length;++i){
+			for(int j=0;j<this.matrix[i].length;++j){
 				ans.set(i,j,MathFunction.remainder(this.matrix[i][j]+mat.get(i,j),mod));
 			}
 		}
@@ -3971,7 +3766,7 @@ record Matrix(long[][] matrix){
 	}
 
 	/**
-	 * この行列に引数の行列を減算した行列を返します。
+	 * この行列に引数の行列を減算した行列を返します。<br/>
 	 * 各要素は mod で除算したあまりに変換されます。
 	 *
 	 * @param mat 減算する行列
@@ -3985,8 +3780,8 @@ record Matrix(long[][] matrix){
 			throw new IllegalArgumentException("matrix size is not same");
 		}
 		final Matrix ans = new Matrix(size,0);
-		for(int i = 0;i<this.matrix.length;++i){
-			for(int j = 0;j<this.matrix[i].length;++j){
+		for(int i=0;i<this.matrix.length;++i){
+			for(int j=0;j<this.matrix[i].length;++j){
 				ans.set(i,j,MathFunction.remainder(this.matrix[i][j]-mat.get(i,j),mod));
 			}
 		}
@@ -3994,7 +3789,7 @@ record Matrix(long[][] matrix){
 	}
 
 	/**
-	 * この行列に引数の行列を乗算した行列を返します。
+	 * この行列に引数の行列を乗算した行列を返します。<br/>
 	 * 各要素は mod で乗算したあまりに変換されます。
 	 *
 	 * @param mat 乗算する行列
@@ -4009,9 +3804,9 @@ record Matrix(long[][] matrix){
 		final Matrix ans = new Matrix(this.size().height,mat.size().width);
 		final Dimension size = ans.size();
 		final int len = this.size().width;
-		for(int i = 0;i<size.height;++i){
-			for(int k = 0;k<len;++k){
-				for(int j = 0;j<size.width;++j){
+		for(int i=0;i<size.height;++i){
+			for(int k=0;k<len;++k){
+				for(int j=0;j<size.width;++j){
 					ans.set(i,j,MathFunction.remainder(ans.get(i,j)+this.matrix[i][k]*mat.get(k,j),mod));
 				}
 			}
@@ -4042,7 +3837,7 @@ record Matrix(long[][] matrix){
 	}
 
 	/**
-	 * 元となる行列に引数の行列を指定された回数だけ乗算します。
+	 * 元となる行列に引数の行列を指定された回数だけ乗算します。<br/>
 	 * 各要素は mod で乗算したあまりに変換されます。
 	 *
 	 * @param original 元となる行列
@@ -4067,7 +3862,7 @@ record Matrix(long[][] matrix){
 
 	/**
 	 * この行列の行列式を返します。<br/>
-	 * 高速化のために非常に大きい素数 (9223372006790004737) を法とした剰余環上で計算します。<br/>
+	 * 高速化のために非常に大きい素数 (9,223,372,006,790,004,737) を法とした剰余環上で計算します。<br/>
 	 * 4e18 を超える場合は負の値として判定するためご注意ください。
 	 *
 	 * @return この行列の行列式
@@ -4078,7 +3873,7 @@ record Matrix(long[][] matrix){
 
 	/**
 	 * この行列の行列式を返します。<br/>
-	 * 高速化のために非常に大きい素数 (9223372006790004737) を法とした剰余環上で計算します。<br/>
+	 * 高速化のために非常に大きい素数 (9,223,372,006,790,004,737) を法とした剰余環上で計算します。<br/>
 	 * limit を超える値は負の値として判定します。
 	 *
 	 * @return この行列の行列式
@@ -4089,7 +3884,7 @@ record Matrix(long[][] matrix){
 
 	/**
 	 * 引数の二次元配列の行列式を返します。<br/>
-	 * 高速化のために非常に大きい素数 (9223372006790004737) を法とした剰余環上で計算します。
+	 * 高速化のために非常に大きい素数 (9,223,372,006,790,004,737) を法とした剰余環上で計算します。
 	 *
 	 * @param mat 元となる二次元配列
 	 * @param limit 正の値としてあり得る最大値
@@ -4099,14 +3894,14 @@ record Matrix(long[][] matrix){
 	private static long determinant(final long[][] mat,final long limit){
 		final int length = mat.length;
 		final long[][] copiedMatrix = new long[length][];
-		for(int i = 0;i<length;i++){
+		for(int i=0;i<length;i++){
 			copiedMatrix[i] = mat[i].clone();
-			ArrayUtil.mapping(copiedMatrix[i],num -> num<0?im.setMontgomeryExpression(num+innerMod):im.setMontgomeryExpression(num));
+			ArrayUtil.mapping(copiedMatrix[i],num->num<0?im.setMontgomeryExpression(num+innerMod):im.setMontgomeryExpression(num));
 		}
 		long ans = im.setMontgomeryExpression(1);
-		for(int i = 0;i<length;i++){
+		for(int i=0;i<length;i++){
 			int pivot = -1;
-			for(int j = i;j<length;j++){
+			for(int j=i;j<length;j++){
 				if(copiedMatrix[j][i]!=0){
 					pivot = j;
 					break;
@@ -4122,9 +3917,9 @@ record Matrix(long[][] matrix){
 			}
 			ans = im.innerMultiply(ans,copiedMatrix[i][i]);
 			final long inv = im.innerPow(copiedMatrix[i][i],innerMod-2);
-			for(int j = i+1;j<length;j++){
+			for(int j=i+1;j<length;j++){
 				final long num = im.innerMultiply(copiedMatrix[j][i],inv);
-				for(int k = i;k<length;k++){
+				for(int k=i;k<length;k++){
 					copiedMatrix[j][k] -= im.innerMultiply(copiedMatrix[i][k],num);
 					if(copiedMatrix[j][k]<0){
 						copiedMatrix[j][k] += innerMod;
@@ -4155,13 +3950,14 @@ record Matrix(long[][] matrix){
 	private static long modDeterminant(final long[][] mat,final long mod){
 		final int length = mat.length;
 		final long[][] copiedMatrix = new long[length][];
-		for(int i = 0;i<length;i++){
+		for(int i=0;i<length;i++){
 			copiedMatrix[i] = mat[i].clone();
+			ArrayUtil.mapping(copiedMatrix[i],num->MathFunction.remainder(num,mod));
 		}
 		long ans = 1;
-		for(int i = 0;i<length;i++){
+		for(int i=0;i<length;i++){
 			int pivot = -1;
-			for(int j = i;j<length;j++){
+			for(int j=i;j<length;j++){
 				if(copiedMatrix[j][i]!=0){
 					pivot = j;
 					break;
@@ -4172,14 +3968,14 @@ record Matrix(long[][] matrix){
 				break;
 			}
 			if(i!=pivot){
-				ArrayUtil.swap(copiedMatrix[i],i,pivot);
+				ArrayUtil.swap(copiedMatrix,i,pivot);
 				ans = mod-ans;
 			}
 			ans = ans*copiedMatrix[i][i]%mod;
 			final long inv = MathFunction.modPow(copiedMatrix[i][i],mod-2,mod);
-			for(int j = i+1;j<length;j++){
+			for(int j=i+1;j<length;j++){
 				final long num = copiedMatrix[j][i]*inv%mod;
-				for(int k = i;k<length;k++){
+				for(int k=i;k<length;k++){
 					copiedMatrix[j][k] -= copiedMatrix[i][k]*num%mod;
 					if(copiedMatrix[j][k]<0){
 						copiedMatrix[j][k] += mod;
@@ -4199,7 +3995,7 @@ record Matrix(long[][] matrix){
 	public String toString(){
 		final StringBuilder ans = new StringBuilder(this.matrix.length*this.matrix[0].length);
 		ans.append(Arrays.toString(this.matrix[0]));
-		for(int i = 1;i<this.matrix.length;++i){
+		for(int i=1;i<this.matrix.length;++i){
 			ans.append("\n");
 			ans.append(Arrays.toString(this.matrix[i]));
 		}
@@ -4208,7 +4004,7 @@ record Matrix(long[][] matrix){
 }
 
 /**
- * 法が 32 bit に収まるとき用の Montgomery クラスです。
+ * 法が奇数で 32 bit に収まるとき用の Montgomery クラスです。<br/>
  * 剰余結果を得る他に、inner から直接モンゴメリ表現での処理も提供します。
  *
  * @param inner 内部処理用のインスタンスです。
@@ -4277,8 +4073,8 @@ record Montgomery32(InnerMontgomery32 inner){
 			final long tNd = num*this.Nd&MASK;
 			final long multiplyValue = tNd*this.mod;
 			final long down = (multiplyValue&MASK)+(num&MASK);
-			final long up = (multiplyValue >>> SHIFT_VALUE)+(num >>> SHIFT_VALUE);
-			long ans = up+(down >>> SHIFT_VALUE);
+			final long up = (multiplyValue>>>SHIFT_VALUE)+(num>>>SHIFT_VALUE);
+			long ans = up+(down>>>SHIFT_VALUE);
 			if(this.mod<=ans){
 				ans -= this.mod;
 			}
@@ -4378,7 +4174,7 @@ record Montgomery32(InnerMontgomery32 inner){
 	}
 
 	/**
-	 * value ** exp mod nを返します。
+	 * value ** exp mod n を返します。
 	 *
 	 * @param value 累乗対象
 	 * @param exp 指数
@@ -4392,7 +4188,7 @@ record Montgomery32(InnerMontgomery32 inner){
 }
 
 /**
- * 法が 32 bit に収まらないとき用の Montgomery クラスです。<br/>
+ * 法が奇数で 32 bit に収まらないとき用の Montgomery クラスです。<br/>
  * 剰余結果を得る他に、inner から直接モンゴメリ表現での処理も提供します。
  *
  * @param inner 内部処理用のインスタンスです。
@@ -4435,7 +4231,7 @@ record Montgomery64(InnerMontgomery64 inner){
 			this.mod = modValue;
 			long r = 0;
 			long t = 0;
-			for(int i = 0;i<BIT_LENGTH;i++){
+			for(int i=0;i<BIT_LENGTH;i++){
 				if((t&1L)==0){
 					t += this.mod;
 					r |= 1L<<i;
@@ -4570,7 +4366,7 @@ record Montgomery64(InnerMontgomery64 inner){
 	}
 
 	/**
-	 * value1 * value2 mod nを返します。
+	 * value1 * value2 mod n を返します。
 	 *
 	 * @param value1 乗算対象
 	 * @param value2 乗算対象
@@ -4597,7 +4393,7 @@ record Montgomery64(InnerMontgomery64 inner){
 }
 
 /**
- * PolarComparator です。
+ * PolarComparator です。<br/>
  * 基準点から見たときに x 軸方向を基準に反時計回りで比較します。
  */
 @SuppressWarnings("unused")
@@ -4629,7 +4425,7 @@ final class PolarComparator{
 	}
 	
 	/**
-	 * 基準点 base からの極座標順に比較する Comparator を返します。
+	 * 基準点 base からの極座標順に比較する Comparator を返します。<br/>
 	 * 内部で BigInteger を用いて計算します。
 	 *
 	 * @param base 基準点
@@ -4653,7 +4449,7 @@ final class PolarComparator{
 	}
 	
 	/**
-	 * 原点からの極座標順に比較します。
+	 * 原点からの極座標順に比較します。<br/>
 	 * 内部で BigInteger を用いて計算します。
 	 *
 	 * @param a 比較対象
@@ -4692,7 +4488,7 @@ final class PolarComparator{
 	}
 	
 	/**
-	 * 基準点からの極座標順に比較します。
+	 * 基準点からの極座標順に比較します。<br/>
 	 * 内部で BigInteger を用いて計算します。
 	 *
 	 * @param a 比較対象
@@ -4735,23 +4531,29 @@ final class PolarComparator{
 	 */
 	private static int quadrant(final long x,final long y){
 		if(y>0){
-			return x>=0?0:1;
+			if(x>0){
+				return 1;
+			}
+			return x==0?2:3;
 		}
 		if(y<0){
-			return x<0?2:3;
+			if(x<0){
+				return 5;
+			}
+			return x==0?6:7;
 		}
 		if(x>0){
-			return 4;
+			return 0;
 		}
 		if(x<0){
-			return 6;
+			return 4;
 		}
 		return 8;
 	}
 }
 
 /**
- * 二分探索ライブラリです。
+ * 二分探索ライブラリです。<br/>
  * 様々な条件での探索を二分探索を用いて実行します。
  */
 @SuppressWarnings("unused")
@@ -4961,7 +4763,7 @@ final class Searcher{
 	public static int downSearchAsInt(int left,int right,final int value,final IntUnaryOperator func){
 		int ans = left-1;
 		while(left-right<1){
-			final int mid = (left+right)/2;
+			final int mid = (left&right)+((left^right)>>1);
 			if(func.applyAsInt(mid)>value){
 				right = mid-1;
 			}
@@ -4989,7 +4791,7 @@ final class Searcher{
 	public static long downSearchAsLong(long left,long right,final long value,final LongUnaryOperator func){
 		long ans = left-1;
 		while(left-right<1){
-			final long mid = (left+right)/2;
+			final long mid = (left&right)+((left^right)>>1);
 			if(func.applyAsLong(mid)>value){
 				right = mid-1;
 			}
@@ -5015,8 +4817,8 @@ final class Searcher{
 	 * @return 指定された値以下で最大の引数
 	 */
 	public static double searchAsDouble(double left,double right,final double value,final DoubleUnaryOperator func){
-		double ans = left-Math.abs(left);
-		for(int i = 0;i<CYCLE_COUNT;++i){
+		double ans = Math.nextDown(left);
+		for(int i=0;i<CYCLE_COUNT;++i){
 			final double mid = (left+right)/2;
 			if(func.applyAsDouble(mid)>value){
 				right = mid;
@@ -5201,7 +5003,7 @@ final class Searcher{
 	 */
 	public static boolean containsAsInt(int left,int right,final int value,final IntUnaryOperator func){
 		while(left-right<1){
-			final int mid = (left+right)/2;
+			final int mid = (left&right)+((left^right)>>1);
 			final int num = func.applyAsInt(mid);
 			if(num>value){
 				right = mid-1;
@@ -5228,7 +5030,7 @@ final class Searcher{
 	 */
 	public static boolean containsAsLong(long left,long right,final long value,final LongUnaryOperator func){
 		while(left-right<1){
-			final long mid = (left+right)/2;
+			final long mid = (left&right)+((left^right)>>1);
 			final long num = func.applyAsLong(mid);
 			if(num>value){
 				right = mid-1;
@@ -5254,14 +5056,14 @@ final class Searcher{
 	 * @return この関数が left 以上 right 以下で探索値を取るかを表す boolean
 	 */
 	public static boolean containsAsDouble(double left,double right,final double value,final DoubleUnaryOperator func){
-		for(int i = 0;i<CYCLE_COUNT;++i){
+		for(int i=0;i<CYCLE_COUNT;++i){
 			final double mid = (left+right)/2;
 			final double num = func.applyAsDouble(mid);
 			if(num>value){
-				right = mid-1;
+				right = mid;
 			}
 			else if(num<value){
-				left = mid+1;
+				left = mid;
 			}
 			else{
 				return true;
@@ -5442,7 +5244,7 @@ final class Searcher{
 	 */
 	public static int searchAsInt(int left,int right,final int value,final IntUnaryOperator func){
 		while(left-right<1){
-			final int mid = (left+right)/2;
+			final int mid = (left&right)+((left^right)>>1);
 			final int num = func.applyAsInt(mid);
 			if(num>value){
 				right = mid-1;
@@ -5469,7 +5271,7 @@ final class Searcher{
 	 */
 	public static long searchAsLong(long left,long right,final long value,final LongUnaryOperator func){
 		while(left-right<1){
-			final long mid = (left+right)/2;
+			final long mid = (left&right)+((left^right)>>1);
 			final long num = func.applyAsLong(mid);
 			if(num>value){
 				right = mid-1;
@@ -5671,7 +5473,7 @@ final class Searcher{
 	public static int upSearchAsInt(int left,int right,final int value,final IntUnaryOperator func){
 		int ans = right+1;
 		while(left-right<1){
-			final int mid = (left+right)/2;
+			final int mid = (left&right)+((left^right)>>1);
 			if(func.applyAsInt(mid)>=value){
 				ans = mid;
 				right = mid-1;
@@ -5699,7 +5501,7 @@ final class Searcher{
 	public static long upSearchAsLong(long left,long right,final long value,final LongUnaryOperator func){
 		long ans = right+1;
 		while(left-right<1){
-			final long mid = (left+right)/2;
+			final long mid = (left&right)+((left^right)>>1);
 			if(func.applyAsLong(mid)>=value){
 				ans = mid;
 				right = mid-1;
@@ -5890,7 +5692,7 @@ final class Searcher{
 	public static int underSearchAsInt(int left,int right,final int value,final IntUnaryOperator func){
 		int ans = left-1;
 		while(left-right<1){
-			final int mid = (left+right)/2;
+			final int mid = (left&right)+((left^right)>>1);
 			if(func.applyAsInt(mid)>=value){
 				right = mid-1;
 			}
@@ -5917,7 +5719,7 @@ final class Searcher{
 	public static long underSearchAsLong(long left,long right,final long value,final LongUnaryOperator func){
 		long ans = left-1;
 		while(left-right<1){
-			final long mid = (left+right)/2;
+			final long mid = (left&right)+((left^right)>>1);
 			if(func.applyAsLong(mid)>=value){
 				right = mid-1;
 			}
@@ -6109,7 +5911,7 @@ final class Searcher{
 	public static int overSearchAsInt(int left,int right,final int value,final IntUnaryOperator func){
 		int ans = right+1;
 		while(left-right<1){
-			final int mid = (left+right)/2;
+			final int mid = (left&right)+((left^right)>>1);
 			if(func.applyAsInt(mid)>value){
 				ans = mid;
 				right = mid-1;
@@ -6136,7 +5938,7 @@ final class Searcher{
 	public static long overSearchAsLong(long left,long right,final long value,final LongUnaryOperator func){
 		long ans = right+1;
 		while(left-right<1){
-			final long mid = (left+right)/2;
+			final long mid = (left&right)+((left^right)>>1);
 			if(func.applyAsLong(mid)>value){
 				ans = mid;
 				right = mid-1;
@@ -6159,7 +5961,7 @@ final class Searcher{
 	 * @return 条件を満たす最小のインデックス
 	 */
 	public static int linearSearch(final int[] array,final int value){
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			if(array[i]==value){
 				return i;
 			}
@@ -6178,7 +5980,7 @@ final class Searcher{
 	 * @return 条件を満たす最小のインデックス
 	 */
 	public static int linearSearch(final long[] array,final long value){
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			if(array[i]==value){
 				return i;
 			}
@@ -6197,7 +5999,7 @@ final class Searcher{
 	 * @return 条件を満たす最小のインデックス
 	 */
 	public static int linearSearch(final double[] array,final double value){
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			if(array[i]==value){
 				return i;
 			}
@@ -6216,7 +6018,7 @@ final class Searcher{
 	 * @return 条件を満たす最小のインデックス
 	 */
 	public static int linearSearch(final char[] array,final char value){
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			if(array[i]==value){
 				return i;
 			}
@@ -6236,7 +6038,7 @@ final class Searcher{
 	 * @return 条件を満たす最小のインデックス
 	 */
 	public static <E extends Comparable<E>> int linearSearch(final E[] array,final E value){
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			if(array[i].compareTo(value)==0){
 				return i;
 			}
@@ -6256,7 +6058,7 @@ final class Searcher{
 	 * @return 条件を満たす最小のインデックス
 	 */
 	public static <E extends Comparable<E>> int linearSearch(final List<? extends E> list,final E value){
-		for(int i = 0;i<list.size();++i){
+		for(int i=0;i<list.size();++i){
 			final E e = list.get(i);
 			if(e.compareTo(value)==0){
 				return i;
@@ -6267,7 +6069,7 @@ final class Searcher{
 }
 
 /**
- * SegmentTree クラスです。
+ * SegmentTree クラスです。<br/>
  * 載せる演算は function メソッドを定義して使用して下さい。
  *
  * @param <E> 演算を適用する要素の型
@@ -6310,7 +6112,7 @@ abstract class SegmentTree<E>{
 	}
 
 	/**
-	 * 引数の配列を元に、単位元が def である SegmentTree を構築します。
+	 * 引数の配列を元に、単位元が def である SegmentTree を構築します。<br/>
 	 * 浅いコピーなので、引数の配列の要素に変更を加えたときの動作は保証されません。
 	 *
 	 * @param arr 元となる配列
@@ -6323,11 +6125,11 @@ abstract class SegmentTree<E>{
 			num <<= 1;
 		}
 		this.size = num;
-		this.offSet = num>>1-(is1indexed?1:0);
+		this.offSet = (num>>1)-(is1indexed?1:0);
 		this.node = new Object[this.size];
 		this.def = defaultValue;
 		System.arraycopy(arr,0,this.node,this.size>>1,arr.length);
-		for(int i = arr.length+(this.size>>1);i<this.size;i++){
+		for(int i=arr.length+(this.size>>1);i<this.size;i++){
 			this.node[i] = defaultValue;
 		}
 		this.updateAll();
@@ -6349,7 +6151,7 @@ abstract class SegmentTree<E>{
 	 */
 	@SuppressWarnings("unchecked")
 	private void updateAll(){
-		for(int i = (this.size>>1)-1;i>0;i--){
+		for(int i=(this.size>>1)-1;i>0;i--){
 			this.node[i] = this.function((E)this.node[i<<1],(E)this.node[(i<<1)+1]);
 		}
 	}
@@ -6394,7 +6196,7 @@ abstract class SegmentTree<E>{
 	}
 
 	/**
-	 * 引数の区間の要素に function を適用した結果を返します。
+	 * 引数の区間の要素に function を適用した結果を返します。<br/>
 	 * 閉区間であることに注意して下さい。
 	 *
 	 * @param left 左端 (left を含む)
@@ -6441,12 +6243,12 @@ abstract class SegmentTree<E>{
 	@Override
 	@Deprecated
 	public String toString(){
-		return "LazySegmentTree["+this.hashCode()+"]";
+		return "SegmentTree["+this.hashCode()+"]";
 	}
 }
 
 /**
- * StringUtil クラスです。
+ * StringUtil クラスです。<br/>
  * String に対するメソッドを提供します。
  */
 @SuppressWarnings("unused")
@@ -6470,7 +6272,7 @@ final class StringUtil{
 	 */
 	public static String reverse(final String str){
 		final StringBuilder sb = new StringBuilder(str.length());
-		for(int i = str.length()-1;i>=0;--i){
+		for(int i=str.length()-1;i>=0;--i){
 			sb.append(str.charAt(i));
 		}
 		return sb.toString();
@@ -6509,7 +6311,7 @@ final class StringUtil{
 }
 
 /**
- * StronglyConnectedComponent クラスです。
+ * StronglyConnectedComponent クラスです。<br/>
  * 有向グラフに対応しています。
  */
 @SuppressWarnings("unused")
@@ -6557,17 +6359,17 @@ final class StronglyConnectedComponent{
 	 */
 	private void makeCompressedRowStorage(){
 		final int[] count = new int[this.size+1];
-		for(final int[] path: this.pathList){
+		for(final int[] path:this.pathList){
 			++count[path[0]];
 		}
 
 		this.start = new int[this.size+2];
 		this.eList = new int[this.pathList.size()];
-		for(int i = 1;i<=this.size;++i){
+		for(int i=1;i<=this.size;++i){
 			this.start[i+1] = this.start[i]+count[i];
 		}
 
-		for(final int[] path: this.pathList){
+		for(final int[] path:this.pathList){
 			count[path[0]] -= 1;
 			this.eList[this.start[path[0]]+(count[path[0]])] = path[1];
 		}
@@ -6608,7 +6410,7 @@ final class StronglyConnectedComponent{
 				this.nowOrder += 1;
 				this.stack[this.tail] = now;
 				this.tail += 1;
-				for(int i = this.innerStart[now];i<this.innerStart[now+1];++i){
+				for(int i=this.innerStart[now];i<this.innerStart[now+1];++i){
 					final int next = this.innerEList[i];
 					if(this.order[next]==-1){
 						this.dfs(next);
@@ -6640,7 +6442,7 @@ final class StronglyConnectedComponent{
 		final InnerSCC innerSCC = new InnerSCC(this.size+1,this.start,this.eList);
 		final int[] order = innerSCC.order;
 
-		for(int i = 1;i<=this.size;++i){
+		for(int i=1;i<=this.size;++i){
 			if(order[i]==-1){
 				innerSCC.dfs(i);
 			}
@@ -6649,17 +6451,17 @@ final class StronglyConnectedComponent{
 		final int groupNumber = innerSCC.groupNumber;
 		final int[] ids = innerSCC.ids;
 		final int[] count = new int[groupNumber];
-		for(int i = 1;i<=this.size;++i){
+		for(int i=1;i<=this.size;++i){
 			ids[i] = groupNumber-ids[i]-1;
 			++count[ids[i]];
 		}
 
 		final int[][] ans = new int[groupNumber][];
-		for(int i = 0;i<groupNumber;++i){
+		for(int i=0;i<groupNumber;++i){
 			ans[i] = new int[count[i]];
 		}
 
-		for(int i = 1;i<=this.size;++i){
+		for(int i=1;i<=this.size;++i){
 			count[ids[i]] -= 1;
 			ans[ids[i]][count[ids[i]]] = i;
 		}
@@ -6680,9 +6482,8 @@ final class StronglyConnectedComponent{
 }
 
 /**
- * SimpleScanner クラスです。
- * java.util.Scanner クラスよりは速いですが、競プロ用に特化しているため
- * char の値がスペース以下の文字は全て区切り文字と判断します。
+ * SimpleScanner クラスです。<br/>
+ * java.util.Scanner クラスよりは速いですが、競プロ用に特化しているため char の値がスペース以下の文字は全て区切り文字と判断します。
  */
 @SuppressWarnings("unused")
 final class SimpleScanner{
@@ -6709,12 +6510,12 @@ final class SimpleScanner{
 	}
 
 	/**
-	 * このSimpleScannerのInputStreamインスタンスです。
+	 * この SimpleScanner の InputStream インスタンスです。
 	 */
 	private final InputStream inputStream;
 
 	/**
-	 * このSimpleScannerのバッファーです。
+	 * この SimpleScanner のバッファーです。
 	 */
 	private final byte[] buff;
 
@@ -6724,7 +6525,7 @@ final class SimpleScanner{
 	private int point, length;
 
 	/**
-	 * 引数のInputStreamを元にSimpleScannerを構築します。
+	 * 引数の InputStream を元に SimpleScanner を構築します。
 	 *
 	 * @param is 元となるInputStream
 	 */
@@ -6871,7 +6672,7 @@ final class SimpleScanner{
 	 */
 	public byte[] nextByte(final int n){
 		final byte[] ans = new byte[n];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextByte();
 		}
 		return ans;
@@ -6886,7 +6687,7 @@ final class SimpleScanner{
 	 */
 	public int[] nextInt(final int n){
 		final int[] ans = new int[n];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextInt();
 		}
 		return ans;
@@ -6901,7 +6702,7 @@ final class SimpleScanner{
 	 */
 	public long[] nextLong(final int n){
 		final long[] ans = new long[n];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextLong();
 		}
 		return ans;
@@ -6916,7 +6717,7 @@ final class SimpleScanner{
 	 */
 	public String[] next(final int n){
 		final String[] ans = new String[n];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.next();
 		}
 		return ans;
@@ -6932,7 +6733,7 @@ final class SimpleScanner{
 	 */
 	public byte[][] nextByte(final int n,final int m){
 		final byte[][] ans = new byte[n][];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextByte(m);
 		}
 		return ans;
@@ -6948,7 +6749,7 @@ final class SimpleScanner{
 	 */
 	public int[][] nextInt(final int n,final int m){
 		final int[][] ans = new int[n][];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextInt(m);
 		}
 		return ans;
@@ -6964,7 +6765,7 @@ final class SimpleScanner{
 	 */
 	public long[][] nextLong(final int n,final int m){
 		final long[][] ans = new long[n][];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextLong(m);
 		}
 		return ans;
@@ -6980,7 +6781,7 @@ final class SimpleScanner{
 	 */
 	public String[][] next(final int n,final int m){
 		final String[][] ans = new String[n][];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.next(m);
 		}
 		return ans;
@@ -7005,7 +6806,7 @@ final class SimpleScanner{
 	 */
 	public char[][] nextCharArray(final int n){
 		final char[][] ans = new char[n][];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextCharArray();
 		}
 		return ans;
@@ -7026,14 +6827,14 @@ final class SimpleScanner{
 		final int[][] ans = new int[vertex+1][];
 		final int[] count = new int[vertex+1];
 		final int[][] path = this.nextInt(edge,2);
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			++count[temp[0]];
 			++count[temp[1]];
 		}
-		for(int i = 1;i<=vertex;++i){
+		for(int i=1;i<=vertex;++i){
 			ans[i] = new int[count[i]];
 		}
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			count[temp[0]] -= 1;
 			ans[temp[0]][count[temp[0]]] = temp[1];
 			count[temp[1]] -= 1;
@@ -7058,13 +6859,13 @@ final class SimpleScanner{
 		final int[][] ans = new int[vertex+1][];
 		final int[] count = new int[vertex+1];
 		final int[][] path = this.nextInt(edge,2);
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			++count[temp[0]];
 		}
-		for(int i = 1;i<=vertex;++i){
+		for(int i=1;i<=vertex;++i){
 			ans[i] = new int[count[i]];
 		}
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			count[temp[0]] -= 1;
 			ans[temp[0]][count[temp[0]]] = temp[1];
 		}
@@ -7087,14 +6888,14 @@ final class SimpleScanner{
 		final int[][][] ans = new int[vertex+1][][];
 		final int[] count = new int[vertex+1];
 		final int[][] path = this.nextInt(edge,3);
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			++count[temp[0]];
 			++count[temp[1]];
 		}
-		for(int i = 1;i<=vertex;++i){
+		for(int i=1;i<=vertex;++i){
 			ans[i] = new int[count[i]][];
 		}
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			count[temp[0]] -= 1;
 			ans[temp[0]][count[temp[0]]] = new int[]{temp[1],temp[2]};
 			count[temp[1]] -= 1;
@@ -7119,13 +6920,13 @@ final class SimpleScanner{
 		final int[][][] ans = new int[vertex+1][][];
 		final int[] count = new int[vertex+1];
 		final int[][] path = this.nextInt(edge,3);
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			++count[temp[0]];
 		}
-		for(int i = 1;i<=vertex;++i){
+		for(int i=1;i<=vertex;++i){
 			ans[i] = new int[count[i]][];
 		}
-		for(final int[] temp: path){
+		for(final int[] temp:path){
 			count[temp[0]] -= 1;
 			ans[temp[0]][count[temp[0]]] = new int[]{temp[1],temp[2]};
 		}
@@ -7151,7 +6952,7 @@ final class SimpleScanner{
 	 */
 	public Point[] nextPoint(final int n){
 		final Point[] ans = new Point[n];
-		for(int i = 0;i<n;++i){
+		for(int i=0;i<n;++i){
 			ans[i] = this.nextPoint();
 		}
 		return ans;
@@ -7424,7 +7225,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 		else{
 			long num = Math.abs(l);
 			final int len = MathFunction.digit(num);
-			for(int i = len;i>0;i--){
+			for(int i=len;i>0;i--){
 				integerBuffer[i] = (byte)(num%10+ZERO);
 				num /= 10;
 			}
@@ -7471,7 +7272,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param obj 出力したい Object
 	 */
 	public void print(final Object obj){
-		final String s = obj.toString();
+		final String s = String.valueOf(obj);
 		this.write(s.toCharArray());
 	}
 
@@ -7634,7 +7435,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(str);
 			this.print(array[i]);
 		}
@@ -7651,7 +7452,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(c);
 			this.print(array[i]);
 		}
@@ -7677,7 +7478,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],str);
 		}
@@ -7694,7 +7495,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],c);
 		}
@@ -7784,7 +7585,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(str);
 			this.print(array[i]);
 		}
@@ -7801,7 +7602,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(c);
 			this.print(array[i]);
 		}
@@ -7827,7 +7628,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],str);
 		}
@@ -7844,7 +7645,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			return;
 		}
 		this.print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],c);
 		}
@@ -7928,8 +7729,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param str 区切り文字
 	 */
 	public void print(final double[] array,final String str){
+		if(array.length==0){
+			return;
+		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(str);
 			this.print(array[i]);
 		}
@@ -7942,8 +7746,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param c 区切り文字
 	 */
 	public void print(final double[] array,final char c){
+		if(array.length==0){
+			return;
+		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(c);
 			this.print(array[i]);
 		}
@@ -7965,8 +7772,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param str 区切り文字
 	 */
 	public void print(final double[][] arrays,final String str){
+		if(arrays.length==0){
+			return;
+		}
 		this.print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],str);
 		}
@@ -7979,8 +7789,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param c 区切り文字
 	 */
 	public void print(final double[][] arrays,final char c){
+		if(arrays.length==0){
+			return;
+		}
 		this.print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],c);
 		}
@@ -8055,10 +7868,12 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param str 区切り文字
 	 */
 	public void println(final char[] cs,final String str){
-		this.print(cs[0]);
-		for(int i = 1;i<cs.length;++i){
-			this.print(str);
-			this.print(cs[i]);
+		if(cs.length!=0){
+			this.print(cs[0]);
+			for(int i=1;i<cs.length;++i){
+				this.print(str);
+				this.print(cs[i]);
+			}
 		}
 		this.println();
 	}
@@ -8070,10 +7885,12 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param c 区切り文字
 	 */
 	public void println(final char[] cs,final char c){
-		this.print(cs[0]);
-		for(int i = 1;i<cs.length;++i){
-			this.print(c);
-			this.print(cs[i]);
+		if(cs.length!=0){
+			this.print(cs[0]);
+			for(int i=1;i<cs.length;++i){
+				this.print(c);
+				this.print(cs[i]);
+			}
 		}
 		this.println();
 	}
@@ -8084,7 +7901,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param cs 出力したい char[][]
 	 */
 	public void println(final char[][] cs){
-		for(final char[] chars: cs){
+		for(final char[] chars:cs){
 			this.println(chars);
 		}
 	}
@@ -8096,7 +7913,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param str 区切り文字
 	 */
 	public void println(final char[][] cs,final String str){
-		for(final char[] chars: cs){
+		for(final char[] chars:cs){
 			this.println(chars,str);
 		}
 	}
@@ -8108,7 +7925,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param c 区切り文字
 	 */
 	public void println(final char[][] cs,final char c){
-		for(final char[] chars: cs){
+		for(final char[] chars:cs){
 			this.println(chars,c);
 		}
 	}
@@ -8131,8 +7948,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[] array,final String str){
+		if(array.length==0){
+			return;
+		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(str);
 			this.print(array[i]);
 		}
@@ -8146,8 +7966,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[] array,final char c){
+		if(array.length==0){
+			return;
+		}
 		this.print(array[0]);
-		for(int i = 1;i<array.length;++i){
+		for(int i=1;i<array.length;++i){
 			this.print(c);
 			this.print(array[i]);
 		}
@@ -8171,8 +7994,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[][] arrays,final String str){
+		if(arrays.length==0){
+			return;
+		}
 		this.print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],str);
 		}
@@ -8186,8 +8012,11 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[][] arrays,final char c){
+		if(arrays.length==0){
+			return;
+		}
 		this.print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
+		for(int i=1;i<arrays.length;++i){
 			this.println();
 			this.print(arrays[i],c);
 		}
@@ -8281,7 +8110,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	public <E> void println(final List<E> list,final String str){
 		if(!list.isEmpty()){
 			this.print(list.getFirst());
-			for(int i = 1;i<list.size();++i){
+			for(int i=1;i<list.size();++i){
 				this.print(str);
 				this.print(list.get(i));
 			}
@@ -8299,7 +8128,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 	public <E> void println(final List<E> list,final char c){
 		if(!list.isEmpty()){
 			this.print(list.getFirst());
-			for(int i = 1;i<list.size();++i){
+			for(int i=1;i<list.size();++i){
 				this.print(c);
 				this.print(list.get(i));
 			}
@@ -8399,7 +8228,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 			if(len>this.buf.length-this.count){
 				this.flushBuffer();
 			}
-			for(int i = 0;i<len;i++){
+			for(int i=0;i<len;i++){
 				this.buf[this.count+i] = (byte)chars[i+off];
 			}
 			this.count += len;
@@ -8416,7 +8245,7 @@ final class SimpleWriter implements Flushable, AutoCloseable{
 		 */
 		private static byte[] parseByteArray(final char[] chars,final int off,final int len){
 			final byte[] ans = new byte[len];
-			for(int i = 0;i<len;i++){
+			for(int i=0;i<len;i++){
 				ans[i] = (byte)chars[i+off];
 			}
 			return ans;
@@ -8701,11 +8530,11 @@ final class Sorter{
 	 */
 	public static void countSort(final int[] array,final int left,final int right,final int maximumLimit){
 		final int[] list = new int[maximumLimit+1];
-		for(int i = left;i<right;++i){
+		for(int i=left;i<right;++i){
 			list[array[i]] += 1;
 		}
 		int temp = left;
-		for(int i = 0;i<list.length;++i){
+		for(int i=0;i<list.length;++i){
 			while(list[i]>0){
 				list[i] -= 1;
 				array[temp] = i;
@@ -8722,7 +8551,7 @@ final class Sorter{
 	 * @param array ソート対象の char 型配列
 	 * @param maximumLimit array 内の最大要素
 	 */
-	public static void countSort(final char[] array,final char maximumLimit){
+	public static void countSort(final char[] array,final int maximumLimit){
 		countSort(array,0,array.length,maximumLimit);
 	}
 
@@ -8735,16 +8564,16 @@ final class Sorter{
 	 * @param right ソート範囲の右端 (right を含まない)
 	 * @param maximumLimit array 内の最大要素
 	 */
-	public static void countSort(final char[] array,final int left,final int right,final char maximumLimit){
+	public static void countSort(final char[] array,final int left,final int right,final int maximumLimit){
 		final int[] list = new int[maximumLimit+1];
-		for(int i = left;i<right;++i){
+		for(int i=left;i<right;++i){
 			++list[array[i]];
 		}
 		int temp = left;
-		for(char c = 0;c<list.length;++c){
+		for(int c=0;c<list.length;++c){
 			while(list[c]>0){
 				list[c] -= 1;
-				array[temp] = c;
+				array[temp] = (char)c;
 				temp += 1;
 			}
 			list[c] -= 1;
@@ -8770,7 +8599,7 @@ final class Sorter{
 	 * @param right ソート範囲の右端 (right を含まない)
 	 */
 	public static void insertSort(final int[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final int num = array[j];
 			while(left<j&&array[j-1]>num){
@@ -8800,7 +8629,7 @@ final class Sorter{
 	 * @param right ソート範囲の右端 (right を含まない)
 	 */
 	public static void insertSort(final long[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final long num = array[j];
 			while(left<j&&array[j-1]>num){
@@ -8830,7 +8659,7 @@ final class Sorter{
 	 * @param right ソート範囲の右端 (right を含まない)
 	 */
 	public static void insertSort(final char[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final char num = array[j];
 			while(left<j&&array[j-1]>num){
@@ -8862,7 +8691,7 @@ final class Sorter{
 	 * @param <E> 配列の要素の型
 	 */
 	public static <E extends Comparable<E>> void insertSort(final E[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final E num = array[j];
 			while(left<j&&array[j-1].compareTo(num)>0){
@@ -8892,7 +8721,7 @@ final class Sorter{
 	 * @param right ソート範囲の右端 (right を含まない)
 	 */
 	public static void reverseInsertSort(final int[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final int num = array[j];
 			while(left<j&&array[j-1]<num){
@@ -8922,7 +8751,7 @@ final class Sorter{
 	 * @param right ソート範囲の右端 (right を含まない)
 	 */
 	public static void reverseInsertSort(final long[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final long num = array[j];
 			while(left<j&&array[j-1]<num){
@@ -8952,7 +8781,7 @@ final class Sorter{
 	 * @param right ソート範囲の右端 (right を含まない)
 	 */
 	public static void reverseInsertSort(final char[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final char num = array[j];
 			while(left<j&&array[j-1]<num){
@@ -8984,7 +8813,7 @@ final class Sorter{
 	 * @param <E> 配列の要素の型
 	 */
 	public static <E extends Comparable<E>> void reverseInsertSort(final E[] array,final int left,final int right){
-		for(int i = left+1;i<right;i++){
+		for(int i=left+1;i<right;i++){
 			int j = i;
 			final E num = array[j];
 			while(left<j&&array[j-1].compareTo(num)<0){
@@ -9059,8 +8888,8 @@ final class StaticRollingHash implements Comparable<StaticRollingHash>{
 	 */
 	private void roll(){
 		final int len = this.str.length();
-		for(int i = 1;i<=len;++i){
-			this.hash[i] = multiply(this.hash[i-1],BASE)+this.str.charAt(i-1)-' '+1;
+		for(int i=1;i<=len;++i){
+			this.hash[i] = multiply(this.hash[i-1],BASE)+this.str.charAt(i-1)+1;
 			if(MOD<=this.hash[i]){
 				this.hash[i] -= MOD;
 			}
@@ -9287,7 +9116,7 @@ final class StaticRollingHash implements Comparable<StaticRollingHash>{
 	public boolean contains(final StaticRollingHash rh){
 		final long h = rh.getHash(0,rh.length());
 		final int len = this.length()-rh.length();
-		for(int i = 0;i<=len;++i){
+		for(int i=0;i<=len;++i){
 			if(h==this.getHash(i,rh.length()+i)){
 				return true;
 			}
@@ -9328,8 +9157,11 @@ final class StaticRollingHash implements Comparable<StaticRollingHash>{
 	 * @return 最も左側にある引数の文字のインデックス (無ければ -1)
 	 */
 	public int indexOf(final int charValue,final int fromIndex){
+		if(fromIndex<0){
+			return -1;
+		}
 		final int len = this.length();
-		for(int i = fromIndex;i<len;++i){
+		for(int i=fromIndex;i<len;++i){
 			if(this.str.charAt(i)==charValue){
 				return i;
 			}
@@ -9359,15 +9191,18 @@ final class StaticRollingHash implements Comparable<StaticRollingHash>{
 	 * @return 最も左側にある引数の文字列のインデックス (無ければ -1)
 	 */
 	public int indexOf(final String s,final int fromIndex){
+		if(fromIndex<0){
+			return -1;
+		}
 		long h = 0;
-		for(final char c: s.toCharArray()){
-			h = multiply(h,BASE)+c-' '+1;
+		for(final char c:s.toCharArray()){
+			h = multiply(h,BASE)+c+1;
 			if(MOD<=h){
 				h -= MOD;
 			}
 		}
 		final int len = this.length()-s.length();
-		for(int i = fromIndex;i<=len;++i){
+		for(int i=fromIndex;i<=len;++i){
 			if(h==this.getHash(i,s.length()+i)){
 				return i;
 			}
@@ -9394,7 +9229,10 @@ final class StaticRollingHash implements Comparable<StaticRollingHash>{
 	 * @return 最も右側にある引数の文字のインデックス (無ければ -1)
 	 */
 	public int lastIndexOf(final int charValue,final int fromIndex){
-		for(int i = fromIndex;i>=0;--i){
+		if(fromIndex>=this.length()){
+			return -1;
+		}
+		for(int i=fromIndex;i>=0;--i){
 			if(this.str.charAt(i)==charValue){
 				return i;
 			}
@@ -9517,1631 +9355,7 @@ final class StaticRollingHash implements Comparable<StaticRollingHash>{
 }
 
 /**
- * Tree クラスです。<br/>
- * java.util.TreeSet と基本変わりませんが、インデックスを指定してのアクセスが O(log N) で可能です。
- *
- * @param <E> Tree に載せる要素の型
- */
-@SuppressWarnings("unused")
-final class Tree<E extends Comparable<E>>{
-
-	/**
-	 * 根を表す Node です。
-	 */
-	private Node<E> root;
-
-	/**
-	 * 状態管理用の変数です。
-	 */
-	private int size, hash;
-
-	/**
-	 * 空の Tree クラスを生成します。
-	 */
-	public Tree(){
-		this.size = 0;
-		this.root = null;
-		this.hash = 0;
-	}
-
-	/**
-	 * 要素を保持する Node クラスです。
-	 */
-	private static final class Node<E>{
-
-		/**
-		 * この Node インスタンスが持つ要素です。
-		 */
-		private E value;
-
-		/**
-		 * 状態管理用の変数です。
-		 */
-		private int height, innerSize;
-
-		/**
-		 * 親、左右の Node を保持する変数です。
-		 */
-		private Node<E> left, right, parent;
-
-		/**
-		 * 指定された情報を元に Node インスタンスを生成します。
-		 *
-		 * @param p 親となる Node インスタンス
-		 * @param v 要素
-		 */
-		public Node(final Node<E> p,final E v){
-			this.value = v;
-			this.parent = p;
-			this.height = 1;
-			this.innerSize = 1;
-			this.left = null;
-			this.right = null;
-		}
-
-		/**
-		 * この Node を表す文字列を返します。
-		 *
-		 * @return この Node を表す文字列
-		 */
-		@Override
-		public String toString(){
-			return "Node["+this.value+"]";
-		}
-	}
-
-	/**
-	 * 引数の要素をこの Tree インスタンスに追加しようと試みます。
-	 *
-	 * @param x 追加する要素
-	 *
-	 * @return 追加されたら true、それ以外は false
-	 */
-	public boolean add(final E x){
-		boolean wasAdded = true;
-		if(this.root==null){
-			this.root = new Node<>(null,x);
-		}
-		else{
-			Node<E> par;
-			Node<E> now = this.root;
-			do{
-				par = now;
-				final int result = x.compareTo(now.value);
-				if(result<0){
-					now = now.left;
-				}
-				else if(result>0){
-					now = now.right;
-				}
-				else{
-					wasAdded = false;
-					break;
-				}
-			}while(now!=null);
-			if(wasAdded){
-				final int result = x.compareTo(par.value);
-				if(result<0){
-					par.left = new Node<>(par,x);
-				}
-				else{
-					par.right = new Node<>(par,x);
-				}
-				this.fix(par);
-			}
-		}
-		if(wasAdded){
-			this.size += 1;
-			this.hash ^= x.hashCode();
-		}
-		return wasAdded;
-	}
-
-	/**
-	 * 指定されたインデックスの要素を取得します。
-	 *
-	 * @param index インデックス
-	 *
-	 * @return 先頭から index 番目の要素
-	 */
-	public E get(int index){
-		if(this.root==null||this.size<=index){
-			throw new IndexOutOfBoundsException();
-		}
-		Node<E> now = this.root;
-		while(now!=null){
-			final int ls = now.left!=null?now.left.innerSize:0;
-			if(index<ls){
-				now = now.left;
-			}
-			else if(ls<index){
-				now = now.right;
-				index -= ls+1;
-			}
-			else{
-				break;
-			}
-		}
-		return now==null?null:now.value;
-	}
-
-	/**
-	 * 指定されたインデックスの要素を取得します。
-	 *
-	 * @param x インデックス
-	 *
-	 * @return 先頭から index 番目の要素
-	 */
-	public int getIndex(final E x){
-		Node<E> now = this.root;
-		int index = 0;
-		while(now!=null){
-			final int result = now.value.compareTo(x);
-			if(0<result){
-				now = now.left;
-			}
-			else{
-				index += now.left==null?0:now.left.innerSize;
-				if(result<0){
-					now = now.right;
-					index += 1;
-				}
-				else{
-					return index;
-				}
-			}
-		}
-		return ~index;
-	}
-
-	/**
-	 * 引数の要素を削除しようと試みます。
-	 *
-	 * @param x 削除する要素
-	 *
-	 * @return 要素が削除できたら true、それ以外は false
-	 */
-	public boolean remove(final E x){
-		final Node<E> node = this.getNode(x);
-		if(node==null){
-			return false;
-		}
-		this.size -= 1;
-		this.hash ^= node.value.hashCode();
-		this.delete(node);
-		return true;
-	}
-
-	/**
-	 * 引数の Node インスタンスを削除します。
-	 *
-	 * @param node 削除対象
-	 */
-	private void delete(final Node<E> node){
-		if(node==null){
-			return;
-		}
-		if(node.left==null&&node.right==null){
-			if(node.parent==null){
-				this.root = null;
-			}
-			else{
-				if(node.parent.left==node){
-					node.parent.left = null;
-				}
-				else{
-					node.parent.right = null;
-				}
-				this.fix(node.parent);
-			}
-			node.parent = null;
-		}
-		else{
-			if(node.left!=null&&node.right!=null){
-				final Node<E> rep = getFirstNode(node.right);
-				node.value = rep.value;
-				this.delete(rep);
-			}
-			else{
-				final Node<E> rep = node.left!=null?node.left:node.right;
-				rep.parent = node.parent;
-				if(node.parent==null){
-					this.root = rep;
-				}
-				else{
-					if(node.parent.left==node){
-						node.parent.left = rep;
-					}
-					else{
-						node.parent.right = rep;
-					}
-					this.fix(node.parent);
-				}
-				node.parent = null;
-			}
-		}
-	}
-
-	/**
-	 * 指定された要素を持つ Node インスタンスを返します。<br/>
-	 * 無い場合は null を返します。
-	 *
-	 * @param x 指定する要素
-	 *
-	 * @return 指定された要素を持つ Node インスタンス
-	 */
-	private Node<E> getNode(final E x){
-		Node<E> now = this.root;
-		while(now!=null){
-			final int result = x.compareTo(now.value);
-			if(result<0){
-				now = now.left;
-			}
-			else if(result>0){
-				now = now.right;
-			}
-			else{
-				break;
-			}
-		}
-		return now;
-	}
-
-	/**
-	 * この Tree インスタンスの先頭の要素を返します。<br/>
-	 * もしこの Tree インスタンスが空なら null を返します。
-	 *
-	 * @return この Tree インスタンスの先頭の要素
-	 */
-	public E first(){
-		if(this.root==null){
-			return null;
-		}
-		return getFirstNode(this.root).value;
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の先頭の要素を持つ Node インスタンスを返します。<br/>
-	 * 指定する Node インスタンスは null でないことを要求します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 *
-	 * @return この部分木の先頭の要素を持つ Node インスタンス
-	 */
-	private static <E extends Comparable<E>> Node<E> getFirstNode(Node<E> node){
-		if(node==null){
-			throw new NullPointerException();
-		}
-		Node<E> par = null;
-		while(node!=null){
-			par = node;
-			node = par.left;
-		}
-		return par;
-	}
-
-	/**
-	 * この Tree インスタンスの末尾の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合は null を返します。
-	 *
-	 * @return この Tree インスタンスの末尾の要素
-	 */
-	public E last(){
-		if(this.root==null){
-			return null;
-		}
-		return this.getLastNode(this.root).value;
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の末尾の要素を持つ Node インスタンスを返します。<br/>
-	 * 指定する Node インスタンスは null でないことを要求します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 *
-	 * @return この部分木の末尾の要素を持つ Node インスタンス
-	 */
-	private Node<E> getLastNode(Node<E> node){
-		if(node==null){
-			throw new NullPointerException();
-		}
-		Node<E> par = null;
-		while(node!=null){
-			par = node;
-			node = par.right;
-		}
-		return par;
-	}
-
-	/**
-	 * 指定された要素がこの Tree インスタンスに存在するか判定します。
-	 *
-	 * @param x 探索対象の要素
-	 *
-	 * @return 指定された要素が存在するなら true、それ以外は false
-	 */
-	public boolean contains(final E x){
-		if(this.root==null){
-			return false;
-		}
-		return this.getNode(x)!=null;
-	}
-
-	/**
-	 * この Tree インスタンスの先頭の要素を取得し、削除します。<br/>
-	 * もしそのような要素が存在しない場合は null を返します。
-	 *
-	 * @return この Tree インスタンスの先頭の要素
-	 */
-	public E pollFirst(){
-		if(this.root==null){
-			return null;
-		}
-		--this.size;
-		final Node<E> min = getFirstNode(this.root);
-		this.hash ^= min.value.hashCode();
-		this.delete(min);
-		return min.value;
-	}
-
-	/**
-	 * この Tree インスタンスの末尾の要素を取得し、削除します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @return この Tree インスタンスの末尾の要素
-	 */
-	public E pollLast(){
-		if(this.root==null){
-			return null;
-		}
-		--this.size;
-		final Node<E> max = this.getLastNode(this.root);
-		this.hash ^= max.value.hashCode();
-		this.delete(max);
-		return max.value;
-	}
-
-	/**
-	 * 指定された要素と同等かそれ以降の要素で最小の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象の要素
-	 *
-	 * @return x と同等かそれ以降の要素で最小の要素
-	 */
-	public E ceiling(final E x){
-		return this.ceiling(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の、
-	 * x と同等かそれ以降の要素で最小の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return x と同等かそれ以降の要素で最小の要素
-	 */
-	private E ceiling(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result>0){
-				node = node.right;
-			}
-			else if(result<0){
-				ans = node;
-				node = node.left;
-			}
-			else{
-				return x;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * 指定された要素以降の要素で最小の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象の要素
-	 *
-	 * @return x 以降の要素で最小の要素
-	 */
-	public E higher(final E x){
-		return this.higher(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の、
-	 * x 以降の要素で最小の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return x 以降の要素で最小の要素
-	 */
-	private E higher(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result>=0){
-				node = node.right;
-			}
-			else{
-				ans = node;
-				node = node.left;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * 指定された要素と同等かそれ以前の要素で最大の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象の要素
-	 *
-	 * @return x と同等かそれ以前の要素で最大の要素
-	 */
-	public E floor(final E x){
-		return this.floor(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の、
-	 * x と同等かそれ以前の要素で最大の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return x と同等かそれ以前の要素で最大の要素
-	 */
-	private E floor(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result<0){
-				node = node.left;
-			}
-			else if(result>0){
-				ans = node;
-				node = node.right;
-			}
-			else{
-				return x;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * 指定された要素以前の要素で最大の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象の要素
-	 *
-	 * @return x 以前の要素で最大の要素
-	 */
-	public E lower(final E x){
-		return this.lower(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の、
-	 * x 以前の要素で最大の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return x 以前の要素で最大の要素
-	 */
-	private E lower(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result<=0){
-				node = node.left;
-			}
-			else{
-				ans = node;
-				node = node.right;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * この Tree インスタンスを空にします。
-	 */
-	public void clear(){
-		this.root = null;
-		this.size = 0;
-		this.hash = 0;
-	}
-
-	/**
-	 * この Tree インスタンスが空か判定します。
-	 *
-	 * @return この Tree インスタンスが空なら true、それ以外は false
-	 */
-	public boolean isEmpty(){
-		return this.size==0;
-	}
-
-	/**
-	 * この Tree インスタンスの要素数を返します。
-	 *
-	 * @return この Tree インスタンスの要素数
-	 */
-	public int size(){
-		return this.size;
-	}
-
-	/**
-	 * この Tree インスタンスと同等な ArrayList を返します。<br/>
-	 * 各要素は Tree インスタンスの要素と連動します。
-	 *
-	 * @return この Tree インスタンスを表す ArrayList
-	 */
-	public ArrayList<E> toList(){
-		final ArrayList<E> list = new ArrayList<>(this.size);
-		if(this.root==null){
-			return list;
-		}
-		final ArrayDeque<Node<E>> deq = new ArrayDeque<>(this.size);
-		deq.add(this.root);
-		while(!deq.isEmpty()){
-			final Node<E> now = deq.pollLast();
-			if(list.isEmpty()){
-				if(now.left==null){
-					list.add(now.value);
-					if(now.right!=null){
-						deq.add(now.right);
-					}
-				}
-				else{
-					deq.add(now);
-					deq.add(now.left);
-				}
-			}
-			else{
-				final E last = list.getLast();
-				if(now.left==null||last.compareTo(now.left.value)>=0){
-					list.add(now.value);
-					if(now.right!=null){
-						deq.add(now.right);
-					}
-				}
-				else{
-					deq.add(now);
-					deq.add(now.left);
-				}
-			}
-		}
-		return list;
-	}
-
-	/**
-	 * この Tree インスタンスを表す String を返します。
-	 */
-	@Override
-	public String toString(){
-		final ArrayList<E> list = this.toList();
-		return list.toString();
-	}
-
-	/**
-	 * 引数がこの Tree インスタンスと同等か判定します。
-	 */
-	@Override
-	public boolean equals(final Object obj){
-		if(obj instanceof final Tree<?> tree){
-			if(this.size!=tree.size()){
-				return false;
-			}
-			final ArrayList<E> list1 = this.toList();
-			final ArrayList<?> list2 = tree.toList();
-			for(int i = 0;i<this.size;++i){
-				final E e = list1.get(i);
-				if(!e.equals(list2.get(i))){
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * この Tree を表すハッシュ値を返します。
-	 */
-	@Override
-	public int hashCode(){
-		return this.hash;
-	}
-
-	/**
-	 * 指定された Node インスタンスを根の方向に辿りながら平衡を修正します。
-	 *
-	 * @param node 始点となる Node インスタンス
-	 */
-	private void fix(Node<E> node){
-		while(node!=null){
-			if(node.left==null){
-				if(node.right!=null&&node.right.height>1){
-					this.rotateL(node);
-				}
-			}
-			else if(node.right==null){
-				if(node.left.height>1){
-					this.rotateR(node);
-				}
-			}
-			else{
-				final int lh = node.left.height;
-				final int rh = node.right.height;
-				if(lh-rh>1){
-					if(node.left.right==null||node.left.right.height!=lh-1){
-						this.rotateR(node);
-					}
-					else{
-						this.rotateL(node.left);
-						this.rotateR(node);
-					}
-				}
-				else if(rh-lh>1){
-					if(node.right.left==null||node.right.left.height!=rh-1){
-						this.rotateL(node);
-					}
-					else{
-						this.rotateR(node.right);
-						this.rotateL(node);
-					}
-				}
-			}
-			this.setStates(node);
-			node = node.parent;
-		}
-	}
-
-	/**
-	 * 指定された Node インスタンスを基点に右回転を適用します。
-	 *
-	 * @param node 基点となる Node インスタンス
-	 */
-	private void rotateR(final Node<E> node){
-		final Node<E> temp = node.left;
-		node.left = temp.right;
-		if(node.left!=null){
-			node.left.parent = node;
-		}
-		temp.right = node;
-		temp.parent = node.parent;
-		if(node.parent!=null){
-			if(node.parent.left==node){
-				node.parent.left = temp;
-			}
-			else{
-				node.parent.right = temp;
-			}
-		}
-		else{
-			this.root = temp;
-		}
-		node.parent = temp;
-		this.setStates(node);
-	}
-
-	/**
-	 * 指定された Node インスタンスを基点に左回転を適用します。
-	 *
-	 * @param node 基点となる Node インスタンス
-	 */
-	private void rotateL(final Node<E> node){
-		final Node<E> temp = node.right;
-		node.right = temp.left;
-		if(node.right!=null){
-			node.right.parent = node;
-		}
-		temp.left = node;
-		temp.parent = node.parent;
-		if(node.parent!=null){
-			if(node.parent.left==node){
-				node.parent.left = temp;
-			}
-			else{
-				node.parent.right = temp;
-			}
-		}
-		else{
-			this.root = temp;
-		}
-		node.parent = temp;
-		this.setStates(node);
-	}
-
-	/**
-	 * 指定された Node インスタンスの内部情報を更新します。
-	 *
-	 * @param node 更新対象の Node インスタンス
-	 */
-	private void setStates(final Node<E> node){
-		final int lh = node.left==null?0:node.left.height;
-		final int rh = node.right==null?0:node.right.height;
-		node.height = Math.max(lh,rh)+1;
-		final int ls = node.left==null?0:node.left.innerSize;
-		final int rs = node.right==null?0:node.right.innerSize;
-		node.innerSize = ls+rs+1;
-	}
-}
-
-/**
- * TreeMulti クラスです。<br/>
- * java.util.TreeSet と基本変わりませんが、インデックスを指定してのアクセスが O(log N) で可能です。<br/>
- * また、同等な要素を複数追加できます。<br/>
- * 同等な要素は最初に追加した要素と等価として管理するので、
- * 別々に管理したい場合は順序を付けるようにしてください。
- *
- * @param <E> TreeMulti に載せる要素の型
- */
-@SuppressWarnings("unused")
-final class TreeMulti<E extends Comparable<E>>{
-
-	/**
-	 * この TreeMulti の根となる Node インスタンスを保持する変数です。
-	 */
-	private Node<E> root;
-
-	/**
-	 * この TreeMulti の要素数を保持する変数です。
-	 */
-	private long size;
-
-	/**
-	 * この TreeMulti のユニークな要素数を保持する変数です。
-	 */
-	private int uniqueSize;
-
-	/**
-	 * この TreeMulti のハッシュ値を保持する変数です。
-	 */
-	private int hash;
-
-	/**
-	 * 空の TreeMulti を生成します。
-	 */
-	public TreeMulti(){
-		this.size = 0;
-		this.uniqueSize = 0;
-		this.root = null;
-		this.hash = 0;
-	}
-
-	/**
-	 * 要素を保持するための Node クラスです。
-	 */
-	private static final class Node<E>{
-
-		/**
-		 * この Node クラスが保持する要素です。
-		 */
-		private E value;
-
-		/**
-		 * 状態管理用の変数です。
-		 */
-		private long count, innerSize;
-		private int height;
-
-		/**
-		 * 親、左右の子を保持する変数です。
-		 */
-		private Node<E> left, right, parent;
-
-		/**
-		 * 指定された情報を元に Node インスタンスを生成します。
-		 *
-		 * @param p 親となる Node インスタンス
-		 * @param v 要素
-		 * @param subSize 要素数
-		 */
-		public Node(final Node<E> p,final E v,final long subSize){
-			this.value = v;
-			this.parent = p;
-			this.count = subSize;
-			this.height = 1;
-			this.innerSize = subSize;
-			this.left = null;
-			this.right = null;
-		}
-
-		/**
-		 * この Node を表す文字列を返します。
-		 *
-		 * @return この Node を表す文字列
-		 */
-		@Override
-		public String toString(){
-			return "Node["+this.value+"]";
-		}
-	}
-
-	/**
-	 * 指定された要素を追加します。
-	 *
-	 * @param x 追加する要素
-	 */
-	public void add(final E x){
-		if(this.root==null){
-			this.root = new Node<>(null,x,1);
-			++this.uniqueSize;
-		}
-		else{
-			Node<E> par;
-			Node<E> now = this.root;
-			boolean wasAdded = true;
-			do{
-				par = now;
-				final int result = x.compareTo(now.value);
-				if(result<0){
-					now = now.left;
-				}
-				else if(result>0){
-					now = now.right;
-				}
-				else{
-					wasAdded = false;
-					++now.count;
-					break;
-				}
-			}while(now!=null);
-			if(wasAdded){
-				++this.uniqueSize;
-				final int result = x.compareTo(par.value);
-				if(result<0){
-					par.left = new Node<>(par,x,1);
-				}
-				else{
-					par.right = new Node<>(par,x,1);
-				}
-			}
-			this.fix(par);
-		}
-		++this.size;
-		this.hash ^= x.hashCode();
-	}
-
-	/**
-	 * 指定された要素を引数の値だけ追加します。
-	 *
-	 * @param x 追加する要素
-	 * @param sum 追加する個数
-	 */
-	public void add(final E x,final long sum){
-		if(this.root==null){
-			this.root = new Node<>(null,x,sum);
-			++this.uniqueSize;
-		}
-		else{
-			Node<E> par;
-			Node<E> now = this.root;
-			boolean wasAdded = true;
-			do{
-				par = now;
-				final int result = x.compareTo(now.value);
-				if(result<0){
-					now = now.left;
-				}
-				else if(result>0){
-					now = now.right;
-				}
-				else{
-					wasAdded = false;
-					now.count += sum;
-					this.fix(now);
-					break;
-				}
-			}while(now!=null);
-			if(wasAdded){
-				++this.uniqueSize;
-				final int result = x.compareTo(par.value);
-				if(result<0){
-					par.left = new Node<>(par,x,sum);
-				}
-				else{
-					par.right = new Node<>(par,x,sum);
-				}
-				this.fix(par);
-			}
-		}
-		this.size += sum;
-		this.hash ^= sum%2==0?0:x.hashCode();
-	}
-
-	/**
-	 * 指定されたインデックスの要素を取得します。
-	 * これはユニークな要素数ではなく全体の要素数でのインデックスです。
-	 *
-	 * @param index 取得する要素のインデックス
-	 *
-	 * @return 指定されたインデックスの要素
-	 */
-	public E get(long index){
-		if(this.root==null||this.size<=index){
-			throw new NullPointerException();
-		}
-		Node<E> now = this.root;
-		while(now!=null){
-			final long ls = now.left!=null?now.left.innerSize:0;
-			if(index<ls){
-				now = now.left;
-			}
-			else if(ls+now.count<=index){
-				index -= ls+now.count;
-				now = now.right;
-			}
-			else{
-				break;
-			}
-		}
-		return now==null?null:now.value;
-	}
-
-	/**
-	 * 指定された要素を一つだけ削除しようと試みます。
-	 *
-	 * @param x 削除する要素
-	 *
-	 * @return 指定された要素が一つだけ削除されたら true、それ以外は false
-	 */
-	public boolean remove(final E x){
-		final Node<E> node = this.getNode(x);
-		if(node==null){
-			return false;
-		}
-		--this.size;
-		this.hash ^= node.hashCode();
-		this.delete(node);
-		return true;
-	}
-
-	/**
-	 * 指定された要素を指定した個数分削除します。
-	 * もし指定された個数だけ存在しない場合は削除できるだけ削除します。
-	 *
-	 * @param x 削除する要素
-	 * @param sum 削除したい個数
-	 *
-	 * @return 削除に成功した個数
-	 */
-	public long remove(final E x,final long sum){
-		final Node<E> node = this.getNode(x);
-		if(node==null){
-			return 0;
-		}
-		final long ans = Math.min(sum,node.count);
-		this.size -= ans;
-		this.hash ^= ans%2==0?0:node.hashCode();
-		node.count -= ans-1;
-		this.delete(node);
-		return ans;
-	}
-
-	/**
-	 * 指定された要素を全て削除します。
-	 *
-	 * @param x 削除する要素
-	 *
-	 * @return 削除した個数
-	 */
-	public long removeAll(final E x){
-		final Node<E> node = this.getNode(x);
-		if(node==null){
-			return 0;
-		}
-		this.size -= node.count;
-		final long ans = node.count;
-		this.hash ^= ans%2==0?0:node.hashCode();
-		node.count = 0;
-		this.delete(node);
-		return ans;
-	}
-
-	/**
-	 * 指定された Node インスタンスを削除します。
-	 *
-	 * @param node 削除する Node インスタンス
-	 */
-	private void delete(final Node<E> node){
-		if(node==null){
-			return;
-		}
-		if(node.count>1){
-			--node.count;
-			this.fix(node);
-			return;
-		}
-		if(node.left==null&&node.right==null){
-			if(node.parent==null){
-				this.root = null;
-			}
-			else{
-				if(node.parent.left==node){
-					node.parent.left = null;
-				}
-				else{
-					node.parent.right = null;
-				}
-				this.fix(node.parent);
-			}
-			node.parent = null;
-			--this.uniqueSize;
-		}
-		else{
-			if(node.left==null||node.right==null){
-				final Node<E> rep = node.left!=null?node.left:node.right;
-				rep.parent = node.parent;
-				if(node.parent==null){
-					this.root = rep;
-				}
-				else{
-					if(node.parent.left==node){
-						node.parent.left = rep;
-					}
-					else{
-						node.parent.right = rep;
-					}
-					this.fix(node.parent);
-				}
-				node.parent = null;
-				--this.uniqueSize;
-			}
-			else{
-				final Node<E> rep = getFirstNode(node.right);
-				node.value = rep.value;
-				node.count = rep.count;
-				rep.count = 0;
-				this.delete(rep);
-			}
-		}
-	}
-
-	/**
-	 * 指定された要素を保持する Node インスタンスを返します。<br/>
-	 * そのような Node インスタンスが存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象の要素
-	 *
-	 * @return x を保持する Node インスタンス
-	 */
-	private Node<E> getNode(final E x){
-		Node<E> now = this.root;
-		while(now!=null){
-			final int result = x.compareTo(now.value);
-			if(result<0){
-				now = now.left;
-			}
-			else if(result>0){
-				now = now.right;
-			}
-			else{
-				break;
-			}
-		}
-		return now;
-	}
-
-	/**
-	 * この TreeMulti の先頭の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @return この TreeMulti の先頭の要素
-	 */
-	public E first(){
-		if(this.root==null){
-			return null;
-		}
-		return getFirstNode(this.root).value;
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の先頭の要素を保持する Node インスタンスを返します。<br/>
-	 * この Node インスタンスは null でないことを要求します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 *
-	 * @return 先頭の要素を保持する Node インスタンス
-	 */
-	private static <E extends Comparable<E>> Node<E> getFirstNode(Node<E> node){
-		if(node==null){
-			throw new NullPointerException();
-		}
-		Node<E> par = null;
-		while(node!=null){
-			par = node;
-			node = par.left;
-		}
-		return par;
-	}
-
-	/**
-	 * この TreeMulti インスタンスの末尾の要素を返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @return この TreeMulti インスタンスの末尾の要素
-	 */
-	public E last(){
-		if(this.root==null){
-			return null;
-		}
-		return getLastNode(this.root).value;
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木の末尾の要素を保持する Node インスタンスを返します。<br/>
-	 * この Node インスタンスは null でないことを要求します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 *
-	 * @return 末尾の要素を保持する Node インスタンス
-	 */
-	private static <E extends Comparable<E>> Node<E> getLastNode(Node<E> node){
-		if(node==null){
-			throw new NullPointerException();
-		}
-		Node<E> par = null;
-		while(node!=null){
-			par = node;
-			node = par.right;
-		}
-		return par;
-	}
-
-	/**
-	 * 指定された要素がこの TreeMulti インスタンスに存在するか判定します。
-	 *
-	 * @param x 探索対象
-	 *
-	 * @return この TreeMulti インスタンスに指定された要素が存在するなら true、それ以外は false
-	 */
-	public boolean contains(final E x){
-		if(this.root==null){
-			return false;
-		}
-		return this.getNode(x)!=null;
-	}
-
-	/**
-	 * 指定された要素がこの TreeMulti インスタンスにいくつ存在するか返します。
-	 *
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素がこの TreeMulti インスタンスに存在する個数
-	 */
-	public long sum(final E x){
-		if(this.root==null){
-			return 0;
-		}
-		final Node<E> node = this.getNode(x);
-		return node!=null?node.count:0;
-	}
-
-	/**
-	 * この TreeMulti インスタンスの先頭の要素を取得し、削除します。
-	 *
-	 * @return この TreeMulti インスタンスの先頭の要素
-	 */
-	public E pollFirst(){
-		if(this.root==null){
-			return null;
-		}
-		--this.size;
-		final Node<E> min = getFirstNode(this.root);
-		this.hash ^= min.value.hashCode();
-		final E ans = min.value;
-		this.delete(min);
-		return ans;
-	}
-
-	/**
-	 * この TreeMulti インスタンスの末尾の要素を取得し、削除します。
-	 *
-	 * @return この TreeMulti インスタンスの末尾の要素
-	 */
-	public E pollLast(){
-		if(this.root==null){
-			return null;
-		}
-		--this.size;
-		final Node<E> max = getLastNode(this.root);
-		this.hash ^= max.value.hashCode();
-		final E ans = max.value;
-		this.delete(max);
-		return ans;
-	}
-
-	/**
-	 * 指定された要素と同等かそれ以降の要素で最小のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素と同等かそれ以降の要素で最小のもの
-	 */
-	public E ceiling(final E x){
-		return this.ceiling(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木のうち、
-	 * 指定された要素と同等かそれ以降の要素で最小のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素と同等かそれ以降の要素で最小のもの
-	 */
-	private E ceiling(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result>0){
-				node = node.right;
-			}
-			else if(result<0){
-				ans = node;
-				node = node.left;
-			}
-			else{
-				return x;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * 指定された要素以降の要素で最小のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素以降の要素で最小のもの
-	 */
-	public E higher(final E x){
-		return this.higher(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木のうち、
-	 * 指定された要素以降の要素で最小のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素以降の要素で最小のもの
-	 */
-	private E higher(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result>=0){
-				node = node.right;
-			}
-			else{
-				ans = node;
-				node = node.left;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * 指定された要素と同等かそれ以前の要素で最大のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素と同等かそれ以前の要素で最大のもの
-	 */
-	public E floor(final E x){
-		return this.floor(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木のうち、
-	 * 指定された要素と同等かそれ以前の要素で最大のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素と同等かそれ以前の要素で最大のもの
-	 */
-	private E floor(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result<0){
-				node = node.left;
-			}
-			else if(result>0){
-				ans = node;
-				node = node.right;
-			}
-			else{
-				return x;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * 指定された要素以前の要素で最大のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素以前の要素で最大のもの
-	 */
-	public E lower(final E x){
-		return this.lower(this.root,x);
-	}
-
-	/**
-	 * 指定された Node インスタンスを根とする部分木のうち、
-	 * 指定された要素以前の要素で最大のものを返します。<br/>
-	 * もしそのような要素が存在しない場合、null を返します。
-	 *
-	 * @param node 根とする Node インスタンス
-	 * @param x 探索対象
-	 *
-	 * @return 指定された要素以前の要素で最大のもの
-	 */
-	private E lower(Node<E> node,final E x){
-		Node<E> ans = null;
-		while(node!=null){
-			final int result = x.compareTo(node.value);
-			if(result<=0){
-				node = node.left;
-			}
-			else{
-				ans = node;
-				node = node.right;
-			}
-		}
-		return ans!=null?ans.value:null;
-	}
-
-	/**
-	 * この TreeMulti インスタンスのユニークな要素数を返します。
-	 *
-	 * @return この TreeMulti インスタンスのユニークな要素数
-	 */
-	public int size(){
-		return this.uniqueSize;
-	}
-
-	/**
-	 * この TreeMulti インスタンスの要素数を返します。
-	 *
-	 * @return この TreeMulti インスタンスの要素数
-	 */
-	public long sumSize(){
-		return this.size;
-	}
-
-	/**
-	 * この TreeMulti インスタンスと同等な ArrayList を返します。<br/>
-	 * この ArrayList の要素と TreeMulti インスタンスの要素は連動しているため、
-	 * 順序が入れ替わるような変更を加えた場合のこの TreeMulti の動作は未定義となります。
-	 *
-	 * @return この TreeMulti インスタンスと等価な ArrayList
-	 */
-	public ArrayList<E> toList(){
-		final ArrayList<E> list = new ArrayList<>((int)this.size);
-		if(this.root==null){
-			return list;
-		}
-		final ArrayDeque<Node<E>> deq = new ArrayDeque<>((int)this.size);
-		deq.add(this.root);
-		while(!deq.isEmpty()){
-			final Node<E> now = deq.pollLast();
-			if(list.isEmpty()){
-				if(now.left==null){
-					for(int i = 0;i<now.count;++i){
-						list.add(now.value);
-					}
-					if(now.right!=null){
-						deq.add(now.right);
-					}
-				}
-				else{
-					deq.add(now);
-					deq.add(now.left);
-				}
-			}
-			else{
-				final E last = list.getLast();
-				if(now.left==null||last.compareTo(now.left.value)>=0){
-					for(int i = 0;i<now.count;++i){
-						list.add(now.value);
-					}
-					if(now.right!=null){
-						deq.add(now.right);
-					}
-				}
-				else{
-					deq.add(now);
-					deq.add(now.left);
-				}
-			}
-		}
-		return list;
-	}
-
-	/**
-	 * この TreeMulti インスタンスを表す String を返します。
-	 */
-	@Override
-	public String toString(){
-		final ArrayList<E> list = this.toList();
-		return list.toString();
-	}
-
-	/**
-	 * この TreeMulti インスタンスと等価か判定します。
-	 */
-	@Override
-	public boolean equals(final Object obj){
-		if(obj instanceof final TreeMulti<?> tree){
-			if(this.size!=tree.size()){
-				return false;
-			}
-			final ArrayList<E> array1 = this.toList();
-			final ArrayList<?> array2 = tree.toList();
-			for(int i = 0;i<this.size;++i){
-				final E e = array1.get(i);
-				if(!e.equals(array2.get(i))){
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * この TreeMulti インスタンスを表すハッシュ値を返します。
-	 */
-	@Override
-	public int hashCode(){
-		return this.hash;
-	}
-
-	/**
-	 * 指定された Node インスタンスを根の方向に辿りながら平衡を修正します。
-	 *
-	 * @param node 始点となる Node インスタンス
-	 */
-	private void fix(Node<E> node){
-		while(node!=null){
-			if(node.left==null){
-				if(node.right!=null&&node.right.height>1){
-					this.rotateL(node);
-				}
-			}
-			else if(node.right==null){
-				if(node.left.height>1){
-					this.rotateR(node);
-				}
-			}
-			else{
-				final int lh = node.left.height;
-				final int rh = node.right.height;
-				if(lh-rh>1){
-					if(node.left.right==null||node.left.right.height!=lh-1){
-						this.rotateR(node);
-					}
-					else{
-						this.rotateL(node.left);
-						this.rotateR(node);
-					}
-				}
-				else if(rh-lh>1){
-					if(node.right.left==null||node.right.left.height!=rh-1){
-						this.rotateL(node);
-					}
-					else{
-						this.rotateR(node.right);
-						this.rotateL(node);
-					}
-				}
-			}
-			setStates(node);
-			node = node.parent;
-		}
-	}
-
-	/**
-	 * 指定された Node インスタンスを基点に右回転を適用します。
-	 *
-	 * @param node 基点となる Node インスタンス
-	 */
-	private void rotateR(final Node<E> node){
-		final Node<E> temp = node.left;
-		node.left = temp.right;
-		if(node.left!=null){
-			node.left.parent = node;
-		}
-		temp.right = node;
-		temp.parent = node.parent;
-		if(node.parent!=null){
-			if(node.parent.left==node){
-				node.parent.left = temp;
-			}
-			else{
-				node.parent.right = temp;
-			}
-		}
-		else{
-			this.root = temp;
-		}
-		node.parent = temp;
-		setStates(node);
-	}
-
-	/**
-	 * 指定された Node インスタンスを基点に左回転を適用します。
-	 *
-	 * @param node 基点となる Node インスタンス
-	 */
-	private void rotateL(final Node<E> node){
-		final Node<E> temp = node.right;
-		node.right = temp.left;
-		if(node.right!=null){
-			node.right.parent = node;
-		}
-		temp.left = node;
-		temp.parent = node.parent;
-		if(node.parent!=null){
-			if(node.parent.left==node){
-				node.parent.left = temp;
-			}
-			else{
-				node.parent.right = temp;
-			}
-		}
-		else{
-			this.root = temp;
-		}
-		node.parent = temp;
-		setStates(node);
-	}
-
-	/**
-	 * 指定された Node インスタンスの状態を更新します。
-	 *
-	 * @param node 更新対象の Node インスタンス
-	 */
-	private static <E extends Comparable<E>> void setStates(final Node<E> node){
-		final int lh = node.left==null?0:node.left.height;
-		final int rh = node.right==null?0:node.right.height;
-		node.height = Math.max(lh,rh)+1;
-		final long ls = node.left==null?0:node.left.innerSize;
-		final long rs = node.right==null?0:node.right.innerSize;
-		node.innerSize = ls+rs+node.count;
-	}
-}
-
-/**
- * UnionFind クラスです。
+ * UnionFind クラスです。<br/>
  * 連結成分の大きさの他、辺の数、連結成分の数も取得できます。
  */
 @SuppressWarnings("unused")
@@ -11202,7 +9416,7 @@ final class UnionFind{
 	}
 
 	/**
-	 * 引数の 2 つの頂点を連結します。
+	 * 引数の 2 つの頂点を連結します。<br/>
 	 * 連結済みであっても辺はカウントされることに注意して下さい。
 	 *
 	 * @param x 頂点 1
@@ -11276,7 +9490,7 @@ final class UnionFind{
 }
 
 /**
- * 重み付き UnionFind です。
+ * 重み付き UnionFind です。<br/>
  * 同じ連結成分内での相対的な重みを取得できます。
  */
 @SuppressWarnings("unused")
@@ -11336,7 +9550,7 @@ final class WeightedUnionFind{
 	}
 
 	/**
-	 * 第一引数の頂点の重みを第二引数を基準にして求めます。
+	 * 第一引数の頂点の重みを第二引数を基準にして求めます。<br/>
 	 * このメソッドは指定された 2 頂点が連結していることが求められます。
 	 *
 	 * @param x1 頂点 1
@@ -11352,7 +9566,7 @@ final class WeightedUnionFind{
 	}
 
 	/**
-	 * 引数の 2 つの頂点を指定された重みで連結します。
+	 * 引数の 2 つの頂点を指定された重みで連結します。<br/>
 	 * 連結済みであっても辺はカウントされることに注意して下さい。
 	 *
 	 * @param x1 頂点 1
@@ -11369,7 +9583,7 @@ final class WeightedUnionFind{
 		}
 		final long dx = this.diff[x1];
 		final long dy = this.diff[x2];
-		long sub = dx-dy+dif;
+		long sub = dx-dy-dif;
 		if(this.rank[rx]<this.rank[ry]){
 			final int temp = rx;
 			rx = ry;

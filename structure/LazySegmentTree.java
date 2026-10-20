@@ -3,19 +3,18 @@ package structure;
 import java.util.Arrays;
 
 /**
- * LazySegmentTreeクラスです。
- * 載せる演算はfunctionメソッド、演算の合成はcompositionメソッド、演算の適用はmappingメソッドに定義して使用して下さい。
+ * LazySegmentTree クラスです。<br/>
+ * 載せる演算は function メソッド、演算の合成は composition メソッド、演算の適用は mapping メソッドに定義して使用して下さい。
  *
  * @param <S> 演算を適用する要素の型
  * @param <F> 演算に使用するパラメータ
  */
-@SuppressWarnings("unchecked")
 public abstract class LazySegmentTree<S,F>{
 
 	/**
 	 * 内部処理用の変数です。
 	 */
-	private final int size, log;
+	private final int offSet, log;
 
 	/**
 	 * 載せる要素の単位元です。
@@ -30,60 +29,60 @@ public abstract class LazySegmentTree<S,F>{
 	/**
 	 * 要素用のテーブルです。
 	 */
-	private final S[] node;
+	private final Object[] node;
 
 	/**
 	 * 演算用のテーブルです。
 	 */
-	private final F[] lazy;
+	private final Object[] lazy;
 
 	/**
-	 * 大きさN、単位元がdefaultS、恒等写像がdefaultFであるLazySegmentTreeを構築します。
-	 * 各メソッドに渡すインデックスは0-indexedであることが要求されます。
+	 * 大きさ N、単位元が defaultS、恒等写像が defaultF である LazySegmentTree を構築します。<br/>
+	 * 各メソッドに渡すインデックスは 0-indexed であることが要求されます。
 	 *
-	 * @param N 大きさ
-	 * @param defaultS 単位元
-	 * @param defaultF 恒等写像
+	 * @param size 大きさ
+	 * @param defS 単位元
+	 * @param defF 恒等写像
 	 */
-	public LazySegmentTree(final int N,final S defaultS,final F defaultF){
-		this(N,defaultS,defaultF,false);
+	protected LazySegmentTree(final int size,final S defS,final F defF){
+		this(size,defS,defF,false);
 	}
 
 	/**
-	 * 大きさN、単位元がdefaultS、恒等写像がdefaultFであるLazySegmentTreeを構築します。
+	 * 大きさ N、単位元が defaultS、恒等写像が defaultF である LazySegmentTree を構築します。
 	 *
-	 * @param N 大きさ
-	 * @param defaultS 単位元
-	 * @param defaultF 恒等写像
-	 * @param is1indexed 各メソッドに渡すインデックスは1-indexedか
+	 * @param size 大きさ
+	 * @param defS 単位元
+	 * @param defF 恒等写像
+	 * @param is1indexed 各メソッドに渡すインデックスは 1-indexed か
 	 */
-	public LazySegmentTree(final int N,final S defaultS,final F defaultF,final boolean is1indexed){
-		this.log = 32-Integer.numberOfLeadingZeros(N-1);
-		this.size = (1<<log)-(is1indexed?1:0);
-		this.defaultS = defaultS;
-		this.defaultF = defaultF;
-		this.node = (S[])new Object[1<<log+1];
-		this.lazy = (F[])new Object[1<<log+1];
-		clear();
+	protected LazySegmentTree(final int size,final S defS,final F defF,final boolean is1indexed){
+		this.log = 32-Integer.numberOfLeadingZeros(size-1);
+		this.offSet = (1<<this.log)-(is1indexed?1:0);
+		this.defaultS = defS;
+		this.defaultF = defF;
+		this.node = new Object[1<<this.log+1];
+		this.lazy = new Object[1<<this.log+1];
+		this.clear();
 	}
 
 	/**
-	 * 引数の配列を元に、単位元がdefaultS、恒等写像がdefaultFであるLazySegmentTreeを構築します。
+	 * 引数の配列を元に、単位元が defaultS、恒等写像が defaultFである LazySegmentTree を構築します。
 	 *
 	 * @param defaultValues 大きさ
-	 * @param defaultS 単位元
-	 * @param defaultF 恒等写像
-	 * @param is1indexed 各メソッドに渡すインデックスは1-indexedか
+	 * @param defS 単位元
+	 * @param defF 恒等写像
+	 * @param is1indexed 各メソッドに渡すインデックスは 1-indexed か
 	 */
-	public LazySegmentTree(final S[] defaultValues,final S defaultS,final F defaultF,final boolean is1indexed){
-		this(defaultValues.length,defaultS,defaultF,is1indexed);
-		updateAll(defaultValues);
+	protected LazySegmentTree(final S[] defaultValues,final S defS,final F defF,final boolean is1indexed){
+		this(defaultValues.length,defS,defF,is1indexed);
+		this.updateAll(defaultValues);
 	}
 
 	/**
 	 * 全ての要素を単位元に、演算を恒等写像にします。
 	 */
-	public void clear(){
+	public final void clear(){
 		Arrays.fill(this.node,this.defaultS);
 		Arrays.fill(this.lazy,this.defaultF);
 	}
@@ -93,10 +92,11 @@ public abstract class LazySegmentTree<S,F>{
 	 *
 	 * @param defaultValues 元となる配列
 	 */
+	@SuppressWarnings("unchecked")
 	private void updateAll(final S[] defaultValues){
-		System.arraycopy(defaultValues,0,node,1<<log,defaultValues.length);
-		for(int i = (1<<log)-1;i>0;i--){
-			node[i] = function(node[i<<1],node[i<<1|1]);
+		System.arraycopy(defaultValues,0,this.node,1<<this.log,defaultValues.length);
+		for(int i=(1<<this.log)-1;i>0;i--){
+			this.node[i] = this.function((S)this.node[i<<1],(S)this.node[i<<1|1]);
 		}
 	}
 
@@ -105,15 +105,16 @@ public abstract class LazySegmentTree<S,F>{
 	 *
 	 * @param index 演算を適用する位置
 	 */
+	@SuppressWarnings("unchecked")
 	private void spread(final int index){
-		if(lazy[index]!=defaultF){
-			int l = index<<1;
-			int r = index<<1|1;
-			node[l] = mapping(node[l],lazy[index]);
-			node[r] = mapping(node[r],lazy[index]);
-			lazy[l] = composition(lazy[l],lazy[index]);
-			lazy[r] = composition(lazy[r],lazy[index]);
-			lazy[index] = defaultF;
+		if(this.lazy[index]!=this.defaultF){
+			final int left = index<<1;
+			final int right = index<<1|1;
+			this.node[left] = this.mapping((S)this.node[left],(F)this.lazy[index]);
+			this.node[right] = this.mapping((S)this.node[right],(F)this.lazy[index]);
+			this.lazy[left] = this.composition((F)this.lazy[left],(F)this.lazy[index]);
+			this.lazy[right] = this.composition((F)this.lazy[right],(F)this.lazy[index]);
+			this.lazy[index] = this.defaultF;
 		}
 	}
 
@@ -123,22 +124,25 @@ public abstract class LazySegmentTree<S,F>{
 	 * @param from 演算を適用する終点
 	 */
 	private void spreadLine(final int from){
-		for(int i = log;i>0;i--)
-			spread(from>>i);
+		for(int i=this.log;i>0;i--){
+			this.spread(from>>i);
+		}
 	}
 
 	/**
 	 * 引数の区間の演算を適用します。
 	 *
-	 * @param l 左端(lを含む)
-	 * @param r 右端(rを含まない)
+	 * @param left 左端 (left を含む)
+	 * @param right 右端 (right を含まない)
 	 */
-	private void spreadRange(final int l,final int r){
-		for(int i = log;i>0;i--){
-			if((l>>i<<i)!=l)
-				spread(l>>i);
-			if((r>>i<<i)!=r)
-				spread(r>>i);
+	private void spreadRange(final int left,final int right){
+		for(int i=this.log;i>0;i--){
+			if((left>>i<<i)!=left){
+				this.spread(left>>i);
+			}
+			if((right>>i<<i)!=right){
+				this.spread(right>>i);
+			}
 		}
 	}
 
@@ -147,25 +151,34 @@ public abstract class LazySegmentTree<S,F>{
 	 *
 	 * @param index 伝播したい要素のインデックス
 	 */
+	@SuppressWarnings("unchecked")
 	private void update(int index){
-		while((index >>= 1)>0)
-			node[index] = function(node[index<<1],node[index<<1|1]);
+		while(true){
+			index >>= 1;
+			if(index==0){
+				break;
+			}
+			this.node[index] = this.function((S)this.node[index<<1],(S)this.node[index<<1|1]);
+		}
 	}
 
 	/**
 	 * 区間の要素の情報を親に向かって伝播します。
 	 *
-	 * @param l 左端(lを含む)
-	 * @param r 右端(rを含まない)
+	 * @param left 左端 (left を含む)
+	 * @param right 右端 (right を含まない)
 	 */
-	private void update(final int l,final int r){
-		for(int i = 1;i<=log;i++){
-			int subL = l>>i;
-			int subR = r>>i;
-			if((subL<<i)!=l)
-				node[subL] = function(node[subL<<1],node[subL<<1|1]);
-			if((subR<<i)!=r)
-				node[subR] = function(node[subR<<1],node[subR<<1|1]);
+	@SuppressWarnings("unchecked")
+	private void update(final int left,final int right){
+		for(int i=1;i<=this.log;i++){
+			final int subL = left>>i;
+			final int subR = right>>i;
+			if((subL<<i)!=left){
+				this.node[subL] = this.function((S)this.node[subL<<1],(S)this.node[subL<<1|1]);
+			}
+			if((subR<<i)!=right){
+				this.node[subR] = this.function((S)this.node[subR<<1],(S)this.node[subR<<1|1]);
+			}
 		}
 	}
 
@@ -175,11 +188,11 @@ public abstract class LazySegmentTree<S,F>{
 	 * @param index インデックス
 	 * @param x 上書きする値
 	 */
-	public void update(int index,final S x){
-		index += size;
-		spreadLine(index);
-		node[index] = x;
-		update(index);
+	public final void update(int index,final S x){
+		index += this.offSet;
+		this.spreadLine(index);
+		this.node[index] = x;
+		this.update(index);
 	}
 
 	/**
@@ -189,104 +202,115 @@ public abstract class LazySegmentTree<S,F>{
 	 *
 	 * @return 引数の位置の要素
 	 */
-	public S get(int index){
-		index += size;
-		spreadLine(index);
-		return node[index];
+	@SuppressWarnings("unchecked")
+	public final S get(int index){
+		index += this.offSet;
+		this.spreadLine(index);
+		return (S)this.node[index];
 	}
 
 	/**
-	 * 指定された区間にfunctionを適用した結果を返します。
+	 * 指定された区間に function を適用した結果を返します。<br/>
+	 * 閉区間であることに注意して下さい。
 	 *
-	 * @param l 左端(lを含む)
-	 * @param r 右端(rを含まない)
+	 * @param left 左端 (left を含む)
+	 * @param right 右端 (right を含む)
 	 *
-	 * @return [l,r)の要素にfunctionを適用した結果
+	 * @return [left,right] の要素に function を適用した結果
 	 */
-	public S query(int l,int r){
-		l += size;
-		r += size;
-		spreadRange(l,r);
-		S sumL = defaultS;
-		S sumR = defaultS;
-		while(l<r){
-			if((l&1)==1)
-				sumL = function(sumL,node[l++]);
-			if((r&1)==1)
-				sumR = function(node[--r],sumR);
-			l >>= 1;
-			r >>= 1;
+	@SuppressWarnings("unchecked")
+	public final S query(int left,int right){
+		left += this.offSet;
+		right += this.offSet+1;
+		this.spreadRange(left,right);
+		S sumL = this.defaultS;
+		S sumR = this.defaultS;
+		while(left<right){
+			if((left&1)==1){
+				sumL = this.function(sumL,(S)this.node[left]);
+				left += 1;
+			}
+			left >>= 1;
+			if((right&1)==1){
+				right -= 1;
+				sumR = this.function((S)this.node[right],sumR);
+			}
+			right >>= 1;
 		}
-		return function(sumL,sumR);
+		return this.function(sumL,sumR);
 	}
 
 	/**
-	 * 全要素にfunctionを適用した結果を返します。
+	 * 全要素に function を適用した結果を返します。
 	 *
-	 * @return 全要素にfunctionを適用した結果
+	 * @return 全要素に function を適用した結果
 	 */
-	public S answer(){
-		return node[1];
+	@SuppressWarnings("unchecked")
+	public final S answer(){
+		return (S)this.node[1];
 	}
 
 	/**
 	 * 引数の位置の要素に指定されたパラメータによる演算を反映します。
 	 *
 	 * @param index インデックス
-	 * @param f 反映する演算を表すパラメータ
+	 * @param function 反映する演算を表すパラメータ
 	 */
-	public void apply(int index,final F f){
-		index += size;
-		spreadLine(index);
-		node[index] = mapping(node[index],f);
-		update(index);
+	@SuppressWarnings("unchecked")
+	public final void apply(int index,final F function){
+		index += this.offSet;
+		this.spreadLine(index);
+		this.node[index] = this.mapping((S)this.node[index],function);
+		this.update(index);
 	}
 
 	/**
-	 * 指定された区間の要素に指定されたパラメータによる演算を反映します。
+	 * 指定された区間の要素に指定されたパラメータによる演算を反映します。<br/>
+	 * 閉区間であることに注意して下さい。
 	 *
-	 * @param l 左端(lを含む)
-	 * @param r 右端(rを含まない)
-	 * @param f 反映する演算を表すパラメータ
+	 * @param left 左端 (left を含む)
+	 * @param right 右端 (right を含む)
+	 * @param function 反映する演算を表すパラメータ
 	 */
-	public void apply(int l,int r,final F f){
-		l += size;
-		r += size;
-		spreadRange(l,r);
-		int subL = l;
-		int subR = r;
+	@SuppressWarnings("unchecked")
+	public final void apply(final int left,final int right,final F function){
+		int subL = left+this.offSet;
+		int subR = right+this.offSet+1;
+		this.spreadRange(subL,subR);
 		while(subL<subR){
 			if((subL&1)==1){
-				node[subL] = mapping(node[subL],f);
-				lazy[subL] = composition(lazy[subL++],f);
+				this.node[subL] = this.mapping((S)this.node[subL],function);
+				this.lazy[subL] = this.composition((F)this.lazy[subL],function);
+				subL += 1;
 			}
 			if((subR&1)==1){
-				node[--subR] = mapping(node[subR],f);
-				lazy[subR] = composition(lazy[subR],f);
+				subR -= 1;
+				this.node[subR] = this.mapping((S)this.node[subR],function);
+				this.lazy[subR] = this.composition((F)this.lazy[subR], function);
 			}
 			subL >>= 1;
 			subR >>= 1;
 		}
-		update(l,r);
+		this.update(left+this.offSet,right+this.offSet+1);
 	}
 
 	/**
 	 * 各要素に適用する関数を定義するメソッドです。
 	 *
-	 * @param s1 要素1
-	 * @param s2 要素2
+	 * @param s1 要素 1
+	 * @param s2 要素 2
 	 *
 	 * @return 要素に関数を適用した結果
 	 */
 	abstract public S function(S s1,S s2);
 
 	/**
-	 * パラメータを合成するメソッドです。
+	 * パラメータを合成するメソッドです。<br/>
 	 * パラメータを表すインスタンスが不変であること、
 	 * ここで返すインスタンスが他に影響を及ぼさないことが要求されます。
 	 *
-	 * @param f1 パラメータ1
-	 * @param f2 パラメータ2
+	 * @param f1 パラメータ 1
+	 * @param f2 パラメータ 2
 	 *
 	 * @return パラメータを合成した結果を表すパラメータ
 	 */
@@ -295,10 +319,21 @@ public abstract class LazySegmentTree<S,F>{
 	/**
 	 * パラメータを元に要素に演算を適用します。
 	 *
-	 * @param s 要素
-	 * @param f パラメータ
+	 * @param value 要素
+	 * @param function パラメータ
 	 *
 	 * @return 要素に演算を適用した結果
 	 */
-	abstract public S mapping(S s,F f);
+	abstract public S mapping(S value,F function);
+
+	/**
+	 * この LazySegmentTree を表す文字列を返します。
+	 *
+	 * @return この LazySegmentTree を表す文字列
+	 */
+	@Override
+	@Deprecated
+	public String toString(){
+		return "LazySegmentTree["+this.hashCode()+"]";
+	}
 }

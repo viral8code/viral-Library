@@ -3,7 +3,7 @@ package structure;
 import java.util.Arrays;
 
 /**
- * UnionFindクラスです。
+ * UnionFind クラスです。<br/>
  * 連結成分の大きさの他、辺の数、連結成分の数も取得できます。
  */
 public final class UnionFind{
@@ -11,7 +11,7 @@ public final class UnionFind{
 	/**
 	 * 内部処理用の配列です。
 	 */
-	private final int[] par, rank, size, path;
+	private final int[] par, rank, sizes, path;
 
 	/**
 	 * 連結成分の数を管理する変数です。
@@ -19,86 +19,87 @@ public final class UnionFind{
 	private int count;
 
 	/**
-	 * 大きさNのUnionFindを構築します。
+	 * 大きさ N の UnionFind を構築します。
 	 *
-	 * @param N 大きさ
+	 * @param size 大きさ
 	 */
-	public UnionFind(final int N){
-		count = N;
-		par = new int[N];
-		rank = new int[N];
-		size = new int[N];
-		path = new int[N];
-		Arrays.fill(par,-1);
-		Arrays.fill(size,1);
+	public UnionFind(final int size){
+		this.count = size;
+		this.par = new int[size];
+		this.rank = new int[size];
+		this.sizes = new int[size];
+		this.path = new int[size];
+		Arrays.fill(this.par,-1);
+		Arrays.fill(this.sizes,1);
 	}
 
 	/**
 	 * 引数の頂点の代表される親を返します。
 	 *
-	 * @param ind 代表を取得する頂点
+	 * @param index 代表を取得する頂点
 	 *
 	 * @return 代表される親
 	 */
-	public int root(final int ind){
-		if(par[ind]==-1){
-			return ind;
+	public int root(final int index){
+		if(this.par[index]==-1){
+			return index;
 		}
 		else{
-			return par[ind] = root(par[ind]);
+			this.par[index] = this.root(this.par[index]);
+			return this.par[index];
 		}
 	}
 
 	/**
-	 * 引数の二つの頂点が同一の連結成分に属するか返します。
+	 * 引数の 2 つの頂点が同一の連結成分に属するか返します。
 	 *
-	 * @param x 頂点1
-	 * @param y 頂点2
+	 * @param x 頂点 1
+	 * @param y 頂点 2
 	 *
-	 * @return 同一の連結成分に属するならtrue、それ以外はfalse
+	 * @return 同一の連結成分に属するなら true、それ以外は false
 	 */
 	public boolean isSame(final int x,final int y){
-		return root(x)==root(y);
+		return this.root(x)==this.root(y);
 	}
 
 	/**
-	 * 引数の二つの頂点を連結します。
+	 * 引数の 2 つの頂点を連結します。<br/>
 	 * 連結済みであっても辺はカウントされることに注意して下さい。
 	 *
-	 * @param x 頂点1
-	 * @param y 頂点2
+	 * @param x 頂点 1
+	 * @param y 頂点 2
 	 *
-	 * @return 既に二頂点が同一の連結成分に属しているならfalse、それ以外はtrue
+	 * @return 既に 2 つの頂点が同一の連結成分に属しているなら false、それ以外は true
 	 */
 	public boolean unite(final int x,final int y){
-		int rx = root(x);
-		int ry = root(y);
-		++path[rx];
+		int rx = this.root(x);
+		int ry = this.root(y);
+		++this.path[rx];
 		if(rx==ry){
 			return false;
 		}
-		if(rank[rx]<rank[ry]){
-			int temp = rx;
+		if(this.rank[rx]<this.rank[ry]){
+			final int temp = rx;
 			rx = ry;
 			ry = temp;
 		}
-		par[ry] = rx;
-		if(rank[rx]==rank[ry]){
-			++rank[rx];
+		this.par[ry] = rx;
+		if(this.rank[rx]==this.rank[ry]){
+			++this.rank[rx];
 		}
-		path[rx] += path[ry];
-		size[rx] += size[ry];
-		--count;
+		this.path[rx] += this.path[ry];
+		this.sizes[rx] += this.sizes[ry];
+		--this.count;
 		return true;
 	}
 
 	/**
-	 * このUnionFindの連結成分の数を返します。
+	 * この UnionFind の連結成分の数を返します。
 	 *
 	 * @return 連結成分の数
 	 */
 	public int groupCount(){
-		return count;
+		return this.count;
 	}
 
 	/**
@@ -109,7 +110,7 @@ public final class UnionFind{
 	 * @return 連結成分の辺の総数
 	 */
 	public int pathCount(final int x){
-		return path[root(x)];
+		return this.path[this.root(x)];
 	}
 
 	/**
@@ -120,6 +121,17 @@ public final class UnionFind{
 	 * @return 連結成分の頂点数
 	 */
 	public int size(final int x){
-		return size[root(x)];
+		return this.sizes[this.root(x)];
+	}
+
+	/**
+	 * この UnionFind を表す文字列を返します。
+	 *
+	 * @return この UnionFind を表す文字列
+	 */
+	@Override
+	@Deprecated
+	public String toString(){
+		return "UnionFind["+this.hashCode()+"]";
 	}
 }

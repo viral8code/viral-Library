@@ -1,8 +1,8 @@
 package math;
 
 /**
- * 階乗計算用の Facttorial クラスです。
- * 引数Nに対して前計算をO(N)で行なうことでN以下の階乗とその逆元、N以下の逆元をO(1)で求めます。
+ * 階乗計算用の Factorial クラスです。
+ * 引数 N に対して前計算を O(N) で行なうことで N 以下の階乗とその逆元、N 以下の逆元を O(1) で求めます。
  */
 public final class Factorial{
 
@@ -17,76 +17,94 @@ public final class Factorial{
 	private final long[] inFact;
 
 	/**
-	 * このFactorialでの法となる値
+	 * この Factorial での法となる値
 	 */
 	private final long mod;
 
 	/**
-	 * 1～Nの階乗とその逆元をmodで割ったあまりを事前に計算します。
+	 * 1～N の階乗とその逆元を mod で割ったあまりを事前に計算します。
 	 *
-	 * @param N 計算範囲
-	 * @param mod 法
+	 * @param size 計算範囲
+	 * @param modValue 法
+	 *
+	 * @throws IllegalArgumentException size が負の場合
 	 */
-	public Factorial(final int N,final long mod){
-		fact = new long[N+1];
-		fact[0] = fact[1] = 1;
-		for(int i = 2;i<=N;++i){
-			fact[i] = fact[i-1]*i%mod;
+	public Factorial(final int size,final long modValue) throws IllegalArgumentException{
+		if(size<0){
+			throw new IllegalArgumentException("size must be non-negative");
 		}
-		inFact = new long[N+1];
-		inFact[N] = MathFunction.modPow(fact[N],mod-2,mod);
-		for(int i = N;i>0;--i){
-			inFact[i-1] = inFact[i]*i%mod;
+		this.fact = new long[size+1];
+		this.fact[0] = 1;
+		if(size>0){
+			this.fact[1] = 1;
 		}
-		inFact[0] = 1;
-		this.mod = mod;
+		for(int i=2;i<=size;++i){
+			this.fact[i] = this.fact[i-1]*i%modValue;
+		}
+		this.inFact = new long[size+1];
+		this.inFact[size] = MathFunction.modPow(this.fact[size],modValue-2,modValue);
+		for(int i=size;i>0;--i){
+			this.inFact[i-1] = this.inFact[i]*i%modValue;
+		}
+		this.inFact[0] = 1;
+		this.mod = modValue;
 	}
 
 	/**
-	 * num!をmodで割ったあまりを返します。
+	 * num! を mod で割ったあまりを返します。
 	 *
-	 * @param num num!となるnum
+	 * @param num num! mod m となる num
 	 *
-	 * @return num!
+	 * @return num! mod m
 	 */
 	public long getFact(final int num){
-		return fact[num];
+		return this.fact[num];
 	}
 
 	/**
-	 * num!^-1をmodで割ったあまりを返します。
+	 * num! ** -1 を mod で割ったあまりを返します。
 	 *
-	 * @param num num!^-1となるnum
+	 * @param num num! ** -1 mod m となる num
 	 *
-	 * @return num!
+	 * @return num! ** -1 mod m
 	 */
 	public long getInFact(final int num){
-		return inFact[num];
+		return this.inFact[num];
 	}
 
 	/**
-	 * modを法とした時のnum^-1を返します。
+	 * mod を法とした時の num ** -1 を返します。
 	 *
-	 * @param num num^-1 mod mとなるnum
+	 * @param num num ** -1 mod m となる num
 	 *
-	 * @return num!
+	 * @return num ** -1 mod m
 	 */
 	public long getInverse(final int num){
-		return fact[num-1]*inFact[num]%mod;
+		return this.fact[num-1]*this.inFact[num]%this.mod;
 	}
 
 	/**
-	 * aCbをmodで割ったあまりを返します。
+	 * aCb を mod で割ったあまりを返します。
 	 *
-	 * @param a aCbとなるa
-	 * @param b aCbとなるb
+	 * @param total aCb mod m となる a
+	 * @param choose aCb mod m となる b
 	 *
-	 * @return aCb
+	 * @return aCb mod m
 	 */
-	public long getCombi(final int a,final int b){
-		if(a<b||a<0||b<0){
+	public long getCombination(final int total,final int choose){
+		if(total<choose||total<0||choose<0){
 			return 0;
 		}
-		return (fact[a]*inFact[a-b]%mod)*inFact[b]%mod;
+		return (this.fact[total]*this.inFact[total-choose]%this.mod)*this.inFact[choose]%this.mod;
+	}
+
+	/**
+	 * この Factorial インスタンスを表す文字列を返します。
+	 *
+	 * @return この Factorial インスタンスを表す文字列
+	 */
+	@Override
+	public String toString(){
+		return "Factorial (size = "+this.fact.length+", mod = "+this.mod+")";
 	}
 }

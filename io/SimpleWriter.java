@@ -1,29 +1,29 @@
 package io;
 
-import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import math.MathFunction;
 
 /**
- * SimpleWriterクラスです。
+ * SimpleWriter クラスです。<br/>
  * そこそこ速い出力を提供します。
  */
-public final class SimpleWriter implements Closeable, Flushable, AutoCloseable{
+public final class SimpleWriter implements Flushable, AutoCloseable{
 
 	/**
-	 * このSimpleWriterのオートフラッシュが有効か保持する変数です。
+	 * この SimpleWriter のオートフラッシュが有効か保持する変数です。
 	 */
-	private final boolean autoFlush;
+	private final boolean _autoFlush;
 
 	/**
-	 * このSimpleWriterのSimpleOutputStreamです。
+	 * この SimpleWriter の SimpleOutputStream です。
 	 */
-	private SimpleOutputStream out;
+	private SimpleOutputStream simpleOutputStream;
 
 	/**
-	 * 改行文字列を表すchar[]です。
+	 * 改行文字列を表す char[] です。
 	 */
 	private static final char[] charsOfReturn;
 
@@ -33,41 +33,49 @@ public final class SimpleWriter implements Closeable, Flushable, AutoCloseable{
 	private static final byte[] integerBuffer;
 
 	/**
-	 * Long.MIN_VALUE用の配列です。
+	 * Long.MIN_VALUE 用の配列です。
 	 */
 	private static final byte[] MIN_VALUE_ARRAY;
 
 	/**
-	 * '0'を表すbyteです。
+	 * '0' を表す byte です。
 	 */
 	private static final byte ZERO;
 
+	/**
+	 * デフォルトのバッファサイズです。
+	 */
+	private static final int DEFAULT_SIZE;
+
 	static{
-		charsOfReturn = System.lineSeparator().toCharArray();
+		final String s = System.lineSeparator();
+		charsOfReturn = s.toCharArray();
 		integerBuffer = new byte[20];
 		integerBuffer[0] = '-';
 		ZERO = '0';
 		MIN_VALUE_ARRAY = new byte[]{'-','9','2','2','3','3','7','2','0','3','6','8','5','4','7','7','5','8','0','8'};
+		DEFAULT_SIZE = 1<<17;
 	}
 
 	/**
-	 * 指定されたOutputStreamを元にSimpleWriterを生成します。
+	 * 指定された OutputStream を元に SimpleWriter を生成します。<br/>
 	 * オートフラッシュは無効です。
-	 * 
-	 * @param out SimpleWriterに保持させるOutputStream
+	 *
+	 * @param out SimpleWriter に保持させる OutputStream
 	 */
 	public SimpleWriter(final OutputStream out){
 		this(out,false);
 	}
 
 	/**
-	 * 指定されたOutputStreamとフラグを元にSimpleWriterを生成します。
-	 * @param out SimpleWriterに保持させるOutputStream
-	 * @param autoFlush オートフラッシュの有効無効を表すboolean
+	 * 指定された OutputStream とフラグを元に SimpleWriter を生成します。
+	 *
+	 * @param out SimpleWriter に保持させる OutputStream
+	 * @param autoFlush オートフラッシュの有効無効を表す boolean
 	 */
 	public SimpleWriter(final OutputStream out,final boolean autoFlush){
-		this.out = new SimpleOutputStream(out,1<<17);
-		this.autoFlush = autoFlush;
+		this.simpleOutputStream = new SimpleOutputStream(out,DEFAULT_SIZE);
+		this._autoFlush = autoFlush;
 	}
 
 	/**
@@ -75,116 +83,122 @@ public final class SimpleWriter implements Closeable, Flushable, AutoCloseable{
 	 */
 	public void flush(){
 		try{
-			out.flush();
-		}catch(final Exception x){
-			x.printStackTrace();
+			this.simpleOutputStream.flush();
+		}
+		catch(final Exception x){
+			x.printStackTrace(System.err);
 			System.exit(1);
 		}
 	}
 
 	/**
-	 * このSimpleWriterのSimpleOutputStreamを閉じます。
+	 * この SimpleWriter の SimpleOutputStream を閉じます。
 	 */
 	public void close(){
 		try{
-			if(out==null){
+			if(this.simpleOutputStream==null){
 				return;
 			}
-			out.close();
-			out = null;
-		}catch(final Exception x){
-			x.printStackTrace();
+			this.simpleOutputStream.close();
+			this.simpleOutputStream = null;
+		}
+		catch(final Exception x){
+			x.printStackTrace(System.err);
 			System.exit(1);
 		}
 	}
 
 	/**
 	 * 引数の値を書き込みます。
-	 * 
-	 * @param c 文字コード
+	 *
+	 * @param i 文字コード
 	 */
-	public void write(final int c){
+	public void write(final int i){
 		try{
-			out.write(c);
-		}catch(final Exception x){
-			x.printStackTrace();
+			this.simpleOutputStream.write(i);
+		}
+		catch(final Exception x){
+			x.printStackTrace(System.err);
 			System.exit(1);
 		}
 	}
 
 	/**
-	 * 指定された区間のcharを書き込みます。
-	 * 
+	 * 指定された区間の char を書き込みます。
+	 *
 	 * @param buf 書き込み元のバッファー
 	 * @param off 書き込み開始地点
 	 * @param len 書き込む文字数
 	 */
 	public void write(final char[] buf,final int off,final int len){
 		try{
-			out.write(buf,off,len);
-		}catch(final Exception x){
-			x.printStackTrace();
+			this.simpleOutputStream.write(buf,off,len);
+		}
+		catch(final Exception x){
+			x.printStackTrace(System.err);
 			System.exit(1);
 		}
 	}
 
 	/**
-	 * 指定された区間のbyteを書き込みます。
-	 * 
+	 * 指定された区間の byte を書き込みます。
+	 *
 	 * @param buf 書き込み元のバッファー
 	 * @param off 書き込み開始地点
 	 * @param len 書き込む文字数
 	 */
 	public void write(final byte[] buf,final int off,final int len){
 		try{
-			out.write(buf,off,len);
-		}catch(final Exception x){
-			x.printStackTrace();
+			this.simpleOutputStream.write(buf,off,len);
+		}
+		catch(final Exception x){
+			x.printStackTrace(System.err);
 			System.exit(1);
 		}
 	}
 
 	/**
-	 * 指定されたchar[]を書き込みます。
-	 * 
-	 * @param buf 書き込みたいchar[]
+	 * 指定された char[] を書き込みます。
+	 *
+	 * @param buf 書き込みたい char[]
 	 */
 	public void write(final char[] buf){
-		write(buf,0,buf.length);
+		this.write(buf,0,buf.length);
 	}
 
 	/**
-	 * 指定されたbyte[]を書き込みます。
-	 * 
-	 * @param buf 書き込みたいbyte[]
+	 * 指定された byte[] を書き込みます。
+	 *
+	 * @param buf 書き込みたい byte[]
 	 */
 	public void write(final byte[] buf){
-		write(buf,0,buf.length);
+		this.write(buf,0,buf.length);
 	}
 
 	/**
 	 * 指定された区間の文字列を書き込みます。
-	 * 
+	 *
 	 * @param s 書き込み元
 	 * @param off 書き込み開始地点
 	 * @param len 書き込む文字数
 	 */
 	public void write(final String s,final int off,final int len){
 		try{
-			out.write(s.toCharArray(),off,len);
-		}catch(final Exception x){
-			x.printStackTrace();
+			this.simpleOutputStream.write(s.toCharArray(),off,len);
+		}
+		catch(final Exception x){
+			x.printStackTrace(System.err);
 			System.exit(1);
 		}
 	}
 
 	/**
 	 * 指定された文字列を書き込みます。
-	 * 
+	 *
 	 * @param s 書き込みたい文字列
 	 */
 	public void write(final String s){
-		write(s.toCharArray(),0,s.length());
+		this.write(s.toCharArray(),0,s.length());
 	}
 
 	/**
@@ -192,1082 +206,1125 @@ public final class SimpleWriter implements Closeable, Flushable, AutoCloseable{
 	 */
 	private void newLine(){
 		try{
-			out.write(charsOfReturn,0,charsOfReturn.length);
-			if(autoFlush){
-				out.flush();
+			this.simpleOutputStream.write(charsOfReturn,0,charsOfReturn.length);
+			if(this._autoFlush){
+				this.simpleOutputStream.flush();
 			}
-		}catch(final Exception x){
-			x.printStackTrace();
+		}
+		catch(final Exception x){
+			x.printStackTrace(System.err);
 			System.exit(1);
 		}
 	}
 
 	/**
-	 * 引数のbooleanを表す文字列を改行無しで出力します。
-	 * 
-	 * @param b 出力したいboolean
+	 * 引数の boolean を表す文字列を改行無しで出力します。
+	 *
+	 * @param value 出力したい boolean
 	 */
-	public void print(final boolean b){
-		write(b?"true":"false");
+	public void print(final boolean value){
+		this.write(value?"true":"false");
 	}
 
 	/**
-	 * 引数のcharを改行無しで出力します。
-	 * 
-	 * @param c 出力したいchar
+	 * 引数の char を改行無しで出力します。
+	 *
+	 * @param c 出力したい char
 	 */
 	public void print(final char c){
-		write(c);
+		this.write(c);
 	}
 
 	/**
-	 * 引数のlongを改行無しで出力します。
-	 * 
-	 * @param l 出力したいlong
+	 * 引数の long を改行無しで出力します。
+	 *
+	 * @param l 出力したい long
 	 */
 	public void print(final long l){
 		if(l==Long.MIN_VALUE){
-			write(MIN_VALUE_ARRAY);
+			this.write(MIN_VALUE_ARRAY);
 		}
 		else{
 			long num = Math.abs(l);
-			int len = MathFunction.digit(num);
+			final int len = MathFunction.digit(num);
 			for(int i=len;i>0;i--){
 				integerBuffer[i] = (byte)(num%10+ZERO);
 				num /= 10;
 			}
-			if(l<0)
-				write(integerBuffer,0,len+1);
-			else
-				write(integerBuffer,1,len);
+			if(l<0){
+				this.write(integerBuffer,0,len+1);
+			}
+			else{
+				this.write(integerBuffer,1,len);
+			}
 		}
 	}
 
 	/**
-	 * 引数のfloatを改行無しで出力します。
-	 * 
-	 * @param f 出力したいfloat
+	 * 引数の float を改行無しで出力します。
+	 *
+	 * @param f 出力したい float
 	 */
 	public void print(final float f){
-		write(String.valueOf(f).toCharArray());
+		this.write(String.valueOf(f).toCharArray());
 	}
 
 	/**
-	 * 引数のdoubleを改行無しで出力します。
-	 * 
-	 * @param d 出力したいdouble
+	 * 引数の double を改行無しで出力します。
+	 *
+	 * @param d 出力したい double
 	 */
 	public void print(final double d){
-		write(String.valueOf(d).toCharArray());
+		this.write(String.valueOf(d).toCharArray());
 	}
 
 	/**
-	 * 引数のchar[]を改行無しで出力します。
-	 * 
-	 * @param s 出力したいchar[]
+	 * 引数の char[] を改行無しで出力します。
+	 *
+	 * @param cs 出力したい char[]
 	 */
-	public void print(final char[] s){
-		write(s);
+	public void print(final char[] cs){
+		this.write(cs);
 	}
 
 	/**
-	 * 引数のObjectを改行無しで出力します。
-	 * このメソッドはprint(obj.toString().toCharArray())と等価です。
-	 * 
-	 * @param obj 出力したいObject
+	 * 引数の Object を改行無しで出力します。
+	 * このメソッドは print(obj.toString().toCharArray()) と等価です。
+	 *
+	 * @param obj 出力したい Object
 	 */
 	public void print(final Object obj){
-		write(obj.toString().toCharArray());
+		final String s = String.valueOf(obj);
+		this.write(s.toCharArray());
 	}
 
 	/**
 	 * 改行を出力します。
 	 */
 	public void println(){
-		newLine();
+		this.newLine();
 	}
 
 	/**
-	 * 引数のbooleanを表す文字列を改行ありで出力します。
-	 * 
-	 * @param x 出力したいboolean
+	 * 引数の boolean を表す文字列を改行ありで出力します。
+	 *
+	 * @param x 出力したい boolean
 	 */
 	public void println(final boolean x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のcharを改行ありで出力します。
-	 * 
-	 * @param x 出力したいchar
+	 * 引数の char を改行ありで出力します。
+	 *
+	 * @param x 出力したい char
 	 */
 	public void println(final char x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のintを改行ありで出力します。
-	 * 
-	 * @param x 出力したいint
+	 * 引数の int を改行ありで出力します。
+	 *
+	 * @param x 出力したい int
 	 */
 	public void println(final int x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のlongを改行ありで出力します。
-	 * 
-	 * @param x 出力したいlong
+	 * 引数の long を改行ありで出力します。
+	 *
+	 * @param x 出力したい long
 	 */
 	public void println(final long x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のfloatを改行ありで出力します。
-	 * 
-	 * @param x 出力したいfloat
+	 * 引数の float を改行ありで出力します。
+	 *
+	 * @param x 出力したい float
 	 */
 	public void println(final float x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のdoubleを改行ありで出力します。
-	 * 
-	 * @param x 出力したいdouble
+	 * 引数の double を改行ありで出力します。
+	 *
+	 * @param x 出力したい double
 	 */
 	public void println(final double x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のchar[]を改行ありで出力します。
-	 * 
-	 * @param x 出力したいchar[]
+	 * 引数の char[] を改行ありで出力します。
+	 *
+	 * @param x 出力したい char[]
 	 */
 	public void println(final char[] x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のStringを改行ありで出力します。
-	 * 
-	 * @param x 出力したいString
+	 * 引数の String を改行ありで出力します。
+	 *
+	 * @param x 出力したい String
 	 */
 	public void println(final String x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
-	 * 引数のObjectを改行ありで出力します。
-	 * 
-	 * @param x 出力したいObject
+	 * 引数の Object を改行ありで出力します。
+	 *
+	 * @param x 出力したい Object
 	 */
 	public void println(final Object x){
-		print(x);
-		println();
+		this.print(x);
+		this.println();
 	}
 
 	/**
 	 * 指定されたフォーマットで引数を出力します。
-	 * 
+	 *
 	 * @param format フォーマット
 	 * @param args 出力したい引数
-	 * @return このSimpleWriter
 	 */
-	public SimpleWriter printf(final String format,final Object... args){
-		print(String.format(format,args));
-		return this;
+	public void printf(final String format,final Object... args){
+		this.print(String.format(format,args));
 	}
 
 	/**
-	 * 指定されたCharSequenceをSimpleOutputStreamに追加します。
-	 * 
-	 * @param csq 追加したいCharSequence
-	 * @return このSimpleWriter
+	 * 指定された CharSequence を SimpleOutputStream に追加します。
+	 *
+	 * @param csq 追加したい CharSequence
 	 */
-	public SimpleWriter append(final CharSequence csq){
-		write(String.valueOf(csq).toCharArray());
-		return this;
+	public void append(final CharSequence csq){
+		this.write(String.valueOf(csq).toCharArray());
 	}
 
 	/**
-	 * 指定されたCharSequenceの区間をSimpleOutputStreamに追加します。
-	 * 
-	 * @param csq 追加したいCharSequence
-	 * @param start 開始地点(startを含む)
-	 * @param end 終了地点(endを含まない)
-	 * @return このSimpleWriter
+	 * 指定された CharSequence の区間を SimpleOutputStream に追加します。
+	 *
+	 * @param csq 追加したい CharSequence
+	 * @param start 開始地点 (start を含む)
+	 * @param end 終了地点 (end を含まない)
 	 */
-	public SimpleWriter append(CharSequence csq,final int start,final int end){
+	public void append(CharSequence csq,final int start,final int end){
 		if(csq==null){
 			csq = "null";
 		}
-		return append(csq.subSequence(start,end));
+		this.append(csq.subSequence(start,end));
 	}
 
 	/**
-	 * 指定されたcharをSimpleOutputStreamに追加します。
-	 * 
-	 * @param c 追加したいchar
-	 * @return このSimpleWriter
+	 * 指定された char を SimpleOutputStream に追加します。
+	 *
+	 * @param c 追加したい char
 	 */
-	public SimpleWriter append(final char c){
-		write(c);
-		return this;
+	public void append(final char c){
+		this.write(c);
 	}
 
 	/**
-	 * int[]を空白区切りで改行無しで出力します。
-	 * 
-	 * @param array 出力したいint[]
+	 * int[] を空白区切りで改行無しで出力します。
+	 *
+	 * @param array 出力したい int[]
 	 */
 	public void print(final int[] array){
-		print(array,' ');
+		this.print(array,' ');
 	}
 
 	/**
-	 * int[]を指定された文字列を区切り文字として改行無しで出力します。
-	 * 
-	 * @param array 出力したいint[]
+	 * int[] を指定された文字列を区切り文字として改行無しで出力します。
+	 *
+	 * @param array 出力したい int[]
 	 * @param str 区切り文字
 	 */
 	public void print(final int[] array,final String str){
-		if(array.length==0)
+		if(array.length==0){
 			return;
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(str);
-			print(array[i]);
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(str);
+			this.print(array[i]);
 		}
 	}
 
 	/**
-	 * int[]を指定された文字を区切り文字として改行無しで出力します。
-	 * 
-	 * @param array 出力したいint[]
+	 * int[] を指定された文字を区切り文字として改行無しで出力します。
+	 *
+	 * @param array 出力したい int[]
 	 * @param c 区切り文字
 	 */
 	public void print(final int[] array,final char c){
-		if(array.length==0)
+		if(array.length==0){
 			return;
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(c);
-			print(array[i]);
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(c);
+			this.print(array[i]);
 		}
 	}
 
 	/**
-	 * int[][]を空白区切りで、最後に改行を入れないで出力します。
-	 * 
-	 * @param array 出力したいint[][]
+	 * int[][] を空白区切りで、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい int[][]
 	 */
-	public void print(final int[][] array){
-		print(array,' ');
+	public void print(final int[][] arrays){
+		this.print(arrays,' ');
 	}
 
 	/**
-	 * int[][]を指定された文字列を区切り文字として、最後に改行を入れないで出力します。
-	 * 
-	 * @param arrays 出力したいint[][]
+	 * int[][] を指定された文字列を区切り文字として、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい int[][]
 	 * @param str 区切り文字
 	 */
 	public void print(final int[][] arrays,final String str){
-		if(arrays.length==0)
+		if(arrays.length==0){
 			return;
-		print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],str);
+		}
+		this.print(arrays[0],str);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],str);
 		}
 	}
 
 	/**
-	 * int[][]を指定された文字を区切り文字として、最後に改行を入れないで出力します。
-	 * 
-	 * @param arrays 出力したいint[][]
+	 * int[][] を指定された文字を区切り文字として、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい int[][]
 	 * @param c 区切り文字
 	 */
 	public void print(final int[][] arrays,final char c){
-		if(arrays.length==0)
+		if(arrays.length==0){
 			return;
-		print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],c);
+		}
+		this.print(arrays[0],c);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],c);
 		}
 	}
 
 	/**
-	 * int[]を空白区切りで改行ありで出力します。
-	 * 
-	 * @param array 出力したいint[]
+	 * int[] を空白区切りで改行ありで出力します。
+	 *
+	 * @param array 出力したい int[]
 	 */
 	public void println(final int[] array){
-		print(array,' ');
-		println();
+		this.print(array,' ');
+		this.println();
 	}
 
 	/**
-	 * int[]を指定された文字列を区切り文字として改行ありで出力します。
-	 * 
-	 * @param array 出力したいint[]
+	 * int[] を指定された文字列を区切り文字として改行ありで出力します。
+	 *
+	 * @param array 出力したい int[]
 	 * @param str 区切り文字
 	 */
 	public void println(final int[] array,final String str){
-		print(array,str);
-		println();
+		this.print(array,str);
+		this.println();
 	}
 
 	/**
-	 * int[]を指定された文字を区切り文字として改行ありで出力します。
-	 * 
-	 * @param array 出力したいint[]
+	 * int[] を指定された文字を区切り文字として改行ありで出力します。
+	 *
+	 * @param array 出力したい int[]
 	 * @param c 区切り文字
 	 */
 	public void println(final int[] array,final char c){
-		print(array,c);
-		println();
+		this.print(array,c);
+		this.println();
 	}
 
 	/**
-	 * int[][]を空白区切りで、最後に改行を入れて出力します。
-	 * 
-	 * @param array 出力したいint[][]
+	 * int[][] を空白区切りで、最後に改行を入れて出力します。
+	 *
+	 * @param array 出力したい int[][]
 	 */
 	public void println(final int[][] array){
-		print(array,' ');
-		println();
+		this.print(array,' ');
+		this.println();
 	}
 
 	/**
-	 * int[][]を指定された文字列を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param arrays 出力したいint[][]
+	 * int[][] を指定された文字列を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい int[][]
 	 * @param str 区切り文字
 	 */
 	public void println(final int[][] arrays,final String str){
-		print(arrays,str);
-		println();
+		this.print(arrays,str);
+		this.println();
 	}
 
 	/**
-	 * int[][]を指定された文字を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param arrays 出力したいint[][]
+	 * int[][] を指定された文字を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい int[][]
 	 * @param c 区切り文字
 	 */
 	public void println(final int[][] arrays,final char c){
-		print(arrays,c);
-		println();
+		this.print(arrays,c);
+		this.println();
 	}
 
 	/**
-	 * long[]を空白区切りで改行無しで出力します。
-	 * 
-	 * @param array 出力したいlong[]
+	 * long[] を空白区切りで改行無しで出力します。
+	 *
+	 * @param array 出力したい long[]
 	 */
 	public void print(final long[] array){
-		print(array,' ');
+		this.print(array,' ');
 	}
 
 	/**
-	 * long[]を指定された文字列を区切り文字として改行無しで出力します。
-	 * 
-	 * @param array 出力したいlong[]
+	 * long[] を指定された文字列を区切り文字として改行無しで出力します。
+	 *
+	 * @param array 出力したい long[]
 	 * @param str 区切り文字
 	 */
 	public void print(final long[] array,final String str){
-		if(array.length==0)
+		if(array.length==0){
 			return;
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(str);
-			print(array[i]);
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(str);
+			this.print(array[i]);
 		}
 	}
 
 	/**
-	 * long[]を指定された文字を区切り文字として改行無しで出力します。
-	 * 
-	 * @param array 出力したいlong[]
+	 * long[] を指定された文字を区切り文字として改行無しで出力します。
+	 *
+	 * @param array 出力したい long[]
 	 * @param c 区切り文字
 	 */
 	public void print(final long[] array,final char c){
-		if(array.length==0)
+		if(array.length==0){
 			return;
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(c);
-			print(array[i]);
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(c);
+			this.print(array[i]);
 		}
 	}
 
 	/**
-	 * long[][]を空白区切りで、最後に改行を入れないで出力します。
-	 * 
-	 * @param array 出力したいlong[][]
+	 * long[][] を空白区切りで、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい long[][]
 	 */
-	public void print(final long[][] array){
-		print(array,' ');
+	public void print(final long[][] arrays){
+		this.print(arrays,' ');
 	}
 
 	/**
-	 * long[][]を指定された文字列を区切り文字として、最後に改行を入れないで出力します。
-	 * 
-	 * @param arrays 出力したいlong[][]
+	 * long[][] を指定された文字列を区切り文字として、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい long[][]
 	 * @param str 区切り文字
 	 */
 	public void print(final long[][] arrays,final String str){
-		if(arrays.length==0)
+		if(arrays.length==0){
 			return;
-		print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],str);
+		}
+		this.print(arrays[0],str);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],str);
 		}
 	}
 
 	/**
-	 * long[][]を指定された文字を区切り文字として、最後に改行を入れないで出力します。
-	 * 
-	 * @param arrays 出力したいlong[][]
+	 * long[][] を指定された文字を区切り文字として、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい long[][]
 	 * @param c 区切り文字
 	 */
 	public void print(final long[][] arrays,final char c){
-		if(arrays.length==0)
+		if(arrays.length==0){
 			return;
-		print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],c);
+		}
+		this.print(arrays[0],c);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],c);
 		}
 	}
 
 	/**
-	 * long[]を空白区切りで改行ありで出力します。
-	 * 
-	 * @param array 出力したいlong[]
+	 * long[] を空白区切りで改行ありで出力します。
+	 *
+	 * @param array 出力したい long[]
 	 */
 	public void println(final long[] array){
-		println(array,' ');
+		this.println(array,' ');
 	}
 
 	/**
-	 * long[]を指定された文字列を区切り文字として改行ありで出力します。
-	 * 
-	 * @param array 出力したいlong[]
+	 * long[] を指定された文字列を区切り文字として改行ありで出力します。
+	 *
+	 * @param array 出力したい long[]
 	 * @param str 区切り文字
 	 */
 	public void println(final long[] array,final String str){
-		print(array,str);
-		println();
+		this.print(array,str);
+		this.println();
 	}
 
 	/**
-	 * long[]を指定された文字を区切り文字として改行ありで出力します。
-	 * 
-	 * @param array 出力したいlong[]
+	 * long[] を指定された文字を区切り文字として改行ありで出力します。
+	 *
+	 * @param array 出力したい long[]
 	 * @param c 区切り文字
 	 */
 	public void println(final long[] array,final char c){
-		print(array,c);
-		println();
+		this.print(array,c);
+		this.println();
 	}
 
 	/**
-	 * long[][]を空白区切りで、最後に改行を入れて出力します。
-	 * 
-	 * @param array 出力したいlong[][]
+	 * long[][] を空白区切りで、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい long[][]
 	 */
-	public void println(final long[][] array){
-		println(array,' ');
+	public void println(final long[][] arrays){
+		this.println(arrays,' ');
 	}
 
 	/**
-	 * long[][]を指定された文字列を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param arrays 出力したいlong[][]
+	 * long[][] を指定された文字列を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい long[][]
 	 * @param str 区切り文字
 	 */
 	public void println(final long[][] arrays,final String str){
-		print(arrays,str);
-		println();
+		this.print(arrays,str);
+		this.println();
 	}
 
 	/**
-	 * long[][]を指定された文字を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param arrays 出力したいlong[][]
+	 * long[][] を指定された文字を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい long[][]
 	 * @param c 区切り文字
 	 */
 	public void println(final long[][] arrays,final char c){
-		print(arrays,c);
-		println();
+		this.print(arrays,c);
+		this.println();
 	}
 
 	/**
-	 * double[]を空白区切りで改行無しで出力します。
-	 * 
-	 * @param array 出力したいdouble[]
+	 * double[] を空白区切りで改行無しで出力します。
+	 *
+	 * @param array 出力したい double[]
 	 */
 	public void print(final double[] array){
-		print(array,' ');
+		this.print(array,' ');
 	}
 
 	/**
-	 * double[]を指定された文字列を区切り文字として改行無しで出力します。
-	 * 
-	 * @param array 出力したいdouble[]
+	 * double[] を指定された文字列を区切り文字として改行無しで出力します。
+	 *
+	 * @param array 出力したい double[]
 	 * @param str 区切り文字
 	 */
 	public void print(final double[] array,final String str){
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(str);
-			print(array[i]);
+		if(array.length==0){
+			return;
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(str);
+			this.print(array[i]);
 		}
 	}
 
 	/**
-	 * double[]を指定された文字を区切り文字として改行無しで出力します。
-	 * 
-	 * @param array 出力したいdouble[]
+	 * double[] を指定された文字を区切り文字として改行無しで出力します。
+	 *
+	 * @param array 出力したい double[]
 	 * @param c 区切り文字
 	 */
 	public void print(final double[] array,final char c){
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(c);
-			print(array[i]);
+		if(array.length==0){
+			return;
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(c);
+			this.print(array[i]);
 		}
 	}
 
 	/**
-	 * double[][]を空白区切りで、最後に改行を入れないで出力します。
-	 * 
-	 * @param array 出力したいdouble[][]
+	 * double[][] を空白区切りで、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい double[][]
 	 */
-	public void print(final double[][] array){
-		print(array,' ');
+	public void print(final double[][] arrays){
+		this.print(arrays,' ');
 	}
 
 	/**
-	 * double[][]を指定された文字列を区切り文字として、最後に改行を入れないで出力します。
-	 * 
-	 * @param arrays 出力したいdouble[][]
+	 * double[][] を指定された文字列を区切り文字として、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい double[][]
 	 * @param str 区切り文字
 	 */
 	public void print(final double[][] arrays,final String str){
-		print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],str);
+		if(arrays.length==0){
+			return;
+		}
+		this.print(arrays[0],str);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],str);
 		}
 	}
 
 	/**
-	 * double[][]を指定された文字を区切り文字として、最後に改行を入れないで出力します。
-	 * 
-	 * @param arrays 出力したいdouble[][]
+	 * double[][] を指定された文字を区切り文字として、最後に改行を入れないで出力します。
+	 *
+	 * @param arrays 出力したい double[][]
 	 * @param c 区切り文字
 	 */
 	public void print(final double[][] arrays,final char c){
-		print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],c);
+		if(arrays.length==0){
+			return;
+		}
+		this.print(arrays[0],c);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],c);
 		}
 	}
 
 	/**
-	 * double[]を空白区切りで改行ありで出力します。
-	 * 
-	 * @param array 出力したいdouble[]
+	 * double[] を空白区切りで改行ありで出力します。
+	 *
+	 * @param array 出力したい double[]
 	 */
 	public void println(final double[] array){
-		println(array,' ');
+		this.println(array,' ');
 	}
 
 	/**
-	 * double[]を指定された文字列を区切り文字として改行ありで出力します。
-	 * 
-	 * @param array 出力したいdouble[]
+	 * double[] を指定された文字列を区切り文字として改行ありで出力します。
+	 *
+	 * @param array 出力したい double[]
 	 * @param str 区切り文字
 	 */
 	public void println(final double[] array,final String str){
-		print(array,str);
-		println();
+		this.print(array,str);
+		this.println();
 	}
 
 	/**
-	 * double[]を指定された文字を区切り文字として改行ありで出力します。
-	 * 
-	 * @param array 出力したいdouble[]
+	 * double[] を指定された文字を区切り文字として改行ありで出力します。
+	 *
+	 * @param array 出力したい double[]
 	 * @param c 区切り文字
 	 */
 	public void println(final double[] array,final char c){
-		print(array,c);
-		println();
+		this.print(array,c);
+		this.println();
 	}
 
 	/**
-	 * double[][]を空白区切りで、最後に改行を入れて出力します。
-	 * 
-	 * @param array 出力したいdouble[][]
+	 * double[][] を空白区切りで、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい double[][]
 	 */
-	public void println(final double[][] array){
-		println(array,' ');
+	public void println(final double[][] arrays){
+		this.println(arrays,' ');
 	}
 
 	/**
-	 * double[][]を指定された文字列を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param arrays 出力したいdouble[][]
+	 * double[][] を指定された文字列を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい double[][]
 	 * @param str 区切り文字
 	 */
 	public void println(final double[][] arrays,final String str){
-		print(arrays,str);
-		println();
+		this.print(arrays,str);
+		this.println();
 	}
 
 	/**
-	 * double[][]を指定された文字を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param arrays 出力したいdouble[][]
+	 * double[][] を指定された文字を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param arrays 出力したい double[][]
 	 * @param c 区切り文字
 	 */
 	public void println(final double[][] arrays,final char c){
-		print(arrays,c);
-		println();
+		this.print(arrays,c);
+		this.println();
 	}
 
 	/**
-	 * char[]を指定された文字列を区切り文字として改行ありで出力します。
-	 * 
-	 * @param cs 出力したいchar[]
+	 * char[] を指定された文字列を区切り文字として改行ありで出力します。
+	 *
+	 * @param cs 出力したい char[]
 	 * @param str 区切り文字
 	 */
 	public void println(final char[] cs,final String str){
-		print(cs[0]);
-		for(int i = 1;i<cs.length;++i){
-			print(str);
-			print(cs[i]);
+		if(cs.length!=0){
+			this.print(cs[0]);
+			for(int i=1;i<cs.length;++i){
+				this.print(str);
+				this.print(cs[i]);
+			}
 		}
-		println();
+		this.println();
 	}
 
 	/**
-	 * char[]を指定された文字を区切り文字として改行ありで出力します。
-	 * 
-	 * @param cs 出力したいchar[]
+	 * char[] を指定された文字を区切り文字として改行ありで出力します。
+	 *
+	 * @param cs 出力したい char[]
 	 * @param c 区切り文字
 	 */
 	public void println(final char[] cs,final char c){
-		print(cs[0]);
-		for(int i = 1;i<cs.length;++i){
-			print(c);
-			print(cs[i]);
+		if(cs.length!=0){
+			this.print(cs[0]);
+			for(int i=1;i<cs.length;++i){
+				this.print(c);
+				this.print(cs[i]);
+			}
 		}
-		println();
+		this.println();
 	}
 
 	/**
-	 * char[][]を改行区切りで、最後に改行を入れて出力します。
-	 * 
-	 * @param cs 出力したいchar[][]
+	 * char[][] を改行区切りで、最後に改行を入れて出力します。
+	 *
+	 * @param cs 出力したい char[][]
 	 */
 	public void println(final char[][] cs){
-		for(final char[] c: cs){
-			println(c);
+		for(final char[] chars:cs){
+			this.println(chars);
 		}
 	}
 
 	/**
-	 * char[][]を指定された文字列を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param cs 出力したいchar[][]
+	 * char[][] を指定された文字列を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param cs 出力したい char[][]
 	 * @param str 区切り文字
 	 */
 	public void println(final char[][] cs,final String str){
-		for(final char[] c: cs){
-			println(c,str);
+		for(final char[] chars:cs){
+			this.println(chars,str);
 		}
 	}
 
 	/**
-	 * char[][]を指定された文字を区切り文字として、最後に改行を入れて出力します。
-	 * 
-	 * @param cs 出力したいchar[][]
+	 * char[][] を指定された文字を区切り文字として、最後に改行を入れて出力します。
+	 *
+	 * @param cs 出力したい char[][]
 	 * @param c 区切り文字
 	 */
 	public void println(final char[][] cs,final char c){
-		for(final char[] cc: cs){
-			println(cc,c);
+		for(final char[] chars:cs){
+			this.println(chars,c);
 		}
 	}
 
 	/**
 	 * 配列を空白区切りで改行無しで出力します。
-	 * 
+	 *
 	 * @param array 出力したい配列
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[] array){
-		print(array,' ');
+		this.print(array,' ');
 	}
 
 	/**
 	 * 配列を指定された文字列を区切り文字として改行無しで出力します。
-	 * 
+	 *
 	 * @param array 出力したい配列
 	 * @param str 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[] array,final String str){
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(str);
-			print(array[i]);
+		if(array.length==0){
+			return;
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(str);
+			this.print(array[i]);
 		}
 	}
 
 	/**
 	 * 配列を指定された文字を区切り文字として改行無しで出力します。
-	 * 
+	 *
 	 * @param array 出力したい配列
 	 * @param c 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[] array,final char c){
-		print(array[0]);
-		for(int i = 1;i<array.length;++i){
-			print(c);
-			print(array[i]);
+		if(array.length==0){
+			return;
+		}
+		this.print(array[0]);
+		for(int i=1;i<array.length;++i){
+			this.print(c);
+			this.print(array[i]);
 		}
 	}
 
 	/**
 	 * 二次元配列を空白区切りで、最後に改行を入れないで出力します。
-	 * 
+	 *
 	 * @param arrays 出力したい二次元配列
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[][] arrays){
-		print(arrays,' ');
+		this.print(arrays,' ');
 	}
 
 	/**
 	 * 二次元配列を指定された文字列を区切り文字として、最後に改行を入れないで出力します。
-	 * 
+	 *
 	 * @param arrays 出力したい二次元配列
 	 * @param str 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[][] arrays,final String str){
-		print(arrays[0],str);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],str);
+		if(arrays.length==0){
+			return;
+		}
+		this.print(arrays[0],str);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],str);
 		}
 	}
 
 	/**
 	 * 二次元配列を指定された文字を区切り文字として、最後に改行を入れないで出力します。
-	 * 
+	 *
 	 * @param arrays 出力したい二次元配列
 	 * @param c 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void print(final E[][] arrays,final char c){
-		print(arrays[0],c);
-		for(int i = 1;i<arrays.length;++i){
-			println();
-			print(arrays[i],c);
+		if(arrays.length==0){
+			return;
+		}
+		this.print(arrays[0],c);
+		for(int i=1;i<arrays.length;++i){
+			this.println();
+			this.print(arrays[i],c);
 		}
 	}
 
 	/**
 	 * 配列を空白区切りで改行ありで出力します。
-	 * 
+	 *
 	 * @param array 出力したい配列
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final E[] array){
-		println(array,' ');
+		this.println(array,' ');
 	}
 
 	/**
 	 * 配列を指定された文字列を区切り文字として改行ありで出力します。
-	 * 
+	 *
 	 * @param array 出力したい配列
 	 * @param str 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final E[] array,final String str){
-		print(array,str);
-		println();
+		this.print(array,str);
+		this.println();
 	}
 
 	/**
 	 * 配列を指定された文字を区切り文字として改行ありで出力します。
-	 * 
+	 *
 	 * @param array 出力したい配列
 	 * @param c 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final E[] array,final char c){
-		print(array,c);
-		println();
+		this.print(array,c);
+		this.println();
 	}
 
 	/**
 	 * 二次元配列を空白区切りで、最後に改行を入れて出力します。
-	 * 
+	 *
 	 * @param arrays 出力したい二次元配列
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final E[][] arrays){
-		println(arrays,' ');
+		this.println(arrays,' ');
 	}
 
 	/**
 	 * 二次元配列を指定された文字列を区切り文字として、最後に改行を入れて出力します。
-	 * 
+	 *
 	 * @param arrays 出力したい二次元配列
 	 * @param str 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final E[][] arrays,final String str){
-		print(arrays,str);
-		println();
+		this.print(arrays,str);
+		this.println();
 	}
 
 	/**
 	 * 二次元配列を指定された文字を区切り文字として、最後に改行を入れて出力します。
-	 * 
+	 *
 	 * @param arrays 出力したい二次元配列
 	 * @param c 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final E[][] arrays,final char c){
-		print(arrays,c);
-		println();
+		this.print(arrays,c);
+		this.println();
 	}
 
 	/**
 	 * リストを空白区切りで改行無しで出力します。
-	 * 
+	 *
 	 * @param list 出力したいリスト
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final List<E> list){
-		println(list,' ');
+		this.println(list,' ');
 	}
 
 	/**
 	 * リストを指定された文字列を区切り文字として改行ありで出力します。
-	 * 
+	 *
 	 * @param list 出力したいリスト
 	 * @param str 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final List<E> list,final String str){
-		if(list.size()>0){
-			print(list.get(0));
-			for(int i = 1;i<list.size();++i){
-				print(str);
-				print(list.get(i));
+		if(!list.isEmpty()){
+			this.print(list.getFirst());
+			for(int i=1;i<list.size();++i){
+				this.print(str);
+				this.print(list.get(i));
 			}
 		}
-		println();
+		this.println();
 	}
 
 	/**
 	 * リストを指定された文字を区切り文字として改行ありで出力します。
-	 * 
+	 *
 	 * @param list 出力したいリスト
 	 * @param c 区切り文字
-	 * 
 	 * @param <E> 要素の型
 	 */
 	public <E> void println(final List<E> list,final char c){
-		if(list.size()>0){
-			print(list.get(0));
-			for(int i = 1;i<list.size();++i){
-				print(c);
-				print(list.get(i));
+		if(!list.isEmpty()){
+			this.print(list.getFirst());
+			for(int i=1;i<list.size();++i){
+				this.print(c);
+				this.print(list.get(i));
 			}
 		}
-		println();
+		this.println();
 	}
 
 	/**
-	 * SimpleWriterクラス用のSimpleOutputStreamクラスです。
+	 * この SimpleWriter を表す文字列を返します。
+	 *
+	 * @return この SimpleWriter を表す文字列
+	 */
+	@Override
+	@Deprecated
+	public String toString(){
+		return "SimpleWriter["+this.hashCode()+"]";
+	}
+
+	/**
+	 * SimpleWriter クラス用の SimpleOutputStream クラスです。<br/>
 	 * ちょっとだけ速いです。
 	 */
-	public final class SimpleOutputStream{
+	public static final class SimpleOutputStream{
 
 		/**
-		 * このSimpleOutputStreamのバッファーです。
+		 * この SimpleOutputStream のバッファーです。
 		 */
 		private final byte[] buf;
 
 		/**
-		 * このSimpleOutputStreamのバッファーにある文字数を管理する変数です。
+		 * この SimpleOutputStream のバッファーにある文字数を管理する変数です。
 		 */
 		private int count;
 
 		/**
-		 * このSimpleoutputStreamの元となるoutputStreamです。
+		 * この SimpleOutputStream の元となる OutputStream です。
 		 */
-		private OutputStream out;
+		private OutputStream outputStream;
 
 		/**
-		 * 指定されたOutputStreamとバッファーサイズを元にSimpleOutputStreamを生成します。
-		 * 
-		 * @param out SimpleOutputStreamの元となるOutputStream
+		 * 指定された OutputStream とバッファーサイズを元に SimpleOutputStream を生成します。
+		 *
+		 * @param out SimpleOutputStream の元となる OutputStream
 		 * @param size バッファーサイズ
 		 */
 		public SimpleOutputStream(final OutputStream out,final int size){
-			this.out = out;
+			this.count = 0;
+			this.outputStream = out;
 			if(size<=0){
 				throw new IllegalArgumentException("Buffer size <= 0");
 			}
-			buf = new byte[size];
+			this.buf = new byte[size];
 		}
 
 		/**
-		 * バッファリングしている文字をOutputStreamに書き込みます。
-		 * 
-		 * @throws IOException
+		 * バッファリングしている文字を OutputStream に書き込みます。
+		 *
+		 * @throws IOException OutputStream::write 由来の Exception
 		 */
 		private void flushBuffer() throws IOException{
-			if(count>0){
-				out.write(buf,0,count);
-				count = 0;
+			if(this.count>0){
+				this.outputStream.write(this.buf,0,this.count);
+				this.count = 0;
 			}
 		}
 
 		/**
 		 * 引数の値をバッファリングします。
-		 * 
-		 * @param b バッファリング対象
 		 *
-		 * @throws IOException フラッシュが必要な時にOutputStream側で例外が生じた場合
+		 * @param i バッファリング対象
+		 *
+		 * @throws IOException フラッシュが必要な時に OutputStream 側で例外が生じた場合
 		 */
-		public void write(final int b) throws IOException{
-			if(count>=buf.length){
-				flushBuffer();
+		public void write(final int i) throws IOException{
+			if(this.count>=this.buf.length){
+				this.flushBuffer();
 			}
-			buf[count++] = (byte)b;
+			this.buf[this.count] = (byte)i;
+			this.count += 1;
 		}
 
 		/**
-		 * 引数のchar[]の指定された文字数分をバッファリングします。
-		 * 
-		 * @param ch 元となるchar[]
+		 * 引数の char[] の指定された文字数分をバッファリングします。
+		 *
+		 * @param chars 元となる char[]
 		 * @param off 開始始点
 		 * @param len 文字数
 		 *
-		 * @throws IOException フラッシュが必要な時にOutputStream側で例外が生じた場合
+		 * @throws IOException フラッシュが必要な時に OutputStream 側で例外が生じた場合
 		 */
-		public void write(final char[] ch,final int off,final int len) throws IOException{
-			if(len>=buf.length){
-				flushBuffer();
-				out.write(parseByteArray(ch,off,len),0,len);
+		public void write(final char[] chars,final int off,final int len) throws IOException{
+			if(len>=this.buf.length){
+				this.flushBuffer();
+				this.outputStream.write(parseByteArray(chars,off,len),0,len);
 				return;
 			}
-			if(len>buf.length-count){
-				flushBuffer();
+			if(len>this.buf.length-this.count){
+				this.flushBuffer();
 			}
 			for(int i=0;i<len;i++){
-				buf[count+i] = (byte)ch[i+off];
+				this.buf[this.count+i] = (byte)chars[i+off];
 			}
-			count += len;
+			this.count += len;
 		}
-		
+
 		/**
-		 * 指定されたchar[]の区間をbyte[]に変換します。
-		 * 
-		 * @param ch 元となるchar[]
+		 * 指定された char[] の区間を byte[] に変換します。
+		 *
+		 * @param chars 元となる char[]
 		 * @param off 開始始点
 		 * @param len 文字数
-		 * @return 変換後のbyte[]
+		 *
+		 * @return 変換後の byte[]
 		 */
-		private byte[] parseByteArray(final char[] ch,final int off,final int len){
+		private static byte[] parseByteArray(final char[] chars,final int off,final int len){
 			final byte[] ans = new byte[len];
 			for(int i=0;i<len;i++){
-				ans[i] = (byte)ch[i+off];
+				ans[i] = (byte)chars[i+off];
 			}
 			return ans;
 		}
 
 		/**
-		 * 指定されたbyte[]の要素分バッファリングします。
-		 * 
-		 * @param b 元となるbyte[]
+		 * 指定された byte[] の要素分バッファリングします。
+		 *
+		 * @param bytes 元となる byte[]
 		 * @param off 開始地点
 		 * @param len 要素数
 		 *
-		 * @throws IOException フラッシュが必要な時にOutputStream側で例外が生じた場合
+		 * @throws IOException フラッシュが必要な時に OutputStream 側で例外が生じた場合
 		 */
-		public void write(final byte[] b,final int off,final int len) throws IOException{
-			if(len>=buf.length){
-				flushBuffer();
-				out.write(b,off,len);
+		public void write(final byte[] bytes,final int off,final int len) throws IOException{
+			if(len>=this.buf.length){
+				this.flushBuffer();
+				this.outputStream.write(bytes,off,len);
 				return;
 			}
-			if(len>buf.length-count){
-				flushBuffer();
+			if(len>this.buf.length-this.count){
+				this.flushBuffer();
 			}
-			System.arraycopy(b,off,buf,count,len);
-			count += len;
+			System.arraycopy(bytes,off,this.buf,this.count,len);
+			this.count += len;
 		}
 
 		/**
-		 * バッファリングしている文字を書き込み、OutputStreamをフラッシュします。
+		 * バッファリングしている文字を書き込み、OutputStream をフラッシュします。
 		 *
-		 * @throws IOException フラッシュが必要な時にOutputStream側で例外が生じた場合
+		 * @throws IOException フラッシュが必要な時に OutputStream 側で例外が生じた場合
 		 */
 		public void flush() throws IOException{
-			flushBuffer();
-			out.flush();
+			this.flushBuffer();
+			this.outputStream.flush();
 		}
 
 		/**
-		 * このSimpleOutputStreamの元となるOutputStreamを閉じます。
+		 * この SimpleOutputStream の元となる OutputStream を閉じます。
 		 *
-		 * @throws IOException フラッシュが必要な時にOutputStream側で例外が生じた場合
+		 * @throws IOException フラッシュが必要な時に OutputStream 側で例外が生じた場合
 		 */
 		public void close() throws IOException{
-			flush();
-			out.close();
-			out = null;
+			this.flush();
+			this.outputStream.close();
+			this.outputStream = null;
+		}
+
+		/**
+		 * この SimpleOutputStream を表す文字列を返します。
+		 *
+		 * @return この SimpleOutputStream を表す文字列
+		 */
+		@Override
+		@Deprecated
+		public String toString(){
+			return "SimpleOutputStream["+this.hashCode()+"]";
 		}
 	}
 }

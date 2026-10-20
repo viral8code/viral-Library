@@ -4,20 +4,35 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.function.Consumer;
+import java.util.function.DoubleBinaryOperator;
+import java.util.function.DoubleConsumer;
+import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
 import java.util.function.LongBinaryOperator;
+import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
+import java.util.function.UnaryOperator;
 
 /**
- * 配列に関する処理を管理するクラスです。
- * 2次元配列の回転や1次元配列の区間反転などを提供します。
+ * 配列に関する処理を管理するクラスです。<br/>
+ * 2 次元配列の回転や1次元配列の区間反転などを提供します。
  */
 public final class ArrayUtil{
 
 	/**
-	 * 配列を右周りに90度回転させたものを返します。
+	 * 呼び出さないでください。
+	 *
+	 * @throws UnsupportedOperationException このコンストラクタは呼び出されることを想定していません。
+	 */
+	private ArrayUtil() throws UnsupportedOperationException{
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -26,8 +41,8 @@ public final class ArrayUtil{
 	 */
 	public static int[][] rotateR(final int[][] array){
 		final int[][] ans = new int[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -35,7 +50,7 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに90度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -44,8 +59,8 @@ public final class ArrayUtil{
 	 */
 	public static long[][] rotateR(final long[][] array){
 		final long[][] ans = new long[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -53,7 +68,7 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに90度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -62,8 +77,8 @@ public final class ArrayUtil{
 	 */
 	public static char[][] rotateR(final char[][] array){
 		final char[][] ans = new char[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -71,7 +86,7 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに90度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -80,8 +95,8 @@ public final class ArrayUtil{
 	 */
 	public static double[][] rotateR(final double[][] array){
 		final double[][] ans = new double[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -89,7 +104,7 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに90度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -98,8 +113,8 @@ public final class ArrayUtil{
 	 */
 	public static boolean[][] rotateR(final boolean[][] array){
 		final boolean[][] ans = new boolean[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -107,19 +122,18 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を右周りに90度回転させたものを返します。
+	 * 配列を右周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
 	 * @param ans 回転させた配列を格納するための配列
-	 * 
 	 * @param <E> 配列の要素の型
 	 *
 	 * @return 回転させた配列
 	 */
 	public static <E> E[][] rotateR(final E[][] array,final E[][] ans){
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[ans[i].length-j-1][i];
 			}
 		}
@@ -127,7 +141,7 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに90度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -136,15 +150,16 @@ public final class ArrayUtil{
 	 */
 	public static int[][] rotateL(final int[][] array){
 		final int[][] ans = new int[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			final int index = i;
-			Arrays.setAll(ans[i],k->array[k][ans.length-index-1]);
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;j++){
+				ans[i][j] = array[j][ans.length-i-1];
+			}
 		}
 		return ans;
 	}
 
 	/**
-	 * 配列を左周りに90度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -153,15 +168,16 @@ public final class ArrayUtil{
 	 */
 	public static long[][] rotateL(final long[][] array){
 		final long[][] ans = new long[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			final int index = i;
-			Arrays.setAll(ans[i],k->array[k][ans.length-index-1]);
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;j++){
+				ans[i][j] = array[j][ans.length-i-1];
+			}
 		}
 		return ans;
 	}
 
 	/**
-	 * 配列を左周りに90度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -170,8 +186,8 @@ public final class ArrayUtil{
 	 */
 	public static char[][] rotateL(final char[][] array){
 		final char[][] ans = new char[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -179,7 +195,7 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに90度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -188,8 +204,8 @@ public final class ArrayUtil{
 	 */
 	public static double[][] rotateL(final double[][] array){
 		final double[][] ans = new double[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -197,7 +213,7 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに90度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
@@ -206,8 +222,8 @@ public final class ArrayUtil{
 	 */
 	public static boolean[][] rotateL(final boolean[][] array){
 		final boolean[][] ans = new boolean[array[0].length][array.length];
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -215,19 +231,18 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 配列を左周りに90度回転させたものを返します。
+	 * 配列を左周りに 90 度回転させたものを返します。<br/>
 	 * 長方形でない配列に関しての動作は保証していません。
 	 *
 	 * @param array 回転させる行列
 	 * @param ans 回転させた配列を格納するための配列
-	 * 
 	 * @param <E> 配列の要素の型
 	 *
 	 * @return 回転させた配列
 	 */
 	public static <E> E[][] rotateL(final E[][] array,final E[][] ans){
-		for(int i = 0;i<ans.length;++i){
-			for(int j = 0;j<ans[i].length;++j){
+		for(int i=0;i<ans.length;++i){
+			for(int j=0;j<ans[i].length;++j){
 				ans[i][j] = array[j][ans.length-i-1];
 			}
 		}
@@ -241,7 +256,7 @@ public final class ArrayUtil{
 	 *
 	 * @return 最長狭義増加部分列の長さ
 	 */
-	public static int lis(int[] array){
+	public static int lis(final int[] array){
 		return lis(array,false);
 	}
 
@@ -251,9 +266,9 @@ public final class ArrayUtil{
 	 * @param arrays 最長狭義増加部分列の長さを求める配列
 	 * @param p 探索する配列のインデックス
 	 *
-	 * @return arrays[i][p](0 &lt;= p &lt;= arrays.length)の最長狭義増加部分列の長さ
+	 * @return arrays[i][p] (0 &lt;= p &lt;= arrays.length) の最長狭義増加部分列の長さ
 	 */
-	public static int lis(int[][] arrays,int p){
+	public static int lis(final int[][] arrays,final int p){
 		return lis(arrays,p,false);
 	}
 
@@ -264,7 +279,7 @@ public final class ArrayUtil{
 	 *
 	 * @return 最長狭義増加部分列の長さ
 	 */
-	public static int lis(long[] array){
+	public static int lis(final long[] array){
 		return lis(array,false);
 	}
 
@@ -274,9 +289,9 @@ public final class ArrayUtil{
 	 * @param arrays 最長狭義増加部分列の長さを求める配列
 	 * @param p 探索する配列のインデックス
 	 *
-	 * @return arrays[i][p](0 &lt;= p &lt;= arrays.length)の最長狭義増加部分列の長さ
+	 * @return arrays[i][p] (0 &lt;= p &lt;= arrays.length) の最長狭義増加部分列の長さ
 	 */
-	public static int lis(long[][] arrays,int p){
+	public static int lis(final long[][] arrays,final int p){
 		return lis(arrays,p,false);
 	}
 
@@ -284,18 +299,18 @@ public final class ArrayUtil{
 	 * 引数の配列の最長増加部分列の長さを返します。
 	 *
 	 * @param array 最長増加部分列の長さを求める配列
-	 * @param include 広義増加列ならtrue、狭義増加列ならfalse
+	 * @param include 広義増加列なら true、狭義増加列なら false
 	 *
 	 * @return 最長狭義増加部分列の長さ
 	 */
-	public static int lis(int[] array,boolean include){
-		int[] list = new int[array.length];
+	public static int lis(final int[] array,final boolean include){
+		final int[] list = new int[array.length];
 		Arrays.fill(list,Integer.MAX_VALUE);
-		for(int num: array){
-			int index = include?Searcher.overSearch(list,num):Searcher.upSearch(list,num);
+		for(final int num:array){
+			final int index = include?Searcher.overSearch(list,num):Searcher.upSearch(list,num);
 			list[index] = Math.min(list[index],num);
 		}
-		int answer = Searcher.underSearch(list,Integer.MAX_VALUE);
+		final int answer = Searcher.underSearch(list,Integer.MAX_VALUE);
 		return answer+1;
 	}
 
@@ -304,18 +319,18 @@ public final class ArrayUtil{
 	 *
 	 * @param arrays 最長狭義増加部分列の長さを求める配列
 	 * @param p 探索する配列のインデックス
-	 * @param include 広義増加列ならtrue、狭義増加列ならfalse
+	 * @param include 広義増加列なら true、狭義増加列なら false
 	 *
-	 * @return arrays[i][p](0 &lt;= p &lt;= arrays.length)の最長狭義増加部分列の長さ
+	 * @return arrays[i][p] (0 &lt;= p &lt;= arrays.length) の最長狭義増加部分列の長さ
 	 */
-	public static int lis(int[][] arrays,int p,boolean include){
-		int[] list = new int[arrays.length];
+	public static int lis(final int[][] arrays,final int p,final boolean include){
+		final int[] list = new int[arrays.length];
 		Arrays.fill(list,Integer.MAX_VALUE);
-		for(int[] array: arrays){
-			int index = include?Searcher.overSearch(list,array[p]):Searcher.upSearch(list,array[p]);
+		for(final int[] array:arrays){
+			final int index = include?Searcher.overSearch(list,array[p]):Searcher.upSearch(list,array[p]);
 			list[index] = Math.min(list[index],array[p]);
 		}
-		int answer = Searcher.underSearch(list,Integer.MAX_VALUE);
+		final int answer = Searcher.underSearch(list,Integer.MAX_VALUE);
 		return answer+1;
 	}
 
@@ -323,18 +338,18 @@ public final class ArrayUtil{
 	 * 引数の配列の最長増加部分列の長さを返します。
 	 *
 	 * @param array 最長増加部分列の長さを求める配列
-	 * @param include 広義増加列ならtrue、狭義増加列ならfalse
+	 * @param include 広義増加列なら true、狭義増加列なら false
 	 *
 	 * @return 最長狭義増加部分列の長さ
 	 */
-	public static int lis(long[] array,boolean include){
-		long[] list = new long[array.length];
+	public static int lis(final long[] array,final boolean include){
+		final long[] list = new long[array.length];
 		Arrays.fill(list,Long.MAX_VALUE);
-		for(long num: array){
-			int index = include?Searcher.overSearch(list,num):Searcher.upSearch(list,num);
+		for(final long num:array){
+			final int index = include?Searcher.overSearch(list,num):Searcher.upSearch(list,num);
 			list[index] = Math.min(list[index],num);
 		}
-		int answer = Searcher.underSearch(list,Long.MAX_VALUE);
+		final int answer = Searcher.underSearch(list,Long.MAX_VALUE);
 		return answer+1;
 	}
 
@@ -343,54 +358,56 @@ public final class ArrayUtil{
 	 *
 	 * @param arrays 最長狭義増加部分列の長さを求める配列
 	 * @param p 探索する配列のインデックス
-	 * @param include 広義増加列ならtrue、狭義増加列ならfalse
+	 * @param include 広義増加列なら true、狭義増加列なら false
 	 *
-	 * @return arrays[i][p](0 &lt;= p &lt;= arrays.length)の最長狭義増加部分列の長さ
+	 * @return arrays[i][p] (0 &lt;= p &lt;= arrays.length) の最長狭義増加部分列の長さ
 	 */
-	public static int lis(long[][] arrays,int p,boolean include){
-		long[] list = new long[arrays.length];
+	public static int lis(final long[][] arrays,final int p,final boolean include){
+		final long[] list = new long[arrays.length];
 		Arrays.fill(list,Long.MAX_VALUE);
-		for(long[] array: arrays){
-			int index = include?Searcher.overSearch(list,array[p]):Searcher.upSearch(list,array[p]);
+		for(final long[] array:arrays){
+			final int index = include?Searcher.overSearch(list,array[p]):Searcher.upSearch(list,array[p]);
 			list[index] = Math.min(list[index],array[p]);
 		}
-		int answer = Searcher.underSearch(list,Long.MAX_VALUE);
+		final int answer = Searcher.underSearch(list,Long.MAX_VALUE);
 		return answer+1;
 	}
 
 	/**
-	 * 引数の隣接グラフから求められる有向辺に対してトポロジカルソートを行ないます。
-	 * 引数のグラフは有向非巡回グラフであることを要求します。
-	 * 有向非巡回グラフでない場合、閉路に含まれる辺の分nullで置き換えたものが返されます。
-	 * 戻り値は辺を表すint型二次元配列です。
+	 * 引数の隣接グラフから求められる有向辺に対してトポロジカルソートを行ないます。<br/>
+	 * 引数のグラフは有向非巡回グラフであることを要求します。<br/>
+	 * 有向非巡回グラフでない場合、閉路以降の辺は全て null で置換されて返します。<br/>
+	 * 戻り値は辺を表す int 型二次元配列です。
 	 *
 	 * @param route 有向グラフの隣接リスト
 	 *
 	 * @return トポロジカルソート済み有向グラフ
 	 */
-	public static int[][] topologicalSort(final ArrayList<ArrayList<Integer>> route){
+	public static int[][] topologicalSort(final ArrayList<? extends ArrayList<Integer>> route){
 		final int[] count = new int[route.size()];
 		int pathCount = 0;
-		for(final ArrayList<Integer> path: route){
-			for(final int point: path){
-				++pathCount;
-				++count[point];
+		for(final ArrayList<Integer> path:route){
+			for(final int point:path){
+				pathCount += 1;
+				count[point] += 1;
 			}
 		}
-		final ArrayDeque<Integer> deq = new ArrayDeque<>();
-		for(int i = 1;i<count.length;++i){
+		final ArrayDeque<Integer> deq = new ArrayDeque<>(count.length);
+		for(int i=1;i<count.length;++i){
 			if(count[i]==0){
 				deq.add(i);
 			}
 		}
 		final int[][] ans = new int[pathCount][2];
 		int index = 0;
-		while(deq.size()>0){
-			int nowP = deq.pollFirst();
-			for(final int nextP: route.get(nowP)){
+		while(!deq.isEmpty()){
+			final int nowP = deq.pollFirst();
+			for(final int nextP:route.get(nowP)){
 				ans[index][0] = nowP;
-				ans[index++][1] = nextP;
-				if(--count[nextP]==0){
+				ans[index][1] = nextP;
+				index += 1;
+				count[nextP] -= 1;
+				if(count[nextP]==0){
 					deq.add(nextP);
 				}
 			}
@@ -399,10 +416,10 @@ public final class ArrayUtil{
 	}
 
 	/**
-	 * 引数の隣接リストから求められる有向辺に対してトポロジカルソートを行ないます。
-	 * 引数のグラフは有向非巡回グラフであることを要求します。
-	 * 有向非巡回グラフでない場合、閉路に含まれる辺の分nullで置き換えたものが返されます。
-	 * 戻り値は辺を表すint型二次元配列です。
+	 * 引数の隣接リストから求められる有向辺に対してトポロジカルソートを行ないます。<br/>
+	 * 引数のグラフは有向非巡回グラフであることを要求します。<br/>
+	 * 有向非巡回グラフでない場合、閉路以降の辺は全て null で置換されて返します。<br/>
+	 * 戻り値は辺を表す int 型二次元配列です。
 	 *
 	 * @param route 有向グラフの隣接リスト
 	 *
@@ -411,26 +428,28 @@ public final class ArrayUtil{
 	public static int[][] topologicalSort(final int[][] route){
 		final int[] count = new int[route.length];
 		int pathCount = 0;
-		for(final int[] path: route){
-			for(final int point: path){
-				++pathCount;
-				++count[point];
+		for(final int[] path:route){
+			for(final int point:path){
+				pathCount += 1;
+				count[point] += 1;
 			}
 		}
-		final ArrayDeque<Integer> deq = new ArrayDeque<>();
-		for(int i = 1;i<count.length;++i){
+		final ArrayDeque<Integer> deq = new ArrayDeque<>(count.length);
+		for(int i=1;i<count.length;++i){
 			if(count[i]==0){
 				deq.add(i);
 			}
 		}
 		final int[][] ans = new int[pathCount][2];
 		int index = 0;
-		while(deq.size()>0){
-			int nowP = deq.pollFirst();
-			for(final int nextP: route[nowP]){
+		while(!deq.isEmpty()){
+			final int nowP = deq.pollFirst();
+			for(final int nextP:route[nowP]){
 				ans[index][0] = nowP;
-				ans[index++][1] = nextP;
-				if(--count[nextP]==0){
+				ans[index][1] = nextP;
+				index += 1;
+				count[nextP] -= 1;
+				if(count[nextP]==0){
 					deq.add(nextP);
 				}
 			}
@@ -442,437 +461,361 @@ public final class ArrayUtil{
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元
-	 * @param b 交換先
+	 * @param i 交換元
+	 * @param j 交換先
 	 */
-	public static void swap(final int[] array,final int a,final int b){
-		final int temp = array[a];
-		array[a] = array[b];
-		array[b] = temp;
+	public static void swap(final int[] array,final int i,final int j){
+		final int temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元
-	 * @param b 交換先
+	 * @param i 交換元
+	 * @param j 交換先
 	 */
-	public static void swap(final long[] array,final int a,final int b){
-		final long temp = array[a];
-		array[a] = array[b];
-		array[b] = temp;
+	public static void swap(final long[] array,final int i,final int j){
+		final long temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元
-	 * @param b 交換先
+	 * @param i 交換元
+	 * @param j 交換先
 	 */
-	public static void swap(final double[] array,final int a,final int b){
-		final double temp = array[a];
-		array[a] = array[b];
-		array[b] = temp;
+	public static void swap(final double[] array,final int i,final int j){
+		final double temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元
-	 * @param b 交換先
+	 * @param i 交換元
+	 * @param j 交換先
 	 */
-	public static void swap(final char[] array,final int a,final int b){
-		final char temp = array[a];
-		array[a] = array[b];
-		array[b] = temp;
+	public static void swap(final char[] array,final int i,final int j){
+		final char temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元
-	 * @param b 交換先
+	 * @param i 交換元
+	 * @param j 交換先
 	 */
-	public static void swap(final boolean[] array,final int a,final int b){
-		final boolean temp = array[a];
-		array[a] = array[b];
-		array[b] = temp;
+	public static void swap(final boolean[] array,final int i,final int j){
+		final boolean temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元
-	 * @param b 交換先
-	 * 
+	 * @param i 交換元
+	 * @param j 交換先
 	 * @param <E> 配列の型
 	 */
-	public static <E> void swap(final E[] array,final int a,final int b){
-		final E temp = array[a];
-		array[a] = array[b];
-		array[b] = temp;
+	public static <E> void swap(final E[] array,final int i,final int j){
+		final E temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元の第1インデックス
-	 * @param b 交換元の第2インデックス
-	 * @param c 交換先の第1インデックス
-	 * @param d 交換先の第2インデックス
+	 * @param i1 交換元の第 1 インデックス
+	 * @param j1 交換元の第 2 インデックス
+	 * @param i2 交換先の第 1 インデックス
+	 * @param j2 交換先の第 2 インデックス
 	 */
-	public static void swap(final int[][] array,final int a,final int b,final int c,final int d){
-		final int temp = array[a][b];
-		array[a][b] = array[c][d];
-		array[c][d] = temp;
+	public static void swap(final int[][] array,final int i1,final int j1,final int i2,final int j2){
+		final int temp = array[i1][j1];
+		array[i1][j1] = array[i2][j2];
+		array[i2][j2] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元の第1インデックス
-	 * @param b 交換元の第2インデックス
-	 * @param c 交換先の第1インデックス
-	 * @param d 交換先の第2インデックス
+	 * @param i1 交換元の第 1 インデックス
+	 * @param j1 交換元の第 2 インデックス
+	 * @param i2 交換先の第 1 インデックス
+	 * @param j2 交換先の第 2 インデックス
 	 */
-	public static void swap(final long[][] array,final int a,final int b,final int c,final int d){
-		final long temp = array[a][b];
-		array[a][b] = array[c][d];
-		array[c][d] = temp;
+	public static void swap(final long[][] array,final int i1,final int j1,final int i2,final int j2){
+		final long temp = array[i1][j1];
+		array[i1][j1] = array[i2][j2];
+		array[i2][j2] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元の第1インデックス
-	 * @param b 交換元の第2インデックス
-	 * @param c 交換先の第1インデックス
-	 * @param d 交換先の第2インデックス
+	 * @param i1 交換元の第 1 インデックス
+	 * @param j1 交換元の第 2 インデックス
+	 * @param i2 交換先の第 1 インデックス
+	 * @param j2 交換先の第 2 インデックス
 	 */
-	public static void swap(final double[][] array,final int a,final int b,final int c,final int d){
-		final double temp = array[a][b];
-		array[a][b] = array[c][d];
-		array[c][d] = temp;
+	public static void swap(final double[][] array,final int i1,final int j1,final int i2,final int j2){
+		final double temp = array[i1][j1];
+		array[i1][j1] = array[i2][j2];
+		array[i2][j2] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元の第1インデックス
-	 * @param b 交換元の第2インデックス
-	 * @param c 交換先の第1インデックス
-	 * @param d 交換先の第2インデックス
+	 * @param i1 交換元の第 1 インデックス
+	 * @param j1 交換元の第 2 インデックス
+	 * @param i2 交換先の第 1 インデックス
+	 * @param j2 交換先の第 2 インデックス
 	 */
-	public static void swap(final char[][] array,final int a,final int b,final int c,final int d){
-		final char temp = array[a][b];
-		array[a][b] = array[c][d];
-		array[c][d] = temp;
+	public static void swap(final char[][] array,final int i1,final int j1,final int i2,final int j2){
+		final char temp = array[i1][j1];
+		array[i1][j1] = array[i2][j2];
+		array[i2][j2] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元の第1インデックス
-	 * @param b 交換元の第2インデックス
-	 * @param c 交換先の第1インデックス
-	 * @param d 交換先の第2インデックス
+	 * @param i1 交換元の第 1 インデックス
+	 * @param j1 交換元の第 2 インデックス
+	 * @param i2 交換先の第 1 インデックス
+	 * @param j2 交換先の第 2 インデックス
 	 */
-	public static void swap(final boolean[][] array,final int a,final int b,final int c,final int d){
-		final boolean temp = array[a][b];
-		array[a][b] = array[c][d];
-		array[c][d] = temp;
+	public static void swap(final boolean[][] array,final int i1,final int j1,final int i2,final int j2){
+		final boolean temp = array[i1][j1];
+		array[i1][j1] = array[i2][j2];
+		array[i2][j2] = temp;
 	}
 
 	/**
 	 * 引数の位置の要素を交換します。
 	 *
 	 * @param array 交換する要素の含まれる配列
-	 * @param a 交換元の第1インデックス
-	 * @param b 交換元の第2インデックス
-	 * @param c 交換先の第1インデックス
-	 * @param d 交換先の第2インデックス
-	 * 
+	 * @param i1 交換元の第 1 インデックス
+	 * @param j1 交換元の第 2 インデックス
+	 * @param i2 交換先の第 1 インデックス
+	 * @param j2 交換先の第 2 インデックス
 	 * @param <E> 配列の型
 	 */
-	public static <E> void swap(final E[][] array,final int a,final int b,final int c,final int d){
-		final E temp = array[a][b];
-		array[a][b] = array[c][d];
-		array[c][d] = temp;
+	public static <E> void swap(final E[][] array,final int i1,final int j1,final int i2,final int j2){
+		final E temp = array[i1][j1];
+		array[i1][j1] = array[i2][j2];
+		array[i2][j2] = temp;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
 	 *
-	 * @return 辞書順で次に当たる配列がある場合はtrue、arrayが降順に並んでいるならfalse
+	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static boolean nextPermutation(final int[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1]<array[i]){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i]<array[i+1]){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i]<array[j]){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		int min = Integer.MAX_VALUE;
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheckOpen(array[i],array[index1],min)){
-				min = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.insertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
 	 *
-	 * @return 辞書順で次に当たる配列がある場合はtrue、arrayが降順に並んでいるならfalse
+	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static boolean nextPermutation(final long[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1]<array[i]){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i]<array[i+1]){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i]<array[j]){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		long min = Long.MAX_VALUE;
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheckOpen(array[i],array[index1],min)){
-				min = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.insertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
 	 *
-	 * @return 辞書順で次に当たる配列がある場合はtrue、arrayが降順に並んでいるならfalse
+	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static boolean nextPermutation(final char[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1]<array[i]){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i]<array[i+1]){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i]<array[j]){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		int min = Integer.MAX_VALUE;
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheckOpen(array[i],array[index1],min)){
-				min = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.insertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の次に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
-	 * 
 	 * @param <E> 配列の型
 	 *
-	 * @return 辞書順で次に当たる配列がある場合はtrue、arrayが降順に並んでいるならfalse
+	 * @return 辞書順で次に当たる配列がある場合は true、array が降順に並んでいるなら false
 	 */
 	public static <E extends Comparable<E>> boolean nextPermutation(final E[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1].compareTo(array[i])<0){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i].compareTo(array[i+1])<0){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i].compareTo(array[j])<0){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		E min = MathFunction.max(array);
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheckSubClose(array[i],array[index1],min)){
-				min = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.insertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
 	 *
-	 * @return 辞書順で直前に当たる配列がある場合はtrue、arrayが昇順に並んでいるならfalse
+	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static boolean previousPermutation(final int[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1]>array[i]){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i]>array[i+1]){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i]>array[j]){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		int max = Integer.MIN_VALUE;
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheckOpen(array[i],max,array[index1])){
-				max = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.reverseInsertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
 	 *
-	 * @return 辞書順で直前に当たる配列がある場合はtrue、arrayが昇順に並んでいるならfalse
+	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static boolean previousPermutation(final long[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1]>array[i]){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i]>array[i+1]){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i]>array[j]){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		long max = Long.MIN_VALUE;
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheckOpen(array[i],max,array[index1])){
-				max = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.reverseInsertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
 	 *
-	 * @return 辞書順で直前に当たる配列がある場合はtrue、arrayが昇順に並んでいるならfalse
+	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static boolean previousPermutation(final char[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1]>array[i]){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i]>array[i+1]){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i]>array[j]){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		int max = Integer.MIN_VALUE;
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheckOpen(array[i],max,array[index1])){
-				max = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.reverseInsertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
-	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。
+	 * 引数の配列の要素を並び替えた時の、辞書順で引数の直前に当たる順番に並び替えます。<br/>
 	 * 原則として、要素に重複が無いものとして処理します。重複がある場合の戻り値は保証されていません。
 	 *
 	 * @param array 並び替え対象の配列
-	 * 
 	 * @param <E> 配列の型
 	 *
-	 * @return 辞書順で直前に当たる配列がある場合はtrue、arrayが昇順に並んでいるならfalse
+	 * @return 辞書順で直前に当たる配列がある場合は true、array が昇順に並んでいるなら false
 	 */
 	public static <E extends Comparable<E>> boolean previousPermutation(final E[] array){
-		int index1 = 0;
-		for(int i = 1;i<array.length;++i){
-			if(array[i-1].compareTo(array[i])>0){
-				index1 = i;
+		for(int i=array.length-2;i>=0;--i){
+			if(array[i].compareTo(array[i+1])>0){
+				for(int j=array.length-1;i<j;--j){
+					if(array[i].compareTo(array[j])>0){
+						swap(array,i,j);
+						reverseRange(array,i+1,array.length);
+						return true;
+					}
+				}
 			}
 		}
-		if(--index1<0){
-			return false;
-		}
-		int index2 = 0;
-		E max = MathFunction.min(array);
-		for(int i = index1+1;i<array.length;++i){
-			if(MathFunction.rangeCheck(array[i],max,array[index1])){
-				max = array[i];
-				index2 = i;
-			}
-		}
-		swap(array,index1,index2);
-		reverseRange(array,index1+1,array.length);
-		Sorter.reverseInsertSort(array,index1+1,array.length);
-		return true;
+		return false;
 	}
 
 	/**
 	 * 引数の配列に対して渡された関数を適用します。
-	 * 
+	 *
 	 * @param array 元となる配列
 	 * @param func 適用する関数
 	 */
@@ -884,7 +827,7 @@ public final class ArrayUtil{
 
 	/**
 	 * 引数の配列に対して渡された関数を適用します。
-	 * 
+	 *
 	 * @param array 元となる配列
 	 * @param func 適用する関数
 	 */
@@ -895,16 +838,40 @@ public final class ArrayUtil{
 	}
 
 	/**
+	 * 引数の配列に対して渡された関数を適用します。
+	 *
+	 * @param array 元となる配列
+	 * @param func 適用する関数
+	 */
+	public static void mapping(final double[] array,final DoubleUnaryOperator func){
+		for(int i=0;i<array.length;i++){
+			array[i] = func.applyAsDouble(array[i]);
+		}
+	}
+
+	/**
+	 * 引数の配列に対して渡された関数を適用します。
+	 *
+	 * @param array 元となる配列
+	 * @param func 適用する関数
+	 */
+	public static <E> void mapping(final E[] array,final UnaryOperator<E> func){
+		for(int i=0;i<array.length;i++){
+			array[i] = func.apply(array[i]);
+		}
+	}
+
+	/**
 	 * 引数の配列と関数を元に配列を再構築します。
 	 *
 	 * @param array 元となる配列
 	 * @param func 配列に施す関数
-	 * 
+	 *
 	 * @return 再構築した配列
 	 */
 	public static int[] reBuild(final int[] array,final IntUnaryOperator func){
 		final int[] ans = new int[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsInt(array[i]);
 		}
 		return ans;
@@ -915,12 +882,12 @@ public final class ArrayUtil{
 	 *
 	 * @param array 元となる配列
 	 * @param func 配列に施す関数
-	 * 
+	 *
 	 * @return 再構築した配列
 	 */
 	public static int[] reBuild(final int[] array,final IntBinaryOperator func){
 		final int[] ans = new int[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsInt(i,array[i]);
 		}
 		return ans;
@@ -931,12 +898,12 @@ public final class ArrayUtil{
 	 *
 	 * @param array 元となる配列
 	 * @param func 配列に施す関数
-	 * 
+	 *
 	 * @return 再構築した配列
 	 */
 	public static long[] reBuild(final long[] array,final LongUnaryOperator func){
 		final long[] ans = new long[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsLong(array[i]);
 		}
 		return ans;
@@ -947,26 +914,163 @@ public final class ArrayUtil{
 	 *
 	 * @param array 元となる配列
 	 * @param func 配列に施す関数
-	 * 
+	 *
 	 * @return 再構築した配列
 	 */
 	public static long[] reBuild(final long[] array,final LongBinaryOperator func){
 		final long[] ans = new long[array.length];
-		for(int i = 0;i<array.length;++i){
+		for(int i=0;i<array.length;++i){
 			ans[i] = func.applyAsLong(i,array[i]);
 		}
 		return ans;
 	}
 
 	/**
-	 * 配列の要素を順に引数のConsumerに作用させます。
+	 * 引数の配列と関数を元に配列を再構築します。
+	 *
+	 * @param array 元となる配列
+	 * @param func 配列に施す関数
+	 *
+	 * @return 再構築した配列
+	 */
+	public static double[] reBuild(final double[] array,final DoubleUnaryOperator func){
+		final double[] ans = new double[array.length];
+		for(int i=0;i<array.length;++i){
+			ans[i] = func.applyAsDouble(array[i]);
+		}
+		return ans;
+	}
+
+	/**
+	 * 引数の配列と関数を元に配列を再構築します。
+	 *
+	 * @param array 元となる配列
+	 * @param func 配列に施す関数
+	 *
+	 * @return 再構築した配列
+	 */
+	public static double[] reBuild(final double[] array,final DoubleBinaryOperator func){
+		final double[] ans = new double[array.length];
+		for(int i=0;i<array.length;++i){
+			ans[i] = func.applyAsDouble(i,array[i]);
+		}
+		return ans;
+	}
+
+	/**
+	 * 配列の要素を順に引数の Consumer に作用させます。
 	 *
 	 * @param array 作用させる配列
-	 * @param func 作用先のConsumer
+	 * @param func 作用先の Consumer
 	 */
 	public static void computeByArray(final int[] array,final IntConsumer func){
-		for(final int num: array){
+		for(final int num:array){
 			func.accept(num);
+		}
+	}
+
+	/**
+	 * 配列の要素を順に引数の Consumer に作用させます。
+	 *
+	 * @param array 作用させる配列
+	 * @param func 作用先の Consumer
+	 */
+	public static void computeByArray(final long[] array,final LongConsumer func){
+		for(final long num:array){
+			func.accept(num);
+		}
+	}
+
+	/**
+	 * 配列の要素を順に引数の Consumer に作用させます。
+	 *
+	 * @param array 作用させる配列
+	 * @param func 作用先の Consumer
+	 */
+	public static void computeByArray(final double[] array,final DoubleConsumer func){
+		for(final double num:array){
+			func.accept(num);
+		}
+	}
+
+	/**
+	 * 配列の要素を順に引数の Consumer に作用させます。
+	 *
+	 * @param array 作用させる配列
+	 * @param func 作用先の Consumer
+	 */
+	public static <E> void computeByArray(final E[] array,final Consumer<? super E> func){
+		for(final E num:array){
+			func.accept(num);
+		}
+	}
+
+	/**
+	 * 要素を逆順にします。
+	 *
+	 * @param array 元となる配列
+	 */
+	public static void reverse(final int[] array){
+		reverseRange(array,0,array.length);
+	}
+
+	/**
+	 * 要素を逆順にします。
+	 *
+	 * @param array 元となる配列
+	 */
+	public static void reverse(final long[] array){
+		reverseRange(array,0,array.length);
+	}
+
+	/**
+	 * 要素を逆順にします。
+	 *
+	 * @param array 元となる配列
+	 */
+	public static void reverse(final double[] array){
+		reverseRange(array,0,array.length);
+	}
+
+	/**
+	 * 要素を逆順にします。
+	 *
+	 * @param array 元となる配列
+	 */
+	public static void reverse(final char[] array){
+		reverseRange(array,0,array.length);
+	}
+
+	/**
+	 * 要素を逆順にします。
+	 *
+	 * @param array 元となる配列
+	 */
+	public static void reverse(final boolean[] array){
+		reverseRange(array,0,array.length);
+	}
+
+	/**
+	 * 要素を逆順にします。
+	 *
+	 * @param array 元となる配列
+	 */
+	public static <E> void reverse(final E[] array){
+		reverseRange(array,0,array.length);
+	}
+
+	/**
+	 * 引数の区間の要素を逆順にします。
+	 *
+	 * @param array 元となる配列
+	 * @param left 区間の左端
+	 * @param right 区間の右端 (right を含まない)
+	 */
+	public static void reverseRange(final int[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			swap(array,left,right);
+			left += 1;
 		}
 	}
 
@@ -974,84 +1078,254 @@ public final class ArrayUtil{
 	 * 引数の区間の要素を逆順にします。
 	 *
 	 * @param array 元となる配列
-	 * @param l 区間の左端
-	 * @param r 区間の右端(rを含まない)
+	 * @param left 区間の左端
+	 * @param right 区間の右端 (right を含まない)
 	 */
-	public static void reverseRange(final int[] array,int l,int r){
-		while(l<r)
-			swap(array,l++,--r);
+	public static void reverseRange(final long[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			swap(array,left,right);
+			left += 1;
+		}
 	}
 
 	/**
 	 * 引数の区間の要素を逆順にします。
 	 *
 	 * @param array 元となる配列
-	 * @param l 区間の左端
-	 * @param r 区間の右端(rを含まない)
+	 * @param left 区間の左端
+	 * @param right 区間の右端 (right を含まない)
 	 */
-	public static void reverseRange(final long[] array,int l,int r){
-		while(l<r)
-			swap(array,l++,--r);
+	public static void reverseRange(final double[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			swap(array,left,right);
+			left += 1;
+		}
 	}
 
 	/**
 	 * 引数の区間の要素を逆順にします。
 	 *
 	 * @param array 元となる配列
-	 * @param l 区間の左端
-	 * @param r 区間の右端(rを含まない)
+	 * @param left 区間の左端
+	 * @param right 区間の右端 (right を含まない)
 	 */
-	public static void reverseRange(final double[] array,int l,int r){
-		while(l<r)
-			swap(array,l++,--r);
+	public static void reverseRange(final char[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			swap(array,left,right);
+			left += 1;
+		}
 	}
 
 	/**
 	 * 引数の区間の要素を逆順にします。
 	 *
 	 * @param array 元となる配列
-	 * @param l 区間の左端
-	 * @param r 区間の右端(rを含まない)
+	 * @param left 区間の左端
+	 * @param right 区間の右端 (right を含まない)
 	 */
-	public static void reverseRange(final char[] array,int l,int r){
-		while(l<r)
-			swap(array,l++,--r);
+	public static void reverseRange(final boolean[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			swap(array,left,right);
+			left += 1;
+		}
 	}
 
 	/**
 	 * 引数の区間の要素を逆順にします。
 	 *
 	 * @param array 元となる配列
-	 * @param l 区間の左端
-	 * @param r 区間の右端(rを含まない)
-	 */
-	public static void reverseRange(final boolean[] array,int l,int r){
-		while(l<r)
-			swap(array,l++,--r);
-	}
-
-	/**
-	 * 引数の区間の要素を逆順にします。
-	 *
-	 * @param array 元となる配列
-	 * @param l 区間の左端
-	 * @param r 区間の右端(rを含まない)
-	 * 
+	 * @param left 区間の左端
+	 * @param right 区間の右端 (right を含まない)
 	 * @param <E> 配列の型
 	 */
-	public static <E> void reverseRange(final E[] array,int l,int r){
-		while(l<r)
-			swap(array,l++,--r);
+	public static <E> void reverseRange(final E[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			swap(array,left,right);
+			left += 1;
+		}
 	}
 
 	/**
-	 * Mo's Algorithm用のComparatorを返します。
+	 * Mo's Algorithm 用の Comparator を返します。
 	 *
-	 * @param M 分割数
-	 * @return Mo's Algorithm用のComparator
+	 * @param queryCount クエリ数
+	 *
+	 * @return Mo's Algorithm 用の Comparator
 	 */
-	public static Comparator<int[]> mo_sComparator(final int M){
-		return (a,b)->a[0]/M!=b[0]/M?Integer.compare(a[0]/M,b[0]/M):
-			Integer.compare(a[1]/M,b[1]/M)*((a[0]/M&1)==0?-1:1);
+	public static Comparator<int[]> mosComparator(final int queryCount){
+		final int separateCount = (int)Math.sqrt(queryCount);
+		return (left,right)->{
+			final int sepL = left[0]/separateCount;
+			final int sepR = right[0]/separateCount;
+			if(sepL!=sepR){
+				return Integer.compare(left[0]/separateCount,right[0]/separateCount);
+			}
+			else if((left[0]/separateCount&1)==0){
+				return Integer.compare(right[1],left[1]);
+			}
+			else{
+				return Integer.compare(left[1],right[1]);
+			}
+		};
+	}
+
+	/**
+	 * 引数の配列が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final int[] array){
+		return isPalindrome(array,0,array.length);
+	}
+
+	/**
+	 * 引数の配列が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final long[] array){
+		return isPalindrome(array,0,array.length);
+	}
+
+	/**
+	 * 引数の配列が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final char[] array){
+		return isPalindrome(array,0,array.length);
+	}
+
+	/**
+	 * 引数の配列が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final boolean[] array){
+		return isPalindrome(array,0,array.length);
+	}
+
+	/**
+	 * 引数の配列が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static <E> boolean isPalindrome(final E[] array){
+		return isPalindrome(array,0,array.length);
+	}
+
+	/**
+	 * 引数の配列の指定された区間が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 * @param left 区間の左端 (left を含む)
+	 * @param right 区間の右端 (right を含まない)
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final int[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			if(array[left]!=array[right]){
+				return false;
+			}
+			left += 1;
+		}
+		return true;
+	}
+
+	/**
+	 * 引数の配列の指定された区間が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 * @param left 区間の左端 (left を含む)
+	 * @param right 区間の右端 (right を含まない)
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final long[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			if(array[left]!=array[right]){
+				return false;
+			}
+			left += 1;
+		}
+		return true;
+	}
+
+	/**
+	 * 引数の配列の指定された区間が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 * @param left 区間の左端 (left を含む)
+	 * @param right 区間の右端 (right を含まない)
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final char[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			if(array[left]!=array[right]){
+				return false;
+			}
+			left += 1;
+		}
+		return true;
+	}
+
+	/**
+	 * 引数の配列の指定された区間が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 * @param left 区間の左端 (left を含む)
+	 * @param right 区間の右端 (right を含まない)
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static boolean isPalindrome(final boolean[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			if(array[left]!=array[right]){
+				return false;
+			}
+			left += 1;
+		}
+		return true;
+	}
+
+	/**
+	 * 引数の配列の指定された区間が回文になっているか判定します。
+	 *
+	 * @param array 配列
+	 * @param left 区間の左端 (left を含む)
+	 * @param right 区間の右端 (right を含まない)
+	 *
+	 * @return 回文になっているなら true、それ以外は false
+	 */
+	public static <E> boolean isPalindrome(final E[] array,int left,int right){
+		while(left<right){
+			right -= 1;
+			if(!array[left].equals(array[right])){
+				return false;
+			}
+			left += 1;
+		}
+		return true;
 	}
 }

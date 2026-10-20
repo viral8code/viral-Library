@@ -1,106 +1,125 @@
 package math;
 
 import java.awt.Point;
-import java.math.BigInteger;
+import java.util.BitSet;
 
 /**
- * 数学に関するメソッドを提供するクラスです。
- * 最大公約数や累乗、2線分の交差判定などを提供します。
+ * 数学に関するメソッドを提供するクラスです。<br/>
+ * 最大公約数や累乗、2 線分の交差判定などを提供します。
  */
 public final class MathFunction{
 
 	/**
-	 * int型の素数判定用の値
+	 * int 型の素数判定用の値
 	 */
-	private static final int[] numberForIntPrime = {2,7,61};
+	private static final int[] numberForIntPrime;
 
 	/**
-	 * long型の素数判定用の値
+	 * long 型の素数判定用の値
 	 */
-	private static final long[] numberForLongPrime = {2,7,61,325,9375,28178,450775,9780504,1795265022};
+	private static final long[] numberForLongPrime;
 
 	/**
-	 * aとbの最大公約数を求めます。戻り値は0以上であることが保証されます。
-	 *
-	 * @param a 公約数を求める整数
-	 * @param b 公約数を求める整数
-	 *
-	 * @return aとbの最大公約数
+	 * 空の int 型配列
 	 */
-	public static long gcd(long a,long b){
-		a = Math.abs(a);
-		b = Math.abs(b);
-		if(b==0){
-			return a;
-		}
-		long temp;
-		while((temp = a%b)!=0){
-			a = b;
-			b = temp;
-		}
-		return b;
+	public static final int[] EMPTY_INTS = new int[0];
+
+	static{
+		numberForIntPrime = new int[]{2,7,61};
+		numberForLongPrime = new long[]{2,7,61,325,9375,28178,450775,9780504,1795265022};
 	}
 
 	/**
-	 * aとbの最小公倍数を求めます。
+	 * 呼び出さないでください。
+	 *
+	 * @throws UnsupportedOperationException このコンストラクタは呼び出されることを想定していません。
+	 */
+	private MathFunction() throws UnsupportedOperationException{
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * a と b の最大公約数を求めます。戻り値は 0 以上であることが保証されます。
+	 *
+	 * @param value1 公約数を求める整数
+	 * @param value2 公約数を求める整数
+	 *
+	 * @return a と b の最大公約数
+	 */
+	public static long gcd(long value1,long value2){
+		if(value2==0){
+			return Math.abs(value1);
+		}
+		long temp = value1%value2;
+		while(temp!=0){
+			value1 = value2;
+			value2 = temp;
+			temp = value1%value2;
+		}
+		return Math.abs(value2);
+	}
+
+	/**
+	 * a と b の最小公倍数を求めます。<br/>
 	 * オーバーフロー検知は出来ません。
 	 *
-	 * @param a 公倍数を求める整数
-	 * @param b 公倍数を求める整数
+	 * @param value1 公倍数を求める整数
+	 * @param value2 公倍数を求める整数
 	 *
-	 * @return aとbの最小公倍数
+	 * @return a と b の最小公倍数
 	 */
-	public static long lcm(final long a,final long b){
-		return a/gcd(a,b)*b;
+	public static long lcm(final long value1,final long value2){
+		return value1/gcd(value1,value2)*value2;
 	}
 
 	/**
 	 * 引数が素数か判定します。
 	 *
-	 * @param n 検査対象
+	 * @param value 検査対象
 	 *
-	 * @return nが素数であるならtrue、素数でないならfalse
+	 * @return value が素数であるなら true、素数でないなら false
 	 */
-	public static boolean isPrime(long n){
-		n = Math.abs(n);
-		if(n==2L){
+	public static boolean isPrime(long value){
+		value = Math.abs(value);
+		if(value==2L){
 			return true;
 		}
-		if(n==1L||(n&1L)==0L){
+		if(value==1L||(value&1L)==0L){
 			return false;
 		}
-		if(n<=Integer.MAX_VALUE){
-			return isPrimeForInt((int)n);
+		if(value<=Integer.MAX_VALUE){
+			return isPrimeForInt((int)value);
 		}
-		return isPrimeForBigInteger(n);
+		return isPrimeForBigInteger(value);
 	}
 
 	/**
 	 * 引数が素数か判定します。
 	 *
-	 * @param n 検査対象
+	 * @param value 検査対象
 	 *
-	 * @return nが素数であるならtrue、素数でないならfalse
+	 * @return value が素数であるなら true、素数でないなら false
 	 */
-	private static boolean isPrimeForInt(int n){
-		long d = n-1L;
-		while((d&1)==0){
-			d >>= 1;
+	private static boolean isPrimeForInt(final int value){
+		long bit = value-1L;
+		while((bit&1)==0){
+			bit >>= 1;
 		}
-		Montgomery32 mg = new Montgomery32(n);
-		for(final int a: numberForIntPrime){
-			if(a>=n){
+		final Montgomery32 mg = new Montgomery32(value);
+		final Montgomery32.InnerMontgomery32 inner = mg.inner();
+		final long montgomeryOne = inner.setMontgomeryExpression(1);
+		final long decrementValue = inner.setMontgomeryExpression(value-1);
+		for(final int a:numberForIntPrime){
+			if(a>=value){
 				return true;
 			}
-			long t = d;
-			long y = mg.inner.pow(a,t);
-			long one = mg.inner.setMontgomeryExpression(1);
-			long Nd = mg.inner.setMontgomeryExpression(n-1);
-			while(t<n-1L&&y!=one&&y!=Nd){
-				y = mg.inner.innerMultiply(y,y);
+			long t = bit;
+			long y = inner.pow(a,t);
+			while(t<value-1L&&y!=montgomeryOne&&y!=decrementValue){
+				y = inner.innerMultiply(y,y);
 				t <<= 1;
 			}
-			if(y!=Nd&&(t&1L)==0){
+			if(y!=decrementValue&&(t&1L)==0){
 				return false;
 			}
 		}
@@ -110,29 +129,30 @@ public final class MathFunction{
 	/**
 	 * 引数が素数か判定します。
 	 *
-	 * @param n 検査対象
+	 * @param value 検査対象
 	 *
-	 * @return nが素数であるならtrue、素数でないならfalse
+	 * @return value が素数であるなら true、素数でないなら false
 	 */
-	private static boolean isPrimeForBigInteger(long n){
-		long d = n-1L;
-		while((d&1L)==0L){
-			d >>= 1;
+	private static boolean isPrimeForBigInteger(final long value){
+		long bit = value-1L;
+		while((bit&1L)==0L){
+			bit >>= 1;
 		}
-		Montgomery64 mg = new Montgomery64(n);
-		for(final long a: numberForLongPrime){
-			if(a>=n){
+		final Montgomery64 mg = new Montgomery64(value);
+		final Montgomery64.InnerMontgomery64 inner = mg.inner();
+		final long montgomeryOne = inner.setMontgomeryExpression(1);
+		final long decrementValue = inner.setMontgomeryExpression(value-1);
+		for(final long a:numberForLongPrime){
+			if(a>=value){
 				return true;
 			}
-			long t = d;
-			long y = mg.inner.pow(a,t);
-			long one = mg.inner.setMontgomeryExpression(1);
-			long Nd = mg.inner.setMontgomeryExpression(n-1);
-			while(t<n-1L&&y!=one&&y!=Nd){
-				y = mg.inner.innerMultiply(y,y);
+			long t = bit;
+			long y = inner.pow(a,t);
+			while(t<value-1L&&y!=montgomeryOne&&y!=decrementValue){
+				y = inner.innerMultiply(y,y);
 				t <<= 1;
 			}
-			if(y!=Nd&&(t&1L)==0){
+			if(y!=decrementValue&&(t&1L)==0){
 				return false;
 			}
 		}
@@ -140,106 +160,109 @@ public final class MathFunction{
 	}
 
 	/**
-	 * num以下の素数を列挙します。
+	 * num 以下の素数を列挙します。
 	 *
 	 * @param num 素数を探す上限値
 	 *
-	 * @return num以下の素数のint型配列
+	 * @return num 以下の素数の int 型配列
 	 */
 	public static int[] primes(final int num){
 		if(num<2){
-			return new int[0];
+			return EMPTY_INTS;
 		}
 		final BitSet numbers = new BitSet(num+1);
 		numbers.set(2,num+1);
 		final int limit = (int)Math.sqrt(num);
-		int bit = 0;
-		while(
-			rangeCheckClose(
-				bit=numbers.nextSetBit(bit+1),
-				2,
-				limit)){
-			for(int j = bit*bit;j<=num;j+=bit){
+		for(int bit=numbers.nextSetBit(0);rangeCheckClose(bit,2,limit);bit=numbers.nextSetBit(bit+1)){
+			for(int j=bit*bit;j<=num;j += bit){
 				numbers.clear(j);
 			}
 		}
 		final int[] answer = new int[numbers.cardinality()];
-		bit = 0;
-		for(int i=0;i<answer.length;++i)
-			bit = (answer[i] = numbers.nextSetBit(bit+1));
+		int bit = 0;
+		for(int i=0;i<answer.length;++i){
+			answer[i] = numbers.nextSetBit(bit+1);
+			bit = answer[i];
+		}
 		return answer;
 	}
 
 	/**
-	 * a**bを計算します。
+	 * value ** b を計算します。
 	 *
-	 * @param a 被累乗数
-	 * @param b 指数
+	 * @param value 被累乗数
+	 * @param exp 指数
 	 *
-	 * @return a**b
+	 * @return value ** exp
 	 */
-	public static long pow(long a,long b){
+	public static long pow(long value,long exp){
 		long ans = 1;
-		while(b>0){
-			if((b&1)==1){
-				ans *= a;
+		while(exp>0){
+			if((exp&1)==1){
+				ans *= value;
 			}
-			a *= a;
-			b >>= 1;
+			value *= value;
+			exp >>= 1;
 		}
 		return ans;
 	}
 
 	/**
-	 * a**bをmodで割ったあまりを計算します。
+	 * value ** b を mod で割ったあまりを計算します。
 	 *
-	 * @param a 被累乗数
-	 * @param b 指数
+	 * @param value 被累乗数
+	 * @param exp 指数
 	 * @param mod 法とする整数
 	 *
-	 * @return a**bをmodで割ったあまり
+	 * @return value ** exp を mod で割ったあまり
 	 */
-	public static long modPow(long a,long b,final long mod){
+	public static long modPow(long value,long exp,final long mod){
+		if(mod==1){
+			return 0;
+		}
+		if(exp<0){
+			exp = Math.floorMod(exp,mod-1);
+		}
 		long ans = 1;
-		a %= mod;
-		while(b>0){
-			if((b&1)==1){
-				ans *= a;
+		value %= mod;
+		while(exp>0){
+			if((exp&1)==1){
+				ans *= value;
 			}
 			ans %= mod;
-			a *= a;
-			a %= mod;
-			b >>= 1;
+			value *= value;
+			value %= mod;
+			exp >>= 1;
 		}
 		return ans;
 	}
 
 	/**
-	 * N!を計算します。
+	 * value! を計算します。
 	 *
-	 * @param N 階乗を求めるのに用いる値
+	 * @param value 階乗を求めるのに用いる値
 	 *
-	 * @return N!
+	 * @return value!
 	 */
-	public static long fact(final int N){
+	public static long fact(final int value){
 		long ans = 1;
-		for(int i = 2;i<=N;++i){
+		for(int i=2;i<=value;++i){
 			ans *= i;
 		}
 		return ans;
 	}
 
 	/**
-	 * N!をmodで割ったあまりを計算します。
+	 * value! を mod で割ったあまりを計算します。
 	 *
-	 * @param N 階乗を求めるのに用いる値
+	 * @param value 階乗を求めるのに用いる値
 	 * @param mod 法とする整数
 	 *
-	 * @return N!をmodで割ったあまり
+	 * @return value! を mod で割ったあまり
 	 */
-	public static long modFact(final int N,final long mod){
+	public static long modFact(final int value,final long mod){
 		long ans = 1;
-		for(int i = 2;i<=N;++i){
+		for(int i=2;i<=value;++i){
 			ans *= i;
 			ans %= mod;
 		}
@@ -247,43 +270,43 @@ public final class MathFunction{
 	}
 
 	/**
-	 * nCrを計算します。
+	 * nCr を計算します。
 	 *
-	 * @param n 二項係数を求めるのに用いる値
-	 * @param r 二項係数を求めるのに用いる値
+	 * @param total nCr の n
+	 * @param choose nCr の r
 	 *
 	 * @return nCr
 	 */
-	public static long combi(final long n,long r){
-		if(r<0||n<r){
+	public static long combination(final long total,long choose){
+		if(choose<0||total<choose){
 			return 0;
 		}
 		long ans = 1;
-		r = Math.min(n-r,r);
-		for(int i = 0;i<r;++i){
-			ans *= n-i;
+		choose = Math.min(total-choose,choose);
+		for(int i=0;i<choose;++i){
+			ans *= total-i;
 			ans /= i+1;
 		}
 		return ans;
 	}
 
 	/**
-	 * nCrをmodで割ったあまりを計算します。
+	 * nCr を mod で割ったあまりを計算します。
 	 *
-	 * @param n 二項係数を求めるのに用いる値
-	 * @param r 二項係数を求めるのに用いる値
+	 * @param total nCr の n
+	 * @param choose nCr の r
 	 * @param mod 法とする整数
 	 *
-	 * @return nCrをmodで割ったあまり
+	 * @return nCr を mod で割ったあまり
 	 */
-	public static long modCombi(final long n,long r,final long mod){
-		if(r<0||n<r){
+	public static long modCombination(final long total,long choose,final long mod){
+		if(choose<0||total<choose){
 			return 0;
 		}
 		long ans = 1;
-		r = Math.min(n-r,r);
-		for(int i = 0;i<r;++i){
-			ans *= (n-i)%mod;
+		choose = Math.min(total-choose,choose);
+		for(int i=0;i<choose;++i){
+			ans *= (total-i)%mod;
 			ans %= mod;
 			ans *= modPow(i+1,mod-2,mod);
 			ans %= mod;
@@ -292,26 +315,26 @@ public final class MathFunction{
 	}
 
 	/**
-	 * 引数の前半二点、後半二点で構成される二線分が交差しているか返します。
+	 * 引数の前半 2 点、後半 2 点で構成される 2 線分が交差しているか返します。
 	 *
-	 * @param x1 点1のx座標
-	 * @param y1 点1のy座標
-	 * @param x2 点2のx座標
-	 * @param y2 点2のy座標
-	 * @param x3 点3のx座標
-	 * @param y3 点3のy座標
-	 * @param x4 点4のx座標
-	 * @param y4 点4のy座標
+	 * @param x1 点 1 の x 座標
+	 * @param y1 点 1 の y 座標
+	 * @param x2 点 2 の x 座標
+	 * @param y2 点 2 の y 座標
+	 * @param x3 点 3 の x 座標
+	 * @param y3 点 3 の y 座標
+	 * @param x4 点 4 の x 座標
+	 * @param y4 点 4 の y 座標
 	 *
-	 * @return 交差している(線分の端が他方の線分上に存在する場合も含む)場合は1、同一線分・直線上なら0、それ以外は-1
+	 * @return 交差している (線分の端が他方の線分上に存在する場合も含む) 場合は 1、同一線分・直線上なら 0、それ以外は -1
 	 */
 	public static int isCrossed(final int x1,final int y1,final int x2,final int y2,final int x3,final int y3,final int x4,final int y4){
-		final long s1 = (long)(x1-x2)*(y3-y1)-(long)(y1-y2)*(x3-x1);
-		final long t1 = (long)(x1-x2)*(y4-y1)-(long)(y1-y2)*(x4-x1);
-		final long s2 = (long)(x3-x4)*(y1-y3)-(long)(y3-y4)*(x1-x3);
-		final long t2 = (long)(x3-x4)*(y2-y3)-(long)(y3-y4)*(x2-x3);
-		final long temp1 = s1*t1;
-		final long temp2 = s2*t2;
+		final long s1 = (x1-x2)*(long)(y3-y1)-(y1-y2)*(long)(x3-x1);
+		final long t1 = (x1-x2)*(long)(y4-y1)-(y1-y2)*(long)(x4-x1);
+		final long s2 = (x3-x4)*(long)(y1-y3)-(y3-y4)*(long)(x1-x3);
+		final long t2 = (x3-x4)*(long)(y2-y3)-(y3-y4)*(long)(x2-x3);
+		final long temp1 = Long.signum(s1)*Long.signum(t1);
+		final long temp2 = Long.signum(s2)*Long.signum(t2);
 		if(temp1>0||temp2>0){
 			return -1;
 		}
@@ -322,14 +345,14 @@ public final class MathFunction{
 	}
 
 	/**
-	 * 引数の前半二点、後半二点で構成される二線分が交差しているか返します。
+	 * 引数の前半 2 点、後半 2 点で構成される 2 線分が交差しているか返します。
 	 *
-	 * @param p1 点1
-	 * @param p2 点2
-	 * @param p3 点3
-	 * @param p4 点4
+	 * @param p1 点 1
+	 * @param p2 点 2
+	 * @param p3 点 3
+	 * @param p4 点 4
 	 *
-	 * @return 交差している(線分の端が他方の線分上に存在する場合も含む)場合は1、同一線分・直線上なら0、それ以外は-1
+	 * @return 交差している (線分の端が他方の線分上に存在する場合も含む) 場合は 1、同一線分・直線上なら 0、それ以外は -1
 	 */
 	public static int isCrossed(final Point p1,final Point p2,final Point p3,final Point p4){
 		return isCrossed(p1.x,p1.y,p2.x,p2.y,p3.x,p3.y,p4.x,p4.y);
@@ -340,7 +363,7 @@ public final class MathFunction{
 	 *
 	 * @param points 多角形を構成する点
 	 *
-	 * @return 多角形が凸多角形ならtrue
+	 * @return 頂点数が 3 つ以上かつ多角形が凸多角形なら true、それ以外は false
 	 */
 	public static boolean isConvex(final Point... points){
 		final int n = points.length;
@@ -351,21 +374,21 @@ public final class MathFunction{
 			return true;
 		}
 		boolean conv = true;
-		for(int i = 0;i<n;++i){
-			int result = isCrossed(points[i],points[(i+2)%n],points[(i+1)%n],points[(i+1+n/2)%n]);
+		for(int i=0;i<n;++i){
+			final int result = isCrossed(points[i],points[(i+2)%n],points[(i+1)%n],points[(i+1+n/2)%n]);
 			conv &= result>=0;
 		}
 		return conv;
 	}
 
 	/**
-	 * numをmodで割ったあまりを返します。
-	 * 戻り値は0以上mod未満であることが保証されます。
+	 * num を mod で割ったあまりを返します。<br/>
+	 * 戻り値は 0 以上 mod 未満であることが保証されます。
 	 *
 	 * @param num 被除算数
 	 * @param mod 法とする値
 	 *
-	 * @return numをmodで割ったあまり
+	 * @return num を mod で割ったあまり
 	 */
 	public static long remainder(long num,final long mod){
 		num %= mod;
@@ -376,81 +399,34 @@ public final class MathFunction{
 	}
 
 	/**
-	 * numが何桁かを返します。
-	 * 0は1桁として捉えます。
+	 * num が何桁かを返します。<br/>
+	 * 0 は 1 桁として捉えます。<br/>
+	 * 負の値の '-' は無視されます (正の整数として解釈されます)。
 	 *
 	 * @param num 調べる整数
 	 *
-	 * @return numの桁数
+	 * @return num の桁数
 	 */
 	public static int digit(final long num){
-		if(num<10L){
-			return 1;
+		final int length = String.valueOf(Math.abs(num)).length();
+		if(num<0){
+			return length-1;
 		}
-		if(num<100L){
-			return 2;
+		else{
+			return length;
 		}
-		if(num<1000L){
-			return 3;
-		}
-		if(num<10000L){
-			return 4;
-		}
-		if(num<100000L){
-			return 5;
-		}
-		if(num<1000000L){
-			return 6;
-		}
-		if(num<10000000L){
-			return 7;
-		}
-		if(num<100000000L){
-			return 8;
-		}
-		if(num<1000000000L){
-			return 9;
-		}
-		if(num<10000000000L){
-			return 10;
-		}
-		if(num<100000000000L){
-			return 11;
-		}
-		if(num<1000000000000L){
-			return 12;
-		}
-		if(num<10000000000000L){
-			return 13;
-		}
-		if(num<100000000000000L){
-			return 14;
-		}
-		if(num<1000000000000000L){
-			return 15;
-		}
-		if(num<10000000000000000L){
-			return 16;
-		}
-		if(num<100000000000000000L){
-			return 17;
-		}
-		if(num<1000000000000000000L){
-			return 18;
-		}
-		return 19;
 	}
 
 	/**
 	 * 引数の中で最大の値を返します。
 	 *
-	 * @param nums 探索対象
+	 * @param numbers 探索対象
 	 *
 	 * @return 引数で最大の要素
 	 */
-	public static int max(final int... nums){
+	public static int max(final int... numbers){
 		int ans = Integer.MIN_VALUE;
-		for(int num: nums){
+		for(final int num:numbers){
 			ans = Math.max(ans,num);
 		}
 		return ans;
@@ -459,13 +435,13 @@ public final class MathFunction{
 	/**
 	 * 引数の中で最大の値を返します。
 	 *
-	 * @param nums 探索対象
+	 * @param numbers 探索対象
 	 *
 	 * @return 引数で最大の要素
 	 */
-	public static long max(final long... nums){
+	public static long max(final long... numbers){
 		long ans = Long.MIN_VALUE;
-		for(long num: nums){
+		for(final long num:numbers){
 			ans = Math.max(ans,num);
 		}
 		return ans;
@@ -474,13 +450,13 @@ public final class MathFunction{
 	/**
 	 * 引数の中で最大の値を返します。
 	 *
-	 * @param nums 探索対象
+	 * @param numbers 探索対象
 	 *
 	 * @return 引数で最大の要素
 	 */
-	public static double max(final double... nums){
-		double ans = -Double.MIN_VALUE;
-		for(double num: nums){
+	public static double max(final double... numbers){
+		double ans = Double.NEGATIVE_INFINITY;
+		for(final double num:numbers){
 			ans = Math.max(ans,num);
 		}
 		return ans;
@@ -489,15 +465,14 @@ public final class MathFunction{
 	/**
 	 * 引数の中で最大の値を返します。
 	 *
-	 * @param nums 探索対象
-	 *
+	 * @param numbers 探索対象
 	 * @param <E> 配列の要素の型
 	 *
 	 * @return 引数で最大の要素
 	 */
-	public static <E extends Comparable<E>> E max(final E[] nums){
-		E ans = nums[0];
-		for(E value: nums){
+	public static <E extends Comparable<E>> E max(final E[] numbers){
+		E ans = numbers[0];
+		for(final E value:numbers){
 			if(ans.compareTo(value)<0){
 				ans = value;
 			}
@@ -508,13 +483,13 @@ public final class MathFunction{
 	/**
 	 * 引数の中で最小の値を返します。
 	 *
-	 * @param nums 探索対象
+	 * @param numbers 探索対象
 	 *
 	 * @return 引数で最小の要素
 	 */
-	public static int min(final int... nums){
+	public static int min(final int... numbers){
 		int ans = Integer.MAX_VALUE;
-		for(int num: nums){
+		for(final int num:numbers){
 			ans = Math.min(ans,num);
 		}
 		return ans;
@@ -523,13 +498,13 @@ public final class MathFunction{
 	/**
 	 * 引数の中で最小の値を返します。
 	 *
-	 * @param nums 探索対象
+	 * @param numbers 探索対象
 	 *
 	 * @return 引数で最小の要素
 	 */
-	public static long min(final long... nums){
+	public static long min(final long... numbers){
 		long ans = Long.MAX_VALUE;
-		for(long num: nums){
+		for(final long num:numbers){
 			ans = Math.min(ans,num);
 		}
 		return ans;
@@ -538,13 +513,13 @@ public final class MathFunction{
 	/**
 	 * 引数の中で最小の値を返します。
 	 *
-	 * @param nums 探索対象
+	 * @param numbers 探索対象
 	 *
 	 * @return 引数で最小の要素
 	 */
-	public static double min(final double... nums){
+	public static double min(final double... numbers){
 		double ans = Double.MAX_VALUE;
-		for(double num: nums){
+		for(final double num:numbers){
 			ans = Math.min(ans,num);
 		}
 		return ans;
@@ -553,15 +528,14 @@ public final class MathFunction{
 	/**
 	 * 引数の中で最小の値を返します。
 	 *
-	 * @param nums 探索対象
-	 *
+	 * @param numbers 探索対象
 	 * @param <E> 配列の要素の型
 	 *
 	 * @return 引数で最小の要素
 	 */
-	public static <E extends Comparable<E>> E min(final E[] nums){
-		E ans = nums[0];
-		for(E value: nums){
+	public static <E extends Comparable<E>> E min(final E[] numbers){
+		E ans = numbers[0];
+		for(final E value:numbers){
 			if(ans.compareTo(value)>0){
 				ans = value;
 			}
@@ -572,13 +546,13 @@ public final class MathFunction{
 	/**
 	 * 引数の総和を返します。
 	 *
-	 * @param nums 加算対象
+	 * @param numbers 加算対象
 	 *
 	 * @return 引数の総和
 	 */
-	public static long sum(final int... nums){
+	public static long sum(final int... numbers){
 		long ans = 0;
-		for(int num: nums){
+		for(final int num:numbers){
 			ans += num;
 		}
 		return ans;
@@ -587,13 +561,13 @@ public final class MathFunction{
 	/**
 	 * 引数の総和を返します。
 	 *
-	 * @param nums 加算対象
+	 * @param numbers 加算対象
 	 *
 	 * @return 引数の総和
 	 */
-	public static long sum(final long... nums){
+	public static long sum(final long... numbers){
 		long ans = 0;
-		for(long num: nums){
+		for(final long num:numbers){
 			ans += num;
 		}
 		return ans;
@@ -603,13 +577,13 @@ public final class MathFunction{
 	 * 引数の総和を指定された値で割ったあまりを返します。
 	 *
 	 * @param mod 法とする値
-	 * @param nums 加算対象
+	 * @param numbers 加算対象
 	 *
 	 * @return 引数の総和を指定された値で割ったあまり
 	 */
-	public static long modSum(final long mod,final int... nums){
+	public static long modSum(final long mod,final int... numbers){
 		long ans = 0;
-		for(int num: nums){
+		for(final int num:numbers){
 			ans += num;
 			ans %= mod;
 		}
@@ -623,13 +597,13 @@ public final class MathFunction{
 	 * 引数の総和を指定された値で割ったあまりを返します。
 	 *
 	 * @param mod 法とする値
-	 * @param nums 加算対象
+	 * @param numbers 加算対象
 	 *
 	 * @return 引数の総和を指定された値で割ったあまり
 	 */
-	public static long modSum(final long mod,final long... nums){
+	public static long modSum(final long mod,final long... numbers){
 		long ans = 0;
-		for(long num: nums){
+		for(final long num:numbers){
 			ans += num;
 			ans %= mod;
 		}
@@ -642,16 +616,16 @@ public final class MathFunction{
 	/**
 	 * 指定された区間の総和を返します。
 	 *
-	 * @param nums 加算対象
+	 * @param numbers 加算対象
 	 * @param from 区間の左端
-	 * @param to 区間の右端(toを含まない)
+	 * @param to 区間の右端 (to を含まない)
 	 *
 	 * @return 指定された区間の総和
 	 */
-	public static long sum(final int[] nums,int from,int to){
+	public static long sum(final int[] numbers,final int from,final int to){
 		long ans = 0;
-		for(int i = from;i<to;++i){
-			ans += nums[i];
+		for(int i=from;i<to;++i){
+			ans += numbers[i];
 		}
 		return ans;
 	}
@@ -659,16 +633,16 @@ public final class MathFunction{
 	/**
 	 * 指定された区間の総和を返します。
 	 *
-	 * @param nums 加算対象
+	 * @param numbers 加算対象
 	 * @param from 区間の左端
-	 * @param to 区間の右端(toを含まない)
+	 * @param to 区間の右端 (to を含まない)
 	 *
 	 * @return 指定された区間の総和
 	 */
-	public static long sum(final long[] nums,int from,int to){
+	public static long sum(final long[] numbers,final int from,final int to){
 		long ans = 0;
-		for(int i = from;i<to;++i){
-			ans += nums[i];
+		for(int i=from;i<to;++i){
+			ans += numbers[i];
 		}
 		return ans;
 	}
@@ -676,18 +650,47 @@ public final class MathFunction{
 	/**
 	 * 指定された区間の総和を指定された値で割ったあまりを返します。
 	 *
-	 * @param nums 加算対象
+	 * @param numbers 加算対象
 	 * @param from 区間の左端
-	 * @param to 区間の右端(toを含まない)
+	 * @param to 区間の右端 (to を含まない)
 	 * @param mod 法とする値
 	 *
 	 * @return 引数の総和を指定された値で割ったあまり
 	 */
-	public static long modSum(final int[] nums,int from,int to,long mod){
+	public static long modSum(final int[] numbers,final int from,final int to,final long mod){
 		long ans = 0;
-		for(int i = from;i<to;++i){
-			ans += nums[i];
-			ans %= mod;
+		for(int i=from;i<to;++i){
+			ans += numbers[i]%mod;
+			if(ans>=mod){
+				ans -= mod;
+			}
+			else if(ans<0){
+				ans += mod;
+			}
+		}
+		return ans;
+	}
+
+	/**
+	 * 指定された区間の総和を指定された値で割ったあまりを返します。
+	 *
+	 * @param numbers 加算対象
+	 * @param from 区間の左端
+	 * @param to 区間の右端 (to を含まない)
+	 * @param mod 法とする値
+	 *
+	 * @return 引数の総和を指定された値で割ったあまり
+	 */
+	public static long modSum(final long[] numbers,final int from,final int to,final long mod){
+		long ans = 0;
+		for(int i=from;i<to;++i){
+			ans += numbers[i]%mod;
+			if(ans>=mod){
+				ans -= mod;
+			}
+			else if(ans<0){
+				ans += mod;
+			}
 		}
 		if(ans<0){
 			ans += mod;
@@ -696,255 +699,231 @@ public final class MathFunction{
 	}
 
 	/**
-	 * 指定された区間の総和を指定された値で割ったあまりを返します。
-	 *
-	 * @param nums 加算対象
-	 * @param from 区間の左端
-	 * @param to 区間の右端(toを含まない)
-	 * @param mod 法とする値
-	 *
-	 * @return 引数の総和を指定された値で割ったあまり
-	 */
-	public static long modSum(final long[] nums,int from,int to,long mod){
-		long ans = 0;
-		for(int i = from;i<to;++i){
-			ans += nums[i];
-			ans %= mod;
-		}
-		if(ans<0){
-			ans += mod;
-		}
-		return ans;
-	}
-
-	/**
-	 * 引数numがl以上r未満の範囲内か判定します。
+	 * 引数 num が left 以上 right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含まない)
 	 *
-	 * @return l &lt;= num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheck(final int num,final int l,final int r){
-		return l<=num&&num<r;
+	public static boolean rangeCheck(final int num,final int left,final int right){
+		return left<=num&&num<right;
 	}
 
 	/**
-	 * 引数numがl以上r未満の範囲内か判定します。
+	 * 引数 num が left 以上 right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含まない)
 	 *
-	 * @return l &lt;= num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheck(final long num,final long l,final long r){
-		return l<=num&&num<r;
+	public static boolean rangeCheck(final long num,final long left,final long right){
+		return left<=num&&num<right;
 	}
 
 	/**
-	 * 引数numがl以上r未満の範囲内か判定します。
+	 * 引数 num が left 以上 right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含まない)
 	 *
-	 * @return l &lt;= num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheck(final double num,final double l,final double r){
-		return l<=num&&num<r;
+	public static boolean rangeCheck(final double num,final double left,final double right){
+		return left<=num&&num<right;
 	}
 
 	/**
-	 * 引数numがl以上r未満の範囲内か判定します。
+	 * 引数 num が left 以上 right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含まない)
+	 * @param <E> 比較する型
 	 *
-	 * @param <E> 比較対象の型
-	 *
-	 * @return l &lt;= num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static <E extends Comparable<E>> boolean rangeCheck(final E num,final E l,final E r){
-		return 0<=num.compareTo(l)&&num.compareTo(r)<0;
+	public static <E extends Comparable<E>> boolean rangeCheck(final E num,final E left,final E right){
+		return 0<=num.compareTo(left)&&num.compareTo(right)<0;
 	}
 
 	/**
-	 * 引数numがlより大きく、r未満の範囲内か判定します。
+	 * 引数 num が left より大きく、right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含まない)
 	 *
-	 * @return l &lt; num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckOpen(final int num,final int l,final int r){
-		return l<num&&num<r;
+	public static boolean rangeCheckOpen(final int num,final int left,final int right){
+		return left<num&&num<right;
 	}
 
 	/**
-	 * 引数numがlより大きく、r未満の範囲内か判定します。
+	 * 引数 num が left より大きく、right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含まない)
 	 *
-	 * @return l &lt; num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckOpen(final long num,final long l,final long r){
-		return l<num&&num<r;
+	public static boolean rangeCheckOpen(final long num,final long left,final long right){
+		return left<num&&num<right;
 	}
 
 	/**
-	 * 引数numがlより大きく、r未満の範囲内か判定します。
+	 * 引数 num が left より大きく、right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含まない)
 	 *
-	 * @return l &lt; num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckOpen(final double num,final double l,final double r){
-		return l<num&&num<r;
+	public static boolean rangeCheckOpen(final double num,final double left,final double right){
+		return left<num&&num<right;
 	}
 
 	/**
-	 * 引数numがlより大きく、r未満の範囲内か判定します。
+	 * 引数 num が left より大きく、right 未満の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含まない)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含まない)
+	 * @param <E> 比較する型
 	 *
-	 * @param <E> 比較対象の型
-	 *
-	 * @return l &lt; num &lt; rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt; right を満たしていれば true、満たしていなければ false
 	 */
-	public static <E extends Comparable<E>> boolean rangeCheckOpen(final E num,final E l,final E r){
-		return 0<num.compareTo(l)&&num.compareTo(r)<0;
+	public static <E extends Comparable<E>> boolean rangeCheckOpen(final E num,final E left,final E right){
+		return 0<num.compareTo(left)&&num.compareTo(right)<0;
 	}
 
 	/**
-	 * 引数numがl以上r以下の範囲内か判定します。
+	 * 引数 num が left 以上 right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含む)
 	 *
-	 * @return l &lt;= num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckClose(final int num,final int l,final int r){
-		return l<=num&&num<=r;
+	public static boolean rangeCheckClose(final int num,final int left,final int right){
+		return left<=num&&num<=right;
 	}
 
 	/**
-	 * 引数numがl以上r以下の範囲内か判定します。
+	 * 引数 num が left 以上 right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含む)
 	 *
-	 * @return l &lt;= num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckClose(final long num,final long l,final long r){
-		return l<=num&&num<=r;
+	public static boolean rangeCheckClose(final long num,final long left,final long right){
+		return left<=num&&num<=right;
 	}
 
 	/**
-	 * 引数numがl以上r以下の範囲内か判定します。
+	 * 引数 num が left 以上 right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含む)
 	 *
-	 * @return l &lt;= num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckClose(final double num,final double l,final double r){
-		return l<=num&&num<=r;
+	public static boolean rangeCheckClose(final double num,final double left,final double right){
+		return left<=num&&num<=right;
 	}
 
 	/**
-	 * 引数numがl以上r以下の範囲内か判定します。
+	 * 引数 num が left 以上 right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含む)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含む)
+	 * @param right 上限 (right を含む)
+	 * @param <E> 比較する型
 	 *
-	 * @param <E> 比較対象の型
-	 *
-	 * @return l &lt;= num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt;= num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static <E extends Comparable<E>> boolean rangeCheckClose(final E num,final E l,final E r){
-		return 0<=num.compareTo(l)&&num.compareTo(r)<=0;
+	public static <E extends Comparable<E>> boolean rangeCheckClose(final E num,final E left,final E right){
+		return 0<=num.compareTo(left)&&num.compareTo(right)<=0;
 	}
 
 	/**
-	 * 引数numがlより大きく、r以下の範囲内か判定します。
+	 * 引数 num が left より大きく、right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含む)
 	 *
-	 * @return l &lt; num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckSubClose(final int num,final int l,final int r){
-		return l<num&&num<=r;
+	public static boolean rangeCheckSubClose(final int num,final int left,final int right){
+		return left<num&&num<=right;
 	}
 
 	/**
-	 * 引数numがlより大きく、r以下の範囲内か判定します。
+	 * 引数 num が left より大きく、right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含む)
 	 *
-	 * @return l &lt; num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckSubClose(final long num,final long l,final long r){
-		return l<num&&num<=r;
+	public static boolean rangeCheckSubClose(final long num,final long left,final long right){
+		return left<num&&num<=right;
 	}
 
 	/**
-	 * 引数numがlより大きく、r以下の範囲内か判定します。
+	 * 引数 num が left より大きく、right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含む)
 	 *
-	 * @return l &lt; num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static boolean rangeCheckSubClose(final double num,final double l,final double r){
-		return l<num&&num<=r;
+	public static boolean rangeCheckSubClose(final double num,final double left,final double right){
+		return left<num&&num<=right;
 	}
 
 	/**
-	 * 引数numがlより大きく、r以下の範囲内か判定します。
+	 * 引数 num が left より大きく、right 以下の範囲内か判定します。
 	 *
 	 * @param num 判定する値
-	 * @param l 下限(lを含まない)
-	 * @param r 上限(rを含む)
+	 * @param left 下限 (left を含まない)
+	 * @param right 上限 (right を含む)
+	 * @param <E> 比較する型
 	 *
-	 * @param <E> 比較対象の型
-	 *
-	 * @return l &lt; num &lt;= rを満たしていればtrue、満たしていなければfalse
+	 * @return left &lt; num &lt;= right を満たしていれば true、満たしていなければ false
 	 */
-	public static <E extends Comparable<E>> boolean rangeCheckSubClose(final E num,final E l,final E r){
-		return 0<num.compareTo(l)&&num.compareTo(r)<=0;
+	public static <E extends Comparable<E>> boolean rangeCheckSubClose(final E num,final E left,final E right){
+		return 0<num.compareTo(left)&&num.compareTo(right)<=0;
 	}
 
 	/**
-	 * 引数の中でのmexを求めます。
+	 * 引数の中での mex を求めます。
 	 *
-	 * @param nums 引数
+	 * @param numbers 引数
 	 *
-	 * @return 引数を集合として見たときのmex
+	 * @return 引数を集合として見たときの mex
 	 */
-	public static int mex(final int... nums){
-		final BitSet set = new BitSet(nums.length);
-		for(final int num: nums)
-			if(num<nums.length)
+	public static int mex(final int... numbers){
+		final BitSet set = new BitSet(numbers.length);
+		for(final int num:numbers){
+			if(rangeCheck(num,0,numbers.length)){
 				set.set(num);
+			}
+		}
 		return set.nextClearBit(0);
 	}
 }
